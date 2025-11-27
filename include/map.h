@@ -18,6 +18,6 @@ typedef struct Map
         uint8_t grid[MAP_SIZE_X][MAP_SIZE_Y][MAP_SIZE_Z];
 } Map;
 
-void map_init(Map *map); // Sets every voxel on the map to the default material; 0.
+void map_init(Map* map); // Sets every voxel on the map to the default material; 0.
 
 #endif // MAP_H

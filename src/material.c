@@ -1,5 +1,6 @@
 // material.c
 
+#include <stdio.h>
 #include "../include/material.h"
 
 Material materials[256];
@@ -19,4 +20,9 @@ void materials_init(Material* materials)
         materials[0].col = (Col){0, 0, 0};
         materials[0].transparency = 1.0f;
         materials[0].reflectivity = 0.0f;
+}
+
+void material_print_info(Material material)
+{
+        printf("Material ID: %d\nRGB: %d, %d, %d\nTransparency: %.2f\%\nReflectivity: %.2f\%\n", material.mat_id, material.col.r, material.col.g, material.col.b, material.transparency*100, material.reflectivity*100);
 }

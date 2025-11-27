@@ -22,5 +22,6 @@ typedef struct Material
 extern Material materials[256]; // Array containing all materials allowing for mat information to be looked up easily.
 
 void materials_init(Material* materials); // Inits the array
+void material_print_info(Material material);
 
 #endif // MATERIAL_H

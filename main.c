@@ -5,8 +5,7 @@
 
 int main(void)
 {
-        Map map;
-        map_init(&map);
+        map_init();
 
         materials_init(materials);
         material_print_info(materials[0]);

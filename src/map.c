@@ -3,7 +3,9 @@
 #include "../include/map.h"
 #include "../include/material.h"
 
-void map_init(Map* map)
+Map map;
+
+void map_init()
 {
         for (int x = 0; x < MAP_SIZE_X; x++)
         {
@@ -11,7 +13,7 @@ void map_init(Map* map)
                 {
                         for (int z = 0; z < MAP_SIZE_Z; z++)
                         {
-                                map->grid[x][y][z] = MAT_AIR;
+                                map.grid[x][y][z] = MAT_AIR;
                         }
                 }
         }

@@ -1,0 +1,21 @@
+// vector.h
+//
+// Provides structs and functions for vectors
+
+#ifndef VECTOR_H
+#define VECTOR_H
+
+typedef struct Vec2
+{
+        float x, y;
+} Vec2;
+
+typedef struct Vec3
+{
+        float x, y, z;
+} Vec3;
+
+Vec2 vec2_add(Vec2 a, Vec2 b);
+Vec3 vec3_add(Vec3 a, Vec3 b);
+
+#endif // VECTOR_H

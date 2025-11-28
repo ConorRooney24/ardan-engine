@@ -3,6 +3,10 @@
 // Takes information about a rays journey and translates it into a pixels colour before printing to the terminal.
 //
 
+#ifndef RENDERER_H
+#define RENDERER_H
+
+#include <stdlib.h>
 #include "colour.h"
 #include "config.h"
 
@@ -16,7 +20,16 @@ typedef struct Pixel
         char character;
 } Pixel;
 
-extern Pixel buffer[DISPLAY_HEIGHT_MAX][DISPLAY_WIDTH_MAX]; // In y, x. not x, y -  TODO, maybe make it so multiple buffers can exist (top down view camera screen for example)
+// extern Pixel buffer[DISPLAY_HEIGHT_MAX][DISPLAY_WIDTH_MAX]; old, non dynamic approach
 
-void buffer_init();
-void buffer_print();
+typedef struct Buffer
+{
+    int width, height;
+    Pixel **pixels;
+} Buffer;
+
+Buffer buffer_init(int width, int height);
+void buffer_destroy(Buffer* buffer);
+void buffer_print(Buffer* buffer);
+
+#endif // RENDERER_H

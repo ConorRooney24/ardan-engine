@@ -13,8 +13,10 @@ int main(void)
         config.display_height = DISPLAY_HEIGHT_DEFAULT;
         config.display_width = DISPLAY_WIDTH_DEFAULT;
 
-        buffer_init();
-        buffer_print();
+        Buffer buffer = buffer_init(config.display_width, config.display_height);
+        buffer_print(&buffer);
+        buffer_destroy(&buffer);
+
 
         return 0;
 }

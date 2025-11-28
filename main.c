@@ -1,5 +1,6 @@
 #include "include/map.h"
 #include "include/material.h"
+#include "include/config.h"
 
 int main(void)
 {

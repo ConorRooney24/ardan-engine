@@ -30,3 +30,14 @@ Vec2 rad_to_vec2(double rad)
 
     return v;
 }
+
+Vec3 direction_rad_to_direction(Vec2 direction_rad)
+{
+        float pitch = direction_rad.x;
+        float yaw = direction_rad.y;
+
+        Vec3 direction;
+        direction.x = cos(pitch) * sin(yaw);
+        direction.y = sin(pitch);
+        direction.z = cos(pitch) * cos(yaw);
+}

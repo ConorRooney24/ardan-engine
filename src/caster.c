@@ -1,5 +1,6 @@
 // caster.c
 
+#include <math.h>
 #include "../include/caster.h"
 #include "../include/trig.h"
 
@@ -43,10 +44,10 @@ void ray_cast(Ray *ray, Map *map, int max_distance, float max_step_size)
 			ray->collided = true;
 			ray->collided_material = materials[MAT_AIR];
 		}
-		else if ((map->grid[ray->position_floored.x][ray->position_floored.y][ray->position_floored.z] != materials[MAT_UNDEFINED]) || (map->grid[ray->position_floored.x][ray->position_floored.y][ray->position_floored.z] != materials[MAT_AIR])) // if we have hit an object
+		else if ((map->grid[ray->position_floored.x][ray->position_floored.y][ray->position_floored.z].mat_id != MAT_UNDEFINED) || (map->grid[ray->position_floored.x][ray->position_floored.y][ray->position_floored.z].mat_id != MAT_AIR)) // if we have hit an object
 		{
 			ray->collided = true;
-			ray->collided_material = map->grid[ray->position_floored.x][ray->position_floored.y];
+			ray->collided_material = materials[map->grid[ray->position_floored.x][ray->position_floored.y]->mat_id];
 		}
 		else // We are not out of bounds, and we have not collided, so we move forward
 		{

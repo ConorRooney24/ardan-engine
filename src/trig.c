@@ -9,5 +9,5 @@ double rad_to_deg(double rad)
 
 double deg_to_rad(double deg)
 {
-        return deg * (180/TRIG_PI);
+        return deg * (TRIG_PI/180);
 }

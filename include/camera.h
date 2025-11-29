@@ -25,5 +25,7 @@ void camera_destroy(Camera *camera);
 void camera_calculate_vFOV(Camera *camera);
 void camera_calculate_ray_trajectories(Camera *camera);
 void camera_print_info(Camera *camera);
+void camera_print_ray_trajectories_deg(Camera *camera);
+void camera_print_ray_trajectories_rad(Camera *camera);
 
 #endif // CAMERA_H

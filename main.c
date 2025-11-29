@@ -27,8 +27,8 @@ int main(void)
         a.y = 2;
         a.z = 3;
         Vec2 b;
-        b.x = 45;
-        b.y = 45;
+        b.x = 0;
+        b.y = 90;
 
         Camera c = camera_init(16, 9, config.hFOV, a, b);
         camera_calculate_vFOV(&c);
@@ -49,6 +49,9 @@ int main(void)
         vec.x = 0;
         vec.y = 1;
         printf("x0, y1 to rad: %f\n", vec2_to_rad(vec));
+
+        camera_calculate_ray_trajectories(&c);
+        camera_print_ray_trajectories_deg(&c);
         
         camera_destroy(&c);
 

@@ -115,3 +115,29 @@ void camera_print_info(Camera *camera)
         printf("| Resolution X:\t%d\tResolution Y:\t%d\n", camera->resolution_x, camera->resolution_y);
         printf("+-------------------------------------------------------\n");
 }
+
+void camera_print_ray_trajectories_deg(Camera *camera)
+{
+        printf("--- Ray trajectory matrix in deg ---\n");
+        for (int y = 0; y < camera->resolution_y; y++)
+        {
+                for (int x = 0; x < camera->resolution_x; x++)
+                {
+                        printf("y%d, x%d [%.1f, %.1f], ", y, x, camera->rays[y][x].direction_deg.x, camera->rays[y][x].direction_deg.y);
+                }
+                printf("\n");
+        }  
+}
+
+void camera_print_ray_trajectories_rad(Camera *camera)
+{
+        printf("--- Ray trajectory matrix in rad ---\n");
+        for (int y = 0; y < camera->resolution_y; y++)
+        {
+                for (int x = 0; x < camera->resolution_x; x++)
+                {
+                        printf("[%.1f, %.1f]", camera->rays[y][x].direction_rad.x, camera->rays[y][x].direction_rad.y);
+                }
+                printf("\n");
+        }  
+}

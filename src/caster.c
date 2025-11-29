@@ -54,6 +54,8 @@ void ray_cast(Ray *ray, Map *map, int max_distance, float max_step_size)
 			ray->position.x += ray->direction.x;
 			ray->position.y += ray->direction.y;
 			ray->position.z += ray->direction.z;
+
+			ray->distance_travelled += vec3_to_distance(ray->direction);
 		}
 	}
 }

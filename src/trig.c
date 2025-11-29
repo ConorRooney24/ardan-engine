@@ -40,6 +40,8 @@ Vec3 direction_rad_to_direction(Vec2 direction_rad)
         direction.x = cos(pitch) * sin(yaw);
         direction.y = sin(pitch);
         direction.z = cos(pitch) * cos(yaw);
+
+        return direction;
 }
 
 Vec3 vec3_normalize(Vec3 vector) 

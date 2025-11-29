@@ -2,6 +2,7 @@
 
 #include <math.h>
 #include <stdlib.h>
+#include <stdio.h>
 #include "../include/camera.h"
 
 Camera camera_init(int resolution_x, int resolution_y, float hFOV, Vec3 position, Vec3 direction)
@@ -60,3 +61,12 @@ float camera_calculate_vFOV(Camera *camera)
 }
 
 void camera_calculate_ray_trajectories(Camera *camera);
+
+void camera_print_info(Camera *camera)
+{
+        printf("--- Camera Info ---\n");
+        printf("Position*:\tx=%f,\ty=%f,\tz=%f\n", camera->position.x, camera->position.y, camera->position.z);
+        printf("Direction*:\tx=%f,\ty=%f,\tz=%f\n", camera->direction.x, camera->direction.y, camera->direction.z);
+        printf("hFOV*:\t\t%f\tvFOV*:\t%f\n", camera->hFOV, camera->vFOV);
+        printf("Resolution X*:\t%d\t\tResolution Y*:\t%d\n", camera->resolution_x, camera->resolution_y);
+}

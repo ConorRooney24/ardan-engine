@@ -32,6 +32,20 @@ int main(void)
         camera_print_info(&c);
         printf("90 deg to rad: %f\n", deg_to_rad(90));
         printf("1 rad to deg: %f\n", rad_to_deg(1));
+
+        Vec2 vec;
+        vec.x = 1;
+        vec.y = 0;
+        printf("x1, y0 to rad: %f\n", vec2_to_rad(vec));
+
+        vec.x = 1;
+        vec.y = 1;
+        printf("x1, y1 to rad: %f\n", vec2_to_rad(vec));
+
+        vec.x = 0;
+        vec.y = 1;
+        printf("x0, y1 to rad: %f\n", vec2_to_rad(vec));
+        
         camera_destroy(&c);
 
         return 0;

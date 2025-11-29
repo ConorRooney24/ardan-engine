@@ -9,7 +9,7 @@
 
 int main(void)
 {
-        map_init();
+        map_init((Vec3){100,100,100});
 
         materials_init(materials);
         material_print_info(materials[0]);
@@ -20,7 +20,7 @@ int main(void)
 
         Buffer buffer = buffer_init(config.display_width, config.display_height);
         buffer_print(&buffer);
-        buffer_destroy(&buffer);
+
 
         Vec3 a;
         a.x = 1;
@@ -54,6 +54,7 @@ int main(void)
         camera_print_ray_trajectories_deg(&c);
         
         camera_destroy(&c);
-
+        buffer_destroy(&buffer);
+        
         return 0;
 }

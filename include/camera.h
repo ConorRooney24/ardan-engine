@@ -9,6 +9,7 @@
 #include "config.h"
 #include "vector.h"
 #include "caster.h"
+#include "renderer.h"
 
 typedef struct Camera
 {
@@ -25,7 +26,7 @@ void camera_destroy(Camera *camera);
 
 void camera_calculate_vFOV(Camera *camera);
 void camera_calculate_ray_trajectories(Camera *camera);
-// void capture_and_pass(Camera *camera, Buffer);
+void capture_and_pass(Camera *camera, Buffer *buffer, Map *map); // Uses the raycaster to cast a ray for each pixel along its trajecory in the matrix and sends the ray journey information to a buffer
 
 void camera_print_info(Camera *camera);
 void camera_print_ray_trajectories_deg(Camera *camera);

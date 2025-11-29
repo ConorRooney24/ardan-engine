@@ -15,6 +15,7 @@ typedef struct Config
 {
         int display_width, display_height;
         float hFOV, vFOV, hFOV_deg, vFOV_deg;
+        float max_ray_distance, max_ray_step;
 } Config;
 
 extern Config config;

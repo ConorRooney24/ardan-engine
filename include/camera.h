@@ -8,16 +8,19 @@
 
 #include "config.h"
 #include "vector.h"
+#include "caster.h"
 
 typedef struct Camera
 {
-        Vec3 position;
-        Vec3 direction;
-        char ray_trajectory_matrix[DISPLAY_WIDTH_MAX][DISPLAY_HEIGHT_MAX];
+        int resolution_x, resolution_y;
         float hFOV, vFOV;
+        Vec3 position, direction;
+        Ray **rays;
 } Camera;
 
-float calculate_vFOV(float hFOV, int display_width, int display_height);
-void calculate_ray_trajectory_matrix(Camera* camera);
+Camera camera_init(int resolution_x, int resolution_y, float hFOV, Vec3 position, Vec3 direction);
+void camera_destroy(Camera *camera);
+float camera_calculate_vFOV(Camera *camera);
+void camera_calculate_ray_trajectories(Camera *camera);
 
 #endif // CAMERA_H

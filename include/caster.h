@@ -9,8 +9,8 @@
 
 typedef struct Ray
 {
-        Vec3 position;
-        Vec3 direction;
+        Vec3 position, direction;
+        Vec2 direction_rad, direction_deg;
         float distance_travelled;
         bool collided;
         Material collided_material;

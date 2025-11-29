@@ -41,3 +41,22 @@ Vec3 direction_rad_to_direction(Vec2 direction_rad)
         direction.y = sin(pitch);
         direction.z = cos(pitch) * cos(yaw);
 }
+
+Vec3 vec3_normalize(Vec3 vector) 
+{
+    float length_squared = (vector.x * vector.x) + (vector.y * vector.y) + (vector.z * vector.z);
+
+    if (length_squared <= 0.0)
+    {
+        return (Vec3){0.0, 0.0, 0.0};
+    }
+
+    float inverse_length = 1.0f / sqrtf(length_squared);
+
+    Vec3 result;
+    result.x = vector.x * inverse_length;
+    result.y = vector.y * inverse_length;
+    result.z = vector.z * inverse_length;
+
+    return result;
+}

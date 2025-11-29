@@ -55,9 +55,9 @@ void camera_destroy(Camera *camera)
         camera->direction.z = 0;
 }
 
-float camera_calculate_vFOV(Camera *camera)
+void camera_calculate_vFOV(Camera *camera)
 {
-        return (2 * atan( tan(camera->hFOV/2) * (camera->resolution_y / camera->resolution_x) ));
+        camera->vFOV = (2 * atan( tan(camera->hFOV/2) * (camera->resolution_y / camera->resolution_x) ));
 }
 
 void camera_calculate_ray_trajectories(Camera *camera);

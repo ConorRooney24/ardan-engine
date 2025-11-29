@@ -77,18 +77,31 @@ void camera_calculate_vFOV(Camera *camera)
 
 void camera_calculate_ray_trajectories(Camera *camera)
 {
-        double x_ray_distance = camera->hFOV / camera->resolution_x; // The distance between rays on the x axis in radian.
-        double y_ray_distance = camera->vFOV / camera->resolution_y; // The distance between rays on the y axis in radian.
-        
-        for (int y = 0; y < camera->resolution_y; y++)
+        double horizontal_ray_step = camera->hFOV / camera->resolution_x; // The distance between rays on the x axis in radian.
+        double vertical_ray_step = camera->vFOV / camera->resolution_y; // The distance between rays on the y axis in radian.
+
+        camera->direction_rad.x = rad_normalise(camera->direction_rad.x);
+        camera->direction_rad.y = rad_normalise(camera->direction_rad.y);
+
+        double horizontal_ray_start_position = camera->direction_rad.y - (camera->hFOV / 2); // the yaw measure in radian which rays on the x axis will start casting from, and then move right by the x distance each step.
+        double vertical_ray_start_position = camera->direction_rad.x - (camera->vFOV / 2);
+
+        for (int y = 0; y < camera->resolution_y; y++) // for each ray
         {
                 for (int x = 0; x < camera->resolution_x; x++)
                 {
-                        
-                }
-                
-        }
-        
+                        double ray_pitch = vertical_ray_start_position + y * vertical_ray_step; // calculate the pitch and yaw of the given ray
+                        double ray_yaw = horizontal_ray_start_position + x * horizontal_ray_step;
+
+                        camera->rays[y][x].direction_rad.x = rad_normalise(ray_pitch);
+                        camera->rays[y][x].direction_rad.y = rad_normalise(ray_yaw);
+
+                        camera->rays[y][x].direction_deg.x = rad_to_deg(camera->rays[y][x].direction_rad.x);
+                        camera->rays[y][x].direction_deg.y = rad_to_deg(camera->rays[y][x].direction_rad.y);
+
+                        camera->rays[y][x].direction = direction_rad_to_direction(camera->rays[y][x].direction_rad);
+                } 
+        }  
 }
 
 void camera_print_info(Camera *camera)

@@ -26,11 +26,15 @@ int main(void)
         a.x = 1;
         a.y = 2;
         a.z = 3;
+        Vec2 b;
+        b.x = 0;
+        b.y = 90;
 
-        Camera c = camera_init(1920, 1080, config.hFOV, a, a);
+        Camera c = camera_init(16, 9, config.hFOV, a, b);
         camera_calculate_vFOV(&c);
         camera_print_info(&c);
-        printf("90 deg to rad: %f\n", deg_to_rad(90));
+        printf("%f deg to rad: %f\n", c.hFOV_deg, deg_to_rad(c.hFOV_deg));
+        printf("%f deg to rad: %f\n", c.vFOV_deg, deg_to_rad(c.vFOV_deg));
         printf("1 rad to deg: %f\n", rad_to_deg(1));
 
         Vec2 vec;

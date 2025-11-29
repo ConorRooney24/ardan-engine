@@ -6,15 +6,25 @@
 #include "../include/trig.h"
 #include "../include/camera.h"
 
-Camera camera_init(int resolution_x, int resolution_y, float hFOV_deg, Vec3 position, Vec3 direction)
+Camera camera_init(int resolution_x, int resolution_y, float hFOV_deg, Vec3 position, Vec2 direction_deg)
 {
         Camera camera;
+
         camera.resolution_x = resolution_x;
         camera.resolution_y = resolution_y;
+
         camera.hFOV_deg = hFOV_deg;
         camera.hFOV = deg_to_rad(hFOV_deg);
+
         camera.position = position;
-        camera.direction = direction;
+
+        camera.direction_deg = direction_deg;
+
+        camera.direction_rad.x = deg_to_rad(camera.direction_deg.x);
+        camera.direction_rad.y = deg_to_rad(camera.direction_deg.y);
+
+        camera.direction = direction_rad_to_direction(camera.direction_rad);
+        camera.direction = vec3_normalize(camera.direction);
 
         camera.rays = (Ray**)malloc(resolution_y * sizeof(Ray*));
         
@@ -65,7 +75,21 @@ void camera_calculate_vFOV(Camera *camera)
         camera->vFOV_deg = rad_to_deg(camera->vFOV);
 }
 
-void camera_calculate_ray_trajectories(Camera *camera);
+void camera_calculate_ray_trajectories(Camera *camera)
+{
+        double x_ray_distance = camera->hFOV / camera->resolution_x; // The distance between rays on the x axis in radian.
+        double y_ray_distance = camera->vFOV / camera->resolution_y; // The distance between rays on the y axis in radian.
+        
+        for (int y = 0; y < camera->resolution_y; y++)
+        {
+                for (int x = 0; x < camera->resolution_x; x++)
+                {
+                        
+                }
+                
+        }
+        
+}
 
 void camera_print_info(Camera *camera)
 {

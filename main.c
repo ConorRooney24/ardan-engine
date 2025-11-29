@@ -5,6 +5,7 @@
 #include "include/config.h"
 #include "include/renderer.h"
 #include "include/camera.h"
+#include "include/trig.h"
 
 int main(void)
 {
@@ -26,9 +27,11 @@ int main(void)
         a.y = 2;
         a.z = 3;
 
-        Camera c = camera_init(10, 10, config.hFOV, a, a);
+        Camera c = camera_init(1920, 1080, config.hFOV, a, a);
         camera_calculate_vFOV(&c);
         camera_print_info(&c);
+        printf("90 deg to rad: %f\n", deg_to_rad(90));
+        printf("1 rad to deg: %f\n", rad_to_deg(1));
         camera_destroy(&c);
 
         return 0;

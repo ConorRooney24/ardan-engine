@@ -13,12 +13,12 @@
 typedef struct Camera
 {
         int resolution_x, resolution_y;
-        float hFOV, vFOV;
+        float hFOV, vFOV, hFOV_deg, vFOV_deg;
         Vec3 position, direction;
         Ray **rays;
 } Camera;
 
-Camera camera_init(int resolution_x, int resolution_y, float hFOV, Vec3 position, Vec3 direction);
+Camera camera_init(int resolution_x, int resolution_y, float hFOV_deg, Vec3 position, Vec3 direction);
 void camera_destroy(Camera *camera);
 void camera_calculate_vFOV(Camera *camera);
 void camera_calculate_ray_trajectories(Camera *camera);

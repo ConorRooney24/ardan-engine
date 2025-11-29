@@ -37,11 +37,7 @@ Camera camera_init(int resolution_x, int resolution_y, float hFOV_deg, Vec3 posi
         {
                 for (int x = 0; x < resolution_x; x++)
                 {
-                        camera.rays[y][x].collided = false;
-                        camera.rays[y][x].collided_material = materials[MAT_AIR];
-                        camera.rays[y][x].position = camera.position;
-                        camera.rays[y][x].direction = camera.direction;
-                        camera.rays[y][x].distance_travelled = 0;    
+                        camera.rays[y][x] = ray_init(camera.position, camera.direction_deg);
                 }       
         }
         

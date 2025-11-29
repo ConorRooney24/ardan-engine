@@ -16,4 +16,7 @@ typedef struct Ray
         Material collided_material;
 } Ray;
 
+Ray ray_init(Vec3 position, Vec2 direction_deg);
+void ray_cast(Ray *ray); // Casts a ray and updates that rays journey information.
+
 #endif // CASTER_H

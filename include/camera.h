@@ -22,8 +22,11 @@ typedef struct Camera
 
 Camera camera_init(int resolution_x, int resolution_y, float hFOV_deg, Vec3 position, Vec2 direction_deg);
 void camera_destroy(Camera *camera);
+
 void camera_calculate_vFOV(Camera *camera);
 void camera_calculate_ray_trajectories(Camera *camera);
+// void capture_and_pass(Camera *camera, Buffer);
+
 void camera_print_info(Camera *camera);
 void camera_print_ray_trajectories_deg(Camera *camera);
 void camera_print_ray_trajectories_rad(Camera *camera);

@@ -15,5 +15,6 @@ double vec2_to_rad(Vec2 vector); // Can be used for calculating rotation. Curren
 Vec3 direction_rad_to_direction(Vec2 direction_rad); // Takes a pitch and yaw, gives an xyz.
 Vec3 vec3_normalize(Vec3 vector);
 float rad_normalise(float rad);
+float vec3_to_distance(Vec3 vec);
 
 #endif // TRIG_H

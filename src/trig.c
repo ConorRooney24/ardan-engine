@@ -20,3 +20,13 @@ double vec2_to_rad(Vec2 vector)
 
         return atan2(sin, cos);
 }
+
+Vec2 rad_to_vec2(double rad)
+{
+    Vec2 v;
+
+    v.x = cos(rad);
+    v.y = sin(rad);
+
+    return v;
+}

@@ -8,18 +8,16 @@
 #define MAP_H
 
 #include <stdint.h>
-
-#define MAP_SIZE_X 100
-#define MAP_SIZE_Y 100
-#define MAP_SIZE_Z 100
+#include "vector.h"
+#include "material.h"
 
 typedef struct Map
 {
-        uint8_t grid[MAP_SIZE_X][MAP_SIZE_Y][MAP_SIZE_Z];
+        Vec3 size;
+        Material ***grid; // TODO, Maybe make these "static objects" instead of materials
 } Map;
 
-extern Map map;
-
-void map_init(); // Sets every voxel on the map to the default material (MAT_AIR).
+Map map_init(Vec3 size);
+void map_destroy(Map *map);
 
 #endif // MAP_H

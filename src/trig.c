@@ -23,12 +23,12 @@ double vec2_to_rad(Vec2 vector)
 
 Vec2 rad_to_vec2(double rad)
 {
-    Vec2 v;
+	Vec2 v;
 
-    v.x = cos(rad);
-    v.y = sin(rad);
+	v.x = cos(rad);
+	v.y = sin(rad);
 
-    return v;
+	return v;
 }
 
 Vec3 direction_rad_to_direction(Vec2 direction_rad)
@@ -46,31 +46,36 @@ Vec3 direction_rad_to_direction(Vec2 direction_rad)
 
 Vec3 vec3_normalize(Vec3 vector) 
 {
-    float length_squared = (vector.x * vector.x) + (vector.y * vector.y) + (vector.z * vector.z);
+	float length_squared = (vector.x * vector.x) + (vector.y * vector.y) + (vector.z * vector.z);
 
-    if (length_squared <= 0.0)
-    {
-        return (Vec3){0.0, 0.0, 0.0};
-    }
+	if (length_squared <= 0.0)
+	{
+		return (Vec3){0.0, 0.0, 0.0};
+	}
 
-    float inverse_length = 1.0f / sqrtf(length_squared);
+	float inverse_length = 1.0f / sqrtf(length_squared);
 
-    Vec3 result;
-    result.x = vector.x * inverse_length;
-    result.y = vector.y * inverse_length;
-    result.z = vector.z * inverse_length;
+	Vec3 result;
+	result.x = vector.x * inverse_length;
+	result.y = vector.y * inverse_length;
+	result.z = vector.z * inverse_length;
 
-    return result;
+	return result;
 }
 
 float rad_normalise(float rad)
 {
-    rad = fmod(rad, 2.0 * TRIG_PI);
+	rad = fmod(rad, 2.0 * TRIG_PI);
 
-    if(rad < 0) 
-    {
-        rad += 2.0 * TRIG_PI;
-    }
+	if(rad < 0) 
+	{
+		rad += 2.0 * TRIG_PI;
+	}
 
-    return rad;
+	return rad;
+}
+
+float vec3_to_distance(Vec3 vec)
+{
+	return sqrt((vec.x * vec.x) + (vec.y * vec.y) + (vec.z * vec.z));
 }

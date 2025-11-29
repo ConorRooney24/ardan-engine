@@ -27,8 +27,8 @@ int main(void)
         a.y = 2;
         a.z = 3;
         Vec2 b;
-        b.x = 0;
-        b.y = 90;
+        b.x = 45;
+        b.y = 45;
 
         Camera c = camera_init(16, 9, config.hFOV, a, b);
         camera_calculate_vFOV(&c);

@@ -93,9 +93,12 @@ void camera_calculate_ray_trajectories(Camera *camera)
 
 void camera_print_info(Camera *camera)
 {
-        printf("--- Camera Info ---\n");
-        printf("Position*:\tx=%f,\ty=%f,\tz=%f\n", camera->position.x, camera->position.y, camera->position.z);
-        printf("Direction*:\tx=%f,\ty=%f,\tz=%f\n", camera->direction.x, camera->direction.y, camera->direction.z);
-        printf("hFOV(deg)*:\t\t%f\tvFOV(deg)*:\t%f\n", camera->hFOV_deg, camera->vFOV_deg);
-        printf("Resolution X*:\t%d\t\tResolution Y*:\t%d\n", camera->resolution_x, camera->resolution_y);
+        printf("+--- Camera Info ---------------------------------------\n");
+        printf("| Position (xyz):\tx = %.2f,\ty = %.2f,\tz = %.2f\n", camera->position.x, camera->position.y, camera->position.z);
+        printf("| Direction (xyz):\tx = %.2f,\ty = %.2f,\tz = %.2f\n", camera->direction.x, camera->direction.y, camera->direction.z);
+        printf("| Direction (Deg):\tPitch = %.2f,\tYaw = %.2f\n", camera->direction_deg.x, camera->direction_deg.y);
+        printf("| Direction (Rad):\tPitch = %.2f,\tYaw = %.2f\n", camera->direction_rad.x, camera->direction_rad.y);
+        printf("| FOV (Deg):\t\th = %.2f,\tv = %.2f\n", camera->hFOV_deg, camera->vFOV_deg);
+        printf("| Resolution X:\t%d\tResolution Y:\t%d\n", camera->resolution_x, camera->resolution_y);
+        printf("+-------------------------------------------------------\n");
 }

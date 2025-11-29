@@ -17,15 +17,15 @@
 #define PIXEL_CHARACTER_DEFAULT ' '
 typedef struct Pixel
 {
-    Colour colour;
-    char character;
+	Colour colour;
+	char character;
 } Pixel;
 
 typedef struct Buffer
 {
-    int resolution_y, resolution_x; // y, x format for printing
-    Ray **rays; // Raw ray data to be processed
-    Pixel **pixels; // Processed pixels with colour information
+	int resolution_y, resolution_x; // y, x format for printing
+	Ray **rays; // Raw ray data to be processed
+	Pixel **pixels; // Processed pixels with colour information
 } Buffer;
 
 Buffer buffer_init(int width, int height);

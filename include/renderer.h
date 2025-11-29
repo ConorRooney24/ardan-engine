@@ -9,6 +9,7 @@
 #include <stdlib.h>
 #include "colour.h"
 #include "config.h"
+#include "caster.h"
 
 #define PIXEL_COLOUR_R_DEFAULT 255
 #define PIXEL_COLOUR_G_DEFAULT 255
@@ -16,16 +17,15 @@
 #define PIXEL_CHARACTER_DEFAULT ' '
 typedef struct Pixel
 {
-        Colour colour;
-        char character;
+    Colour colour;
+    char character;
 } Pixel;
-
-// extern Pixel buffer[DISPLAY_HEIGHT_MAX][DISPLAY_WIDTH_MAX]; old, non dynamic approach
 
 typedef struct Buffer
 {
-    int width, height;
-    Pixel **pixels;
+    int resolution_y, resolution_x; // y, x format for printing
+    Ray **rays; // Raw ray data to be processed
+    Pixel **pixels; // Processed pixels with colour information
 } Buffer;
 
 Buffer buffer_init(int width, int height);

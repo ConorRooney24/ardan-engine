@@ -7,25 +7,29 @@
 
 // Pixel buffer[DISPLAY_HEIGHT_MAX][DISPLAY_WIDTH_MAX];
 
-Buffer buffer_init(int width, int height)
+Buffer buffer_init(int resolution_x, int resolution_y)
 {
         Buffer buffer;
-        buffer.width = width;
-        buffer.height = height;
+        buffer.resolution_x = resolution_x;
+        buffer.resolution_y = resolution_y;
 
-        buffer.pixels = (Pixel**)malloc(height * sizeof(Pixel*));
+        buffer.rays = (Ray**)malloc(resolution_y * sizeof(Ray*));
+        buffer.pixels = (Pixel**)malloc(resolution_y * sizeof(Pixel*));
 
-        for (int i = 0; i < height; i++)
+        for (int i = 0; i < resolution_y; i++)
         {
-                buffer.pixels[i] = malloc(width * sizeof(Pixel));
+                buffer.rays[i] = malloc(resolution_x * sizeof(Ray));
+                buffer.pixels[i] = malloc(resolution_x * sizeof(Pixel));
         }
         
         
 
-        for (int y = 0; y < height; y++)
+        for (int y = 0; y < resolution_y; y++)
         {
-                for (int x = 0; x < width; x++)
+                for (int x = 0; x < resolution_x; x++)
                 {
+                        buffer.rays[y][x] = ray_init((Vec3){0,0,0}, (Vec2){0,0});
+
                         buffer.pixels[y][x].character = PIXEL_CHARACTER_DEFAULT;
                         buffer.pixels[y][x].colour.r = PIXEL_COLOUR_R_DEFAULT;
                         buffer.pixels[y][x].colour.g = PIXEL_COLOUR_G_DEFAULT;
@@ -38,22 +42,27 @@ Buffer buffer_init(int width, int height)
 
 void buffer_destroy(Buffer* buffer)
 {
-        for (int y = 0; y < buffer->height; y++)
+        for (int y = 0; y < buffer->resolution_y; y++)
         {
+                free(buffer->rays[y]);
                 free(buffer->pixels[y]);
         }
 
+        free(buffer->rays);
         free(buffer->pixels);
+
+        buffer->rays = NULL;
         buffer->pixels = NULL;
-        buffer->width = 0;
-        buffer->height = 0;
+        
+        buffer->resolution_x = 0;
+        buffer->resolution_y = 0;
 }
 
 void buffer_print(Buffer *buffer)
 {
-        for (int y = 0; y < buffer->height; y++)
+        for (int y = 0; y < buffer->resolution_y; y++)
         {
-                for (int x = 0; x < buffer->width; x++)
+                for (int x = 0; x < buffer->resolution_x; x++)
                 {
                         printf("\x1b[48;2;%d;%d;%dm%c%c", buffer->pixels[y][x].colour.r, buffer->pixels[y][x].colour.g, buffer->pixels[y][x].colour.b, buffer->pixels[y][x].character, buffer->pixels[y][x].character);
                 }

@@ -17,8 +17,8 @@ void materials_init(Material* materials)
 
         // Air
         materials[MAT_AIR].mat_id = MAT_AIR;
-        materials[MAT_AIR].col = (Col){0, 0, 0};
-        materials[MAT_AIR].transparency = 1.0f;
+        materials[MAT_AIR].col = (Col){140, 194, 255};
+        materials[MAT_AIR].transparency = 0.0f;
         materials[MAT_AIR].reflectivity = 0.0f;
 
         materials[MAT_BLOCK_RED].mat_id = MAT_BLOCK_RED;

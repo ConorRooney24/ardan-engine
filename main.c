@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include <math.h>
 
 #include "include/map.h"
 #include "include/material.h"
@@ -7,14 +8,20 @@
 #include "include/camera.h"
 #include "include/trig.h"
 
+#define RES_X 16*16
+#define RES_Y 9*16
+#define MAP_X 50
+#define MAP_Y 50
+#define MAP_Z 100
+
 int main(void)
 {
         config.max_ray_distance = 200;
         config.max_ray_step = 1;
         materials_init(materials);
 
-        Buffer buffer = buffer_init(16*32, 9*32);
-        Map map = map_init((Vec3i){100,100,100});
+        Buffer buffer = buffer_init(RES_X, RES_Y);
+        Map map = map_init((Vec3i){MAP_X,MAP_Y,MAP_Z});
 
         for (int x = 0; x < map.size.x; x++)
         {
@@ -24,7 +31,7 @@ int main(void)
                         {
                                 //map.grid[x][y][z].mat_id = MAT_AIR;
                                 //map.grid[x][y][z].mat_id = MAT_BLOCK_GREEN;
-                                if (x == map.size.x-1 || x == 0)
+                                if (x == map.size.x-1)
                                 {
                                         map.grid[x][y][z] = materials[MAT_BLOCK_RED];
                                 }
@@ -45,20 +52,33 @@ int main(void)
 
         Vec3 pos;
         Vec2 dir_deg;
-        pos.x = 50;
-        pos.y = 50;
-        pos.z = 50;
+        pos.x = MAP_X/2;
+        pos.y = MAP_Y/2;
+        pos.z = MAP_Z/2;
         dir_deg.x = 0;
         dir_deg.y = 0;
 
-        Camera c = camera_init(16*32, 9*32, 90, pos, dir_deg);
+        Camera c = camera_init(RES_X, RES_Y, 90, pos, dir_deg);
         camera_calculate_vFOV(&c);
 
-        camera_calculate_ray_trajectories(&c);
-        capture_and_pass(&c, &buffer, &map);
+        printf("\033[2J"); // clear terminal before render TODO, make a program controller with init and end functions and stuff, also put destroyers in there
 
-        buffer_translate_ray_data(&buffer);
-        buffer_print(&buffer);
+        for (int i = 0; i < 360; i++)
+        {
+                c.direction_deg.y = i;
+                c.direction_deg.x = sin(i*0.01)*10;
+                c.direction_rad.x = deg_to_rad(c.direction_deg.x);
+                c.direction_rad.y = deg_to_rad(c.direction_deg.y);
+                c.direction = direction_rad_to_direction(c.direction_rad);
+                c.direction = vec3_normalize(c.direction);
+                camera_rays_reset(&c);
+                camera_calculate_ray_trajectories(&c);
+                capture_and_pass(&c, &buffer, &map);
+                buffer_translate_ray_data(&buffer);
+                buffer_print(&buffer);
+        }
+
+        printf("\033[2J");
 
         camera_destroy(&c);
         buffer_destroy(&buffer);

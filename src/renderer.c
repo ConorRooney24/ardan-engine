@@ -64,7 +64,7 @@ void buffer_translate_ray_data(Buffer *buffer)
         {
                 for (int x = 0; x < buffer->resolution_x; x++)
                 {
-                        if (buffer->rays[y][x].collided == true && (buffer->rays[y][x].collided_material.mat_id != MAT_AIR || buffer->rays[y][x].collided_material.mat_id != MAT_UNDEFINED))
+                        if (buffer->rays[y][x].collided_material.mat_id != MAT_UNDEFINED)
                         {
                                 //buffer->pixels[y][x].colour = materials[MAT_BLOCK_GREEN].col;
                                 buffer->pixels[y][x].colour = buffer->rays[y][x].collided_material.col;

@@ -20,4 +20,8 @@ void sleep_seconds(float seconds);
 TimeStamp record_time();
 TimeStamp time_diff(TimeStamp a, TimeStamp b);
 
+long long timestamp_to_ns(TimeStamp timestamp);
+double timestamp_to_ms(TimeStamp timestamp);
+double timestamp_to_s(TimeStamp timestamp);
+
 #endif // TIME_H

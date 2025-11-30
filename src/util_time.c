@@ -29,3 +29,18 @@ TimeStamp time_diff(TimeStamp start, TimeStamp end)
 
         return difference;
 }
+
+long long timestamp_to_ns(TimeStamp timestamp)
+{
+    return (long long)timestamp.ts.tv_sec * 1000000000 + timestamp.ts.tv_nsec;
+}
+
+double timestamp_to_ms(TimeStamp timestamp)
+{
+    return timestamp_to_ns(timestamp) / 1000000;
+}
+
+double timestamp_to_s(TimeStamp timestamp)
+{
+    return timestamp_to_ns(timestamp) / 1000000000;
+}

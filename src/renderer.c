@@ -81,6 +81,7 @@ void buffer_translate_ray_data(Buffer *buffer)
 
 void buffer_print(Buffer *buffer)
 {
+        printf("\033[H");
         for (int y = 0; y < buffer->resolution_y; y++)
         {
                 for (int x = 0; x < buffer->resolution_x; x++)

@@ -27,6 +27,17 @@ Ray ray_init(Vec3 position, Vec2 direction_deg)
 
 void ray_cast(Ray *ray, Map *map, int max_distance, float max_step_size)
 {
+
+	// This function is very slow and causes visual bugs. TODO, Fix.
+	// each ray has to increment in small values, a massive ammount of times,
+	// especially in large open spaces. Not only that, but it is not accurate
+	// When we increment a ray, and we then check that we collided, we dont
+	// know the exact point of collision. We floor the position of the ray
+	// once we realise it collided, and this is (I think) what is causing
+	// the weird jagged edges on walls that should be flat. Decreasing the
+	// step size solves this, but also has a large cost on speed. 
+	// There are better algorithms such as 3D DDA which should be implemented
+
 	ray->direction = vec3_normalize(ray->direction);
 
 	ray->direction.x *= max_step_size;

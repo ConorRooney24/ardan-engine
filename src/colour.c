@@ -86,13 +86,26 @@ Col colour_skew(Col c, int max_ammount)
         return c;
 }
 
-Col colour_blend(Col a, Col b)
+Col colour_blend(Col a, Col b, float ratio)
 {
+        if (!(ratio >= 0.0f && ratio <= 1.0f))
+        {
+                colour_print_set(COLOUR_RED);
+                printf("Error: Ratio must be between 0.0 and 1.0 inclusive");
+                colour_print_reset();
+                printf("\n");
+                return;
+        }
+        
         Col c;
+        float ammount_a, ammount_b;
 
-        c.r = round( (float)(a.r + b.r) / 2.0f );
-        c.g = round( (float)(a.g + b.g) / 2.0f );
-        c.b = round( (float)(b.b + b.b) / 2.0f );
+        ammount_a = 1 - ratio;
+        ammount_b = ratio;
+
+        c.r = (( (float)a.r ) * ammount_a) + (( (float)b.r ) * ammount_b);
+        c.g = (( (float)a.g ) * ammount_a) + (( (float)b.g ) * ammount_b);
+        c.b = (( (float)a.b ) * ammount_a) + (( (float)b.b ) * ammount_b);
 
         return c;
 }

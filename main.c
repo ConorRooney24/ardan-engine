@@ -61,7 +61,7 @@ int main(void)
         dir_deg.x = 0;
         dir_deg.y = 0;
 
-        Camera c = camera_init(RES_X, RES_Y, 90, pos, dir_deg);
+        Camera c = camera_init(RES_X, RES_Y, 180, pos, dir_deg);
         camera_calculate_vFOV(&c);
 
         TimeStamp a[360];

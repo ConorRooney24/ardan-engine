@@ -85,7 +85,8 @@ void buffer_print(Buffer *buffer)
         {
                 for (int x = 0; x < buffer->resolution_x; x++)
                 {
-                        printf("\x1b[48;2;%d;%d;%dm%c%c", buffer->pixels[y][x].colour.r, buffer->pixels[y][x].colour.g, buffer->pixels[y][x].colour.b, buffer->pixels[y][x].character, buffer->pixels[y][x].character);
+                        colour_print_set(buffer->pixels[y][x].colour);
+                        printf("%c%c", buffer->pixels[y][x].character, buffer->pixels[y][x].character);
                 }
                 printf("\x1b[0m");
                 printf("\n");

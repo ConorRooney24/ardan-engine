@@ -13,11 +13,11 @@
 
 typedef struct Map
 {
-        Vec3 size;
+        Vec3i size;
         Material ***grid; // TODO, Maybe make these "static objects" instead of materials
 } Map;
 
-Map map_init(Vec3 size);
+Map map_init(Vec3i size);
 void map_destroy(Map *map);
 
 #endif // MAP_H

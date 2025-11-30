@@ -4,7 +4,7 @@
 #include "../include/map.h"
 #include "../include/material.h"
 
-Map map_init(Vec3 size)
+Map map_init(Vec3i size)
 {
         Map map;
         map.size = size;
@@ -43,5 +43,5 @@ void map_destroy(Map *map)
         free(map->grid);
 
         map->grid = NULL;
-        map->size = (Vec3){0,0,0};
+        map->size = (Vec3i){0,0,0};
 }

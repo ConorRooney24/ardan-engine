@@ -35,6 +35,11 @@ void materials_init(Material* materials)
         materials[MAT_BLOCK_BLUE].col = (Col){0, 0, 255};
         materials[MAT_BLOCK_BLUE].transparency = 0.0f;
         materials[MAT_BLOCK_BLUE].reflectivity = 0.0f;
+
+        materials[MAT_AIR_FOGGY].mat_id = MAT_AIR_FOGGY;
+        materials[MAT_AIR_FOGGY].col = (Col){164, 187, 194};
+        materials[MAT_AIR_FOGGY].transparency = 0.5f;
+        materials[MAT_AIR_FOGGY].reflectivity = 0.0f;
 }
 
 void material_print_info(Material material)

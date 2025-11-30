@@ -40,7 +40,7 @@ Camera camera_init(int resolution_x, int resolution_y, float hFOV_deg, Vec3 posi
                         camera.rays[y][x] = ray_init(camera.position, camera.direction_deg);
                 }       
         }
-        
+
         return camera;
 }
 void camera_destroy(Camera *camera)
@@ -67,7 +67,6 @@ void camera_calculate_vFOV(Camera *camera)
 {
         float aspect_ratio = (float)camera->resolution_y / (float)camera->resolution_x;
         camera->vFOV = 2.0f * atan(tan(camera->hFOV / 2.0f) * aspect_ratio);
-        printf("%d\n", camera->vFOV);
         camera->vFOV_deg = rad_to_deg(camera->vFOV);
 }
 

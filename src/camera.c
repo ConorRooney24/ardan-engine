@@ -119,6 +119,23 @@ void capture_and_pass(Camera *camera, Buffer *buffer, Map *map)
         }
 }
 
+void camera_rays_reset(Camera *camera)
+{
+        for (int y = 0; y < camera->resolution_y; y++)
+        {
+                for (int x = 0; x < camera->resolution_x; x++)
+                {
+                        camera->rays[y][x].collided = false;
+                        camera->rays[y][x].collided_material = materials[MAT_UNDEFINED];
+                        camera->rays[y][x].direction = camera->direction;
+                        camera->rays[y][x].direction_deg = camera->direction_deg;
+                        camera->rays[y][x].direction_rad = camera->direction_rad;
+                        camera->rays[y][x].distance_travelled = 0;
+                        camera->rays[y][x].position = camera->position;
+                }
+        }
+}
+
 void camera_print_info(Camera *camera)
 {
         printf("+--- Camera Info ---------------------------------------\n");

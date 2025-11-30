@@ -12,7 +12,6 @@
 #define MAT_BLOCK_RED 1
 #define MAT_BLOCK_GREEN 2
 #define MAT_BLOCK_BLUE 3
-#define MAT_AIR_FOGGY 254
 #define MAT_UNDEFINED 255
 
 typedef struct Material

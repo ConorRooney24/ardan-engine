@@ -35,15 +35,15 @@ TimeStamp time_diff(TimeStamp start, TimeStamp end)
 
 long long timestamp_to_ns(TimeStamp timestamp)
 {
-    return (long long)timestamp.ts.tv_sec * 1000000000 + timestamp.ts.tv_nsec;
+    return (long long)timestamp.ts.tv_sec * 1000000000LL + timestamp.ts.tv_nsec;
 }
 
 double timestamp_to_ms(TimeStamp timestamp)
 {
-    return timestamp_to_ns(timestamp) / 1000000;
+    return (double)timestamp.ts.tv_sec * 1000 + (double)timestamp.ts.tv_nsec / 1000000LL;
 }
 
 double timestamp_to_s(TimeStamp timestamp)
 {
-    return timestamp_to_ns(timestamp) / 1000000000;
+    return (double)timestamp.ts.tv_sec + (double)timestamp.ts.tv_nsec / 1000000000LL;
 }

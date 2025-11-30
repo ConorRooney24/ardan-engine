@@ -7,6 +7,7 @@
 #include "include/renderer.h"
 #include "include/camera.h"
 #include "include/trig.h"
+#include "include/util_time.h"
 
 #define RES_X 16*16
 #define RES_Y 9*16
@@ -61,10 +62,17 @@ int main(void)
         Camera c = camera_init(RES_X, RES_Y, 90, pos, dir_deg);
         camera_calculate_vFOV(&c);
 
+        TimeStamp a[360];
+        TimeStamp b[360];
+        float delta_s[360];
+        double total_delta_s = 0;
+        float average_frametime_seconds;
+
         printf("\033[2J"); // clear terminal before render TODO, make a program controller with init and end functions and stuff, also put destroyers in there
 
         for (int i = 0; i < 360; i++)
         {
+                a[i] = record_time();
                 c.direction_deg.y = i;
                 c.direction_deg.x = sin(i*0.01)*10;
                 c.direction_rad.x = deg_to_rad(c.direction_deg.x);
@@ -76,12 +84,27 @@ int main(void)
                 capture_and_pass(&c, &buffer, &map);
                 buffer_translate_ray_data(&buffer);
                 buffer_print(&buffer);
+                b[i] = record_time();
         }
 
+        for (int i = 0; i < 360; i++)
+        {
+                delta_s[i] = timestamp_to_s(time_diff(a[i], b[i]));
+        }
+
+        for (int i = 0; i < 360; i++)
+        {
+                total_delta_s += (double)delta_s[i];
+        }
+
+        average_frametime_seconds = total_delta_s / 360;
+        
         printf("\033[2J");
 
         camera_destroy(&c);
         buffer_destroy(&buffer);
+
+        printf("\n\n\nAverage Frametime (s): %f\n\n\n", average_frametime_seconds);
 
         return 0;
 }

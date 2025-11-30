@@ -7,7 +7,7 @@
 
 #include <stdint.h>
 #include <stdio.h>
-#include "include/rand.h"
+#include "rand.h"
 
 #define COLOUR_RED (Colour){255,0,0}
 #define COLOUR_GREEN (Colour){0,255,0}

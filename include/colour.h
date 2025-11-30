@@ -23,5 +23,6 @@ typedef Colour Col;
 void colour_print_set(Col col);
 void colour_print_reset();
 Col colour_skew(Col c, int max_ammount); // Skews a colours r,g, and b values by a random ammount
+Col colour_blend(Col a, Col b);
 
 #endif // COLOUR_H

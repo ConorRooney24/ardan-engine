@@ -85,3 +85,14 @@ Col colour_skew(Col c, int max_ammount)
 
         return c;
 }
+
+Col colour_blend(Col a, Col b)
+{
+        Col c;
+
+        c.r = round( (float)(a.r + b.r) / 2.0f );
+        c.g = round( (float)(a.g + b.g) / 2.0f );
+        c.b = round( (float)(b.b + b.b) / 2.0f );
+
+        return c;
+}

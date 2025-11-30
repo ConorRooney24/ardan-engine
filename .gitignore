@@ -1,3 +1,5 @@
 .vscode
 
+gmon.out
+gprof.txt
 test

@@ -18,6 +18,7 @@ typedef struct Colour
 
 typedef Colour Col;
 
-// TODO, make a colour_set_print(Col c) function
+void colour_print_set(Col col);
+void colour_print_reset();
 
 #endif // COLOUR_H

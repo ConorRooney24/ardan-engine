@@ -36,15 +36,17 @@ int main(void)
                                 {
                                         map.grid[x][y][z] = materials[MAT_BLOCK_RED];
                                 }
-
-                                if (y == map.size.y-1 || y == 0)
+                                else if (y == map.size.y-1 || y == 0)
                                 {
                                         map.grid[x][y][z] = materials[MAT_BLOCK_GREEN];
                                 }
-                                
-                                if (z == map.size.z-1 || z == 0)
+                                else if (z == map.size.z-1 || z == 0)
                                 {
                                         map.grid[x][y][z] = materials[MAT_BLOCK_BLUE];
+                                }
+                                else
+                                {
+                                        map.grid[x][y][z] = materials[MAT_AIR];
                                 }
                                 
                         }

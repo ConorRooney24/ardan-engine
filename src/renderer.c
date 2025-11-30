@@ -64,14 +64,13 @@ void buffer_translate_ray_data(Buffer *buffer)
         {
                 for (int x = 0; x < buffer->resolution_x; x++)
                 {
-                        if (buffer->rays[y][x].collided_material.mat_id != MAT_UNDEFINED)
+                        if (buffer->rays[y][x].collided)
                         {
-                                //buffer->pixels[y][x].colour = materials[MAT_BLOCK_GREEN].col;
                                 buffer->pixels[y][x].colour = buffer->rays[y][x].collided_material.col;
                         }
                         else
                         {
-                                buffer->pixels[y][x].colour = (Colour){0, 0, 0}; 
+                                buffer->pixels[y][x].colour = materials[MAT_AIR].col; // If the ray has not collided (meaning it went out of bounds) we set it to the air colour to avoid black patches.
                         }
                 }
                 

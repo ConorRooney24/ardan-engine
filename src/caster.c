@@ -53,7 +53,6 @@ void ray_cast(Ray *ray, Map *map, int max_distance, float max_step_size)
 		if ((ray->position_floored.x >= map->size.x || ray->position_floored.x < 0) || (ray->position_floored.y >= map->size.y || ray->position_floored.y < 0)||(ray->position_floored.z >= map->size.z || ray->position_floored.z < 0)) // if out of bounds
 		{
 			ray->collided = false;
-			ray->collided_material = materials[MAT_AIR];
 			return;
 		}
 		else if (!map->grid[ray->position_floored.x][ray->position_floored.y][ray->position_floored.z].mat_id == MAT_UNDEFINED) // if we have hit an undefined cell

@@ -1,6 +1,7 @@
 // caster.c
 
 #include <math.h>
+#include <stdio.h>
 #include "../include/caster.h"
 #include "../include/trig.h"
 
@@ -27,7 +28,6 @@ Ray ray_init(Vec3 position, Vec2 direction_deg)
 
 void ray_cast(Ray *ray, Map *map, int max_distance, float max_step_size)
 {
-
 	// This function is very slow and causes visual bugs. TODO, Fix.
 	// each ray has to increment in small values, a massive ammount of times,
 	// especially in large open spaces. Not only that, but it is not accurate
@@ -52,21 +52,27 @@ void ray_cast(Ray *ray, Map *map, int max_distance, float max_step_size)
 		
 		if ((ray->position_floored.x >= map->size.x || ray->position_floored.x < 0) || (ray->position_floored.y >= map->size.y || ray->position_floored.y < 0)||(ray->position_floored.z >= map->size.z || ray->position_floored.z < 0)) // if out of bounds
 		{
-			ray->collided = true;
+			ray->collided = false;
 			ray->collided_material = materials[MAT_AIR];
+			return;
 		}
-		else if (map->grid[ray->position_floored.x][ray->position_floored.y][ray->position_floored.z].mat_id != MAT_UNDEFINED && map->grid[ray->position_floored.x][ray->position_floored.y][ray->position_floored.z].mat_id != MAT_AIR) // if we have hit an object
+		else if (!map->grid[ray->position_floored.x][ray->position_floored.y][ray->position_floored.z].mat_id == MAT_UNDEFINED) // if we have hit an undefined cell
 		{
-			ray->collided = true;
-			ray->collided_material = map->grid[ray->position_floored.x][ray->position_floored.y][ray->position_floored.z];
+			printf("Error: Ray collided with undefined material;");
+			return;
 		}
-		else // We are not out of bounds, and we have not collided, so we move forward
+		else if (map->grid[ray->position_floored.x][ray->position_floored.y][ray->position_floored.z].transparency == 1.0f) // If the block is fully transparant (air)
 		{
 			ray->position.x += ray->direction.x;
 			ray->position.y += ray->direction.y;
 			ray->position.z += ray->direction.z;
-
 			ray->distance_travelled += vec3_to_distance(ray->direction);
+		}
+		else // If not out of bounds, and havent hit undefined, and the block isnt fully transparant, we must have hit an object
+		{
+			ray->collided = true;
+			ray->collided_material = map->grid[ray->position_floored.x][ray->position_floored.y][ray->position_floored.z];
+			return;
 		}
 	}
 }

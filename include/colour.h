@@ -12,6 +12,7 @@
 #define COLOUR_RED (Colour){255,0,0}
 #define COLOUR_GREEN (Colour){0,255,0}
 #define COLOUR_BLUE (Colour){0,0,255}
+#define COLOUR_UNDEFINED (Colour){255,0,255}
 
 typedef struct Colour
 {

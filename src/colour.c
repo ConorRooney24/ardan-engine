@@ -94,7 +94,7 @@ Col colour_blend(Col a, Col b, float ratio)
                 printf("Error: Ratio must be between 0.0 and 1.0 inclusive");
                 colour_print_reset();
                 printf("\n");
-                return;
+                return COLOUR_UNDEFINED;
         }
         
         Col c;

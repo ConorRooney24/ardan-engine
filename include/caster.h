@@ -18,8 +18,8 @@ typedef struct Ray
         Material collided_material;
 } Ray;
 
-Ray ray_init(Vec3 position, Vec2 direction_deg); // TODO update to cover new values
+Ray ray_init(Vec3 position, Vec2 direction_deg);
 void ray_cast(Ray *ray, Map *map, int max_distance, float max_step_size); // Casts a ray through a map and updates that rays journey information.
-// TODO add ray destroyer
+
 
 #endif // CASTER_H

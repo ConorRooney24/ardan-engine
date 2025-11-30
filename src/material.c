@@ -21,12 +21,20 @@ void materials_init(Material* materials)
         materials[MAT_AIR].transparency = 1.0f;
         materials[MAT_AIR].reflectivity = 0.0f;
 
+        materials[MAT_BLOCK_RED].mat_id = MAT_BLOCK_RED;
+        materials[MAT_BLOCK_RED].col = (Col){255, 0, 0};
+        materials[MAT_BLOCK_RED].transparency = 0.0f;
+        materials[MAT_BLOCK_RED].reflectivity = 0.0f;
+
         materials[MAT_BLOCK_GREEN].mat_id = MAT_BLOCK_GREEN;
         materials[MAT_BLOCK_GREEN].col = (Col){0, 255, 0};
         materials[MAT_BLOCK_GREEN].transparency = 0.0f;
         materials[MAT_BLOCK_GREEN].reflectivity = 0.0f;
 
-        
+        materials[MAT_BLOCK_BLUE].mat_id = MAT_BLOCK_BLUE;
+        materials[MAT_BLOCK_BLUE].col = (Col){0, 0, 255};
+        materials[MAT_BLOCK_BLUE].transparency = 0.0f;
+        materials[MAT_BLOCK_BLUE].reflectivity = 0.0f;
 }
 
 void material_print_info(Material material)

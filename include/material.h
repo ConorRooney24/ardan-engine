@@ -9,7 +9,9 @@
 #include "colour.h"
 
 #define MAT_AIR 0
-#define MAT_BLOCK_GREEN 1
+#define MAT_BLOCK_RED 1
+#define MAT_BLOCK_GREEN 2
+#define MAT_BLOCK_BLUE 3
 #define MAT_UNDEFINED 255
 
 typedef struct Material

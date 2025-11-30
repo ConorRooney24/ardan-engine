@@ -4,7 +4,10 @@
 
 void sleep_seconds(float seconds)
 {
-        usleep(1000000 * seconds); 
+        struct timespec ts;
+        ts.tv_sec = (time_t)seconds;
+        ts.tv_nsec = (seconds - ts.tv_sec) * 1e9;
+        nanosleep(&ts, NULL);
 }
 
 TimeStamp record_time()

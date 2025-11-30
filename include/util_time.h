@@ -5,7 +5,7 @@
 #ifndef TIME_H
 #define TIME_H
 
-#define _POSIX_C_SOURCE 199309L
+#define _POSIX_C_SOURCE 200809L
 
 #include <time.h>
 #include <unistd.h>

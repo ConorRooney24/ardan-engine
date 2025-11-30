@@ -33,21 +33,21 @@ void ray_cast(Ray *ray, Map *map, int max_distance, float max_step_size)
 	ray->direction.y *= max_step_size;
 	ray->direction.z *= max_step_size;
 
-	while (ray->distance_travelled <= max_distance || ray->collided == true)
+	while (ray->distance_travelled <= max_distance && ray->collided == false)
 	{
 		ray->position_floored.x = (int)floor(ray->position.x);
 		ray->position_floored.y = (int)floor(ray->position.y);
 		ray->position_floored.z = (int)floor(ray->position.z);
 		
-		if ((ray->position_floored.x >= map->size.x || ray->position_floored.x < 0)||(ray->position_floored.y >= map->size.y || ray->position_floored.y < 0)||(ray->position_floored.z >= map->size.z || ray->position_floored.z < 0)) // if out of bounds
+		if ((ray->position_floored.x >= map->size.x || ray->position_floored.x < 0) || (ray->position_floored.y >= map->size.y || ray->position_floored.y < 0)||(ray->position_floored.z >= map->size.z || ray->position_floored.z < 0)) // if out of bounds
 		{
 			ray->collided = true;
 			ray->collided_material = materials[MAT_AIR];
 		}
-		else if ((map->grid[ray->position_floored.x][ray->position_floored.y][ray->position_floored.z].mat_id != MAT_UNDEFINED) || (map->grid[ray->position_floored.x][ray->position_floored.y][ray->position_floored.z].mat_id != MAT_AIR)) // if we have hit an object
+		else if (map->grid[ray->position_floored.x][ray->position_floored.y][ray->position_floored.z].mat_id != MAT_UNDEFINED && map->grid[ray->position_floored.x][ray->position_floored.y][ray->position_floored.z].mat_id != MAT_AIR) // if we have hit an object
 		{
 			ray->collided = true;
-			ray->collided_material = materials[map->grid[ray->position_floored.x][ray->position_floored.y]->mat_id];
+			ray->collided_material = map->grid[ray->position_floored.x][ray->position_floored.y][ray->position_floored.z];
 		}
 		else // We are not out of bounds, and we have not collided, so we move forward
 		{

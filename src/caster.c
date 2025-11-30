@@ -57,7 +57,10 @@ void ray_cast(Ray *ray, Map *map, int max_distance, float max_step_size)
 		}
 		else if (!map->grid[ray->position_floored.x][ray->position_floored.y][ray->position_floored.z].mat_id == MAT_UNDEFINED) // if we have hit an undefined cell
 		{
+			colour_print_set(COLOUR_RED);
 			printf("Error: Ray collided with undefined material;");
+			colour_print_reset();
+			printf("\n");
 			return;
 		}
 		else if (map->grid[ray->position_floored.x][ray->position_floored.y][ray->position_floored.z].transparency == 1.0f) // If the block is fully transparant (air)

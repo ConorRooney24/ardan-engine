@@ -105,7 +105,10 @@ void capture_and_pass(Camera *camera, Buffer *buffer, Map *map)
 {
         if (camera->resolution_x != buffer->resolution_x || camera->resolution_y != buffer->resolution_y)
         {
-                printf("Error: Camera resolution does not match buffer resolution\n"); // TODO, Build a logging/error system
+                colour_print_set(COLOUR_RED);
+                printf("Error: Camera resolution does not match buffer resolution"); // TODO, Build a logging/error system
+                colour_print_reset();
+                printf("\n");
                 return;
         }
 

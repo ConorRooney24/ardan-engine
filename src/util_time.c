@@ -2,12 +2,16 @@
 
 #include "../include/util_time.h"
 
-void sleep_seconds(float seconds)
+void sleep_ns(long ns) 
 {
-        struct timespec ts;
-        ts.tv_sec = (time_t)seconds;
-        ts.tv_nsec = (seconds - ts.tv_sec) * 1e9;
-        nanosleep(&ts, NULL);
+        struct TimeStamp a;
+        a.ts.tv_sec  = ns / 1000000000LL;
+        a.ts.tv_nsec = ns % 1000000000LL;
+
+        while (nanosleep(&a.ts, &a.ts) == -1 && errno == EINTR) 
+        {
+                continue;
+        }
 }
 
 TimeStamp record_time()

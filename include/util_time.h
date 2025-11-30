@@ -9,13 +9,14 @@
 
 #include <time.h>
 #include <unistd.h>
+#include <errno.h>
 
 typedef struct TimeStamp
 {
         struct timespec ts;
 } TimeStamp;
 
-void sleep_seconds(float seconds);
+void sleep_ns(long ns);
 
 TimeStamp record_time();
 TimeStamp time_diff(TimeStamp a, TimeStamp b);

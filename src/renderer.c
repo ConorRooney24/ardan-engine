@@ -58,6 +58,27 @@ void buffer_destroy(Buffer* buffer)
         buffer->resolution_y = 0;
 }
 
+void buffer_translate_ray_data(Buffer *buffer)
+{
+        for (int y = 0; y < buffer->resolution_y; y++)
+        {
+                for (int x = 0; x < buffer->resolution_x; x++)
+                {
+                        if (buffer->rays[y][x].collided == true && buffer->rays[y][x].collided_material.mat_id == MAT_BLOCK_GREEN)
+                        {
+                                //buffer->pixels[y][x].colour = materials[MAT_BLOCK_GREEN].col;
+                                buffer->pixels[y][x].colour = (Colour){0, 255, 0};
+                        }
+                        else
+                        {
+                                buffer->pixels[y][x].colour = (Colour){0, 0, 0}; 
+                        }
+                }
+                
+        }
+        
+}
+
 void buffer_print(Buffer *buffer)
 {
         for (int y = 0; y < buffer->resolution_y; y++)
@@ -66,7 +87,19 @@ void buffer_print(Buffer *buffer)
                 {
                         printf("\x1b[48;2;%d;%d;%dm%c%c", buffer->pixels[y][x].colour.r, buffer->pixels[y][x].colour.g, buffer->pixels[y][x].colour.b, buffer->pixels[y][x].character, buffer->pixels[y][x].character);
                 }
+                printf("\x1b[0m");
                 printf("\n");
         }
-        printf("\x1b[0m"); // Colour reset
+}
+
+void buffer_print_ray_material_id(Buffer *buffer)
+{
+        for (int y = 0; y < buffer->resolution_y; y++)
+        {
+                for (int x = 0; x < buffer->resolution_x; x++)
+                {
+                        printf("%d, ", buffer->rays[y][x].collided_material.mat_id);
+                }
+                printf("\n");
+        }     
 }

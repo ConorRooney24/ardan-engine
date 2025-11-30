@@ -29,7 +29,11 @@ typedef struct Buffer
 } Buffer;
 
 Buffer buffer_init(int width, int height);
-void buffer_destroy(Buffer* buffer);
-void buffer_print(Buffer* buffer);
+void buffer_destroy(Buffer *buffer);
+
+void buffer_translate_ray_data(Buffer *buffer);
+
+void buffer_print(Buffer *buffer);
+void buffer_print_ray_material_id(Buffer *buffer);
 
 #endif // RENDERER_H

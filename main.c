@@ -9,52 +9,49 @@
 
 int main(void)
 {
-        map_init((Vec3){100,100,100});
-
+        config.max_ray_distance = 200;
+        config.max_ray_step = 1;
         materials_init(materials);
-        material_print_info(materials[0]);
 
-        config.display_height = DISPLAY_HEIGHT_DEFAULT;
-        config.display_width = DISPLAY_WIDTH_DEFAULT;
-        config.hFOV = 90;
+        Buffer buffer = buffer_init(16*8, 9*8);
+        Map map = map_init((Vec3i){100,100,100});
 
-        Buffer buffer = buffer_init(config.display_width, config.display_height);
-        buffer_print(&buffer);
+        for (int x = 0; x < map.size.x; x++)
+        {
+                for (int y = 0; y < map.size.y; y++)
+                {
+                        for (int z = 0; z < map.size.z; z++)
+                        {
+                                //map.grid[x][y][z].mat_id = MAT_AIR;
+                                //map.grid[x][y][z].mat_id = MAT_BLOCK_GREEN;
+                                if (z == map.size.z-1)
+                                {
+                                        map.grid[x][y][z].mat_id = MAT_BLOCK_GREEN;
+                                }
+                                
+                        }
+                }
+        }
 
+        Vec3 pos;
+        Vec2 dir_deg;
+        pos.x = 50;
+        pos.y = 50;
+        pos.z = 0;
+        dir_deg.x = 0;
+        dir_deg.y = 0;
 
-        Vec3 a;
-        a.x = 1;
-        a.y = 2;
-        a.z = 3;
-        Vec2 b;
-        b.x = 0;
-        b.y = 0;
-
-        Camera c = camera_init(16, 9, config.hFOV, a, b);
+        Camera c = camera_init(16*8, 9*8, 90, pos, dir_deg);
         camera_calculate_vFOV(&c);
-        camera_print_info(&c);
-        printf("%f deg to rad: %f\n", c.hFOV_deg, deg_to_rad(c.hFOV_deg));
-        printf("%f deg to rad: %f\n", c.vFOV_deg, deg_to_rad(c.vFOV_deg));
-        printf("1 rad to deg: %f\n", rad_to_deg(1));
-
-        Vec2 vec;
-        vec.x = 1;
-        vec.y = 0;
-        printf("x1, y0 to rad: %f\n", vec2_to_rad(vec));
-
-        vec.x = 1;
-        vec.y = 1;
-        printf("x1, y1 to rad: %f\n", vec2_to_rad(vec));
-
-        vec.x = 0;
-        vec.y = 1;
-        printf("x0, y1 to rad: %f\n", vec2_to_rad(vec));
 
         camera_calculate_ray_trajectories(&c);
-        camera_print_ray_trajectories_deg(&c);
-        
+        capture_and_pass(&c, &buffer, &map);
+
+        buffer_translate_ray_data(&buffer);
+        buffer_print(&buffer);
+
         camera_destroy(&c);
         buffer_destroy(&buffer);
-        
+
         return 0;
 }

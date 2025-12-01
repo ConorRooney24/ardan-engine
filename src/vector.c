@@ -35,3 +35,8 @@ Vec3 vec3_subtract(Vec3 a, Vec3 b)
         c.z = a.z - b.z;
         return c;
 }
+
+Vec3 vec3_scale(Vec3 v, float scalar)
+{
+        return (Vec3){v.x*scalar, v.y*scalar, v.z*scalar};
+}

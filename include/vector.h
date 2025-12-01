@@ -25,5 +25,6 @@ Vec3 vec3_add(Vec3 a, Vec3 b);
 Vec2 vec2_subtract(Vec2 a, Vec2 b);
 Vec3 vec3_subtract(Vec3 a, Vec3 b);
 Vec3 vec3_scale(Vec3 v, float scalar);
+Vec3i vec3_floor(Vec3 v);
 
 #endif // VECTOR_H

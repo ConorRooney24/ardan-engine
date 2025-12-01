@@ -51,3 +51,9 @@ double timestamp_to_s(TimeStamp timestamp)
 {
     return (double)timestamp.ts.tv_sec + (double)timestamp.ts.tv_nsec / 1000000000LL;
 }
+
+float time_frame_time_to_fps(TimeStamp frametime)
+{
+        double frametime_seconds = timestamp_to_s(frametime);
+        return 1.0L / frametime_seconds;
+}

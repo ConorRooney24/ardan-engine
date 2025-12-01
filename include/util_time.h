@@ -25,4 +25,6 @@ long long timestamp_to_ns(TimeStamp timestamp);
 double timestamp_to_ms(TimeStamp timestamp);
 double timestamp_to_s(TimeStamp timestamp);
 
+float time_frame_time_to_fps(TimeStamp frametime);
+
 #endif // TIME_H

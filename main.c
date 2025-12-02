@@ -39,19 +39,19 @@ int main(void)
                                 //map.grid[x][y][z].mat_id = MAT_BLOCK_GREEN;
                                 if (x == map.size.x-1 || x == 0)
                                 {
-                                        map.grid[x][y][z] = materials[MAT_BLOCK_RED];
+                                        map.vox[x][y][z].mat = materials[MAT_BLOCK_RED];
                                 }
                                 else if (y == map.size.y-1 || y == 0)
                                 {
-                                        map.grid[x][y][z] = materials[MAT_BLOCK_GREEN];
+                                        map.vox[x][y][z].mat = materials[MAT_BLOCK_GREEN];
                                 }
                                 else if (z == map.size.z-1 || z == 0)
                                 {
-                                        map.grid[x][y][z] = materials[MAT_BLOCK_BLUE];
+                                        map.vox[x][y][z].mat = materials[MAT_BLOCK_BLUE];
                                 }
                                 else
                                 {
-                                        map.grid[x][y][z] = materials[MAT_AIR];
+                                        map.vox[x][y][z].mat = materials[MAT_AIR];
                                 }
                                 
                         }

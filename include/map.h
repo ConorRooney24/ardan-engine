@@ -10,11 +10,19 @@
 #include <stdint.h>
 #include "vector.h"
 #include "material.h"
+#include "text.h"
+
+typedef struct Vox // Voxels
+{
+        Material mat;
+        Text text;
+} Vox;
+
 
 typedef struct Map
 {
         Vec3i size;
-        Material ***grid;
+        Vox ***vox;
 } Map;
 
 Map map_init(Vec3i size);

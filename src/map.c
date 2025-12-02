@@ -9,19 +9,20 @@ Map map_init(Vec3i size)
         Map map;
         map.size = size;
 
-        map.grid = (Material***)malloc(size.x * sizeof(Material**));
+        map.vox = (Vox***)malloc(size.x * sizeof(Vox**));
 
         for (int x = 0; x < size.x; x++)
         {
-                map.grid[x] = (Material**)malloc(size.y * sizeof(Material*));
+                map.vox[x] = (Vox**)malloc(size.y * sizeof(Vox*));
 
                 for (int y = 0; y < size.y; y++)
                 {
-                        map.grid[x][y] = (Material *)malloc(size.z * sizeof(Material));
+                        map.vox[x][y] = (Vox *)malloc(size.z * sizeof(Vox));
 
                         for (int z = 0; z < size.z; z++)
-                        {
-                                map.grid[x][y][z] = materials[MAT_UNDEFINED];
+                        {                                
+                                map.vox[x][y][z].mat = materials[MAT_UNDEFINED];
+                                map.vox[x][y][z].text = texts[TEXT_UNDEFINED];
                         }
                 }
         }
@@ -34,14 +35,14 @@ void map_destroy(Map *map)
         {
                 for (int y = 0; y < map->size.y; y++)
                 {
-                        free(map->grid[x][y]);
+                        free(map->vox[x][y]);
                 }
 
-                free(map->grid[x]);
+                free(map->vox[x]);
         }
 
-        free(map->grid);
+        free(map->vox);
 
-        map->grid = NULL;
+        map->vox = NULL;
         map->size = (Vec3i){0,0,0};
 }

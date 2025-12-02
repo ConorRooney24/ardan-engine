@@ -43,7 +43,7 @@ void ray_cast_simple(Ray *ray, Map *map, int max_distance, float step_scalar)
 			ray->collided = false;
 			return;
 		}
-		else if (!map->grid[ray->pos_f.x][ray->pos_f.y][ray->pos_f.z].mat_id == MAT_UNDEFINED) // if we have hit an undefined cell
+		else if (!map->vox[ray->pos_f.x][ray->pos_f.y][ray->pos_f.z].mat.mat_id == MAT_UNDEFINED) // if we have hit an undefined cell
 		{
 			col_print_set(COL_RED);
 			printf("Error: Ray collided with undefined material;");
@@ -51,7 +51,7 @@ void ray_cast_simple(Ray *ray, Map *map, int max_distance, float step_scalar)
 			printf("\n");
 			return;
 		}
-		else if (map->grid[ray->pos_f.x][ray->pos_f.y][ray->pos_f.z].transparency == 1.0f) // If the block is fully transparent (air)
+		else if (map->vox[ray->pos_f.x][ray->pos_f.y][ray->pos_f.z].mat.transparency == 1.0f) // If the block is fully transparent (air)
 		{
 			ray->pos.x += ray->vel.x;
 			ray->pos.y += ray->vel.y;
@@ -61,7 +61,7 @@ void ray_cast_simple(Ray *ray, Map *map, int max_distance, float step_scalar)
 		else // If not out of bounds, and haven't hit undefined, and the block isn't fully transparent, we must have hit an object
 		{
 			ray->collided = true;
-			ray->collided_material = map->grid[ray->pos_f.x][ray->pos_f.y][ray->pos_f.z];
+			ray->collided_material = map->vox[ray->pos_f.x][ray->pos_f.y][ray->pos_f.z].mat;
 			return;
 		}
 	}
@@ -81,7 +81,7 @@ void ray_cast_jump(Ray *ray, Map *map, int max_distance, float step_scalar_coars
 	{
 		simulated_ray_pos_floored = vec3_floor(simulated_ray_pos);
 		
-		if (map->grid[simulated_ray_pos_floored.x][simulated_ray_pos_floored.y][simulated_ray_pos_floored.z].transparency == 1.0f) // if air
+		if (map->vox[simulated_ray_pos_floored.x][simulated_ray_pos_floored.y][simulated_ray_pos_floored.z].mat.transparency == 1.0f) // if air
 		{
 			simulated_ray_pos = vec3_add(simulated_ray_pos, simulated_ray_vel);
 			jumpDistanceScalar++;
@@ -107,7 +107,7 @@ void ray_cast_jump(Ray *ray, Map *map, int max_distance, float step_scalar_coars
 			ray->collided = false;
 			return;
 		}
-		else if (map->grid[ray->pos_f.x][ray->pos_f.y][ray->pos_f.z].mat_id == MAT_UNDEFINED) // if we have hit an undefined cell
+		else if (map->vox[ray->pos_f.x][ray->pos_f.y][ray->pos_f.z].mat.mat_id == MAT_UNDEFINED) // if we have hit an undefined cell
 		{
 			col_print_set(COL_RED);
 			printf("Error: Ray collided with undefined material;");
@@ -115,7 +115,7 @@ void ray_cast_jump(Ray *ray, Map *map, int max_distance, float step_scalar_coars
 			printf("\n");
 			return;
 		}
-		else if (map->grid[ray->pos_f.x][ray->pos_f.y][ray->pos_f.z].transparency == 1.0f) // If the block is fully transparent (air)
+		else if (map->vox[ray->pos_f.x][ray->pos_f.y][ray->pos_f.z].mat.transparency == 1.0f) // If the block is fully transparent (air)
 		{
 			ray->pos.x += ray->vel.x;
 			ray->pos.y += ray->vel.y;
@@ -125,7 +125,7 @@ void ray_cast_jump(Ray *ray, Map *map, int max_distance, float step_scalar_coars
 		else // If not out of bounds, and haven't hit undefined, and the block isn't fully transparent, we must have hit an object
 		{
 			ray->collided = true;
-			ray->collided_material = map->grid[ray->pos_f.x][ray->pos_f.y][ray->pos_f.z];
+			ray->collided_material = map->vox[ray->pos_f.x][ray->pos_f.y][ray->pos_f.z].mat;
 			return;
 		}
 	}

@@ -107,7 +107,7 @@ void ray_cast_jump(Ray *ray, Map *map, int max_distance, float step_scalar_coars
 			ray->collided = false;
 			return;
 		}
-		else if (!map->grid[ray->pos_f.x][ray->pos_f.y][ray->pos_f.z].mat_id == MAT_UNDEFINED) // if we have hit an undefined cell
+		else if (map->grid[ray->pos_f.x][ray->pos_f.y][ray->pos_f.z].mat_id == MAT_UNDEFINED) // if we have hit an undefined cell
 		{
 			col_print_set(COL_RED);
 			printf("Error: Ray collided with undefined material;");

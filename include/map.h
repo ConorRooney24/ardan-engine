@@ -14,7 +14,7 @@
 typedef struct Map
 {
         Vec3i size;
-        Material ***grid; // TODO, Maybe make these "static objects" instead of materials
+        Material ***grid;
 } Map;
 
 Map map_init(Vec3i size);

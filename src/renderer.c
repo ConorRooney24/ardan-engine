@@ -31,9 +31,9 @@ Buffer buffer_init(int res_x, int res_y)
                         buffer.rays[y][x] = ray_init((Vec3){0,0,0}, (Vec2){0,0});
 
                         buffer.pixels[y][x].character = PIXEL_CHARACTER_DEFAULT;
-                        buffer.pixels[y][x].colour.r = PIXEL_COLOUR_R_DEFAULT;
-                        buffer.pixels[y][x].colour.g = PIXEL_COLOUR_G_DEFAULT;
-                        buffer.pixels[y][x].colour.b = PIXEL_COLOUR_B_DEFAULT;
+                        buffer.pixels[y][x].col.r = PIXEL_COL_R_DEFAULT;
+                        buffer.pixels[y][x].col.g = PIXEL_COL_G_DEFAULT;
+                        buffer.pixels[y][x].col.b = PIXEL_COL_B_DEFAULT;
                 }
         }
 
@@ -66,11 +66,11 @@ void buffer_translate_ray_data(Buffer *buffer)
                 {
                         if (buffer->rays[y][x].collided)
                         {
-                                buffer->pixels[y][x].colour = buffer->rays[y][x].collided_material.col;
+                                buffer->pixels[y][x].col = buffer->rays[y][x].collided_material.col;
                         }
                         else
                         {
-                                buffer->pixels[y][x].colour = materials[MAT_AIR].col; // If the ray has not collided (meaning it went out of bounds) we set it to the air colour to avoid black patches.
+                                buffer->pixels[y][x].col = materials[MAT_AIR].col; // If the ray has not collided (meaning it went out of bounds) we set it to the air colour to avoid black patches.
                         }
                 }
                 
@@ -85,7 +85,7 @@ void buffer_print(Buffer *buffer)
         {
                 for (int x = 0; x < buffer->res_x; x++)
                 {
-                        colour_print_set(buffer->pixels[y][x].colour);
+                        col_print_set(buffer->pixels[y][x].col);
                         printf("%c%c", buffer->pixels[y][x].character, buffer->pixels[y][x].character);
                 }
                 printf("\x1b[0m");

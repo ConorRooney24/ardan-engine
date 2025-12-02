@@ -7,17 +7,17 @@
 #define RENDERER_H
 
 #include <stdlib.h>
-#include "colour.h"
+#include "col.h"
 #include "config.h"
 #include "caster.h"
 
-#define PIXEL_COLOUR_R_DEFAULT 255
-#define PIXEL_COLOUR_G_DEFAULT 255
-#define PIXEL_COLOUR_B_DEFAULT 255
+#define PIXEL_COL_R_DEFAULT 255
+#define PIXEL_COL_G_DEFAULT 255
+#define PIXEL_COL_B_DEFAULT 255
 #define PIXEL_CHARACTER_DEFAULT ' '
 typedef struct Pixel
 {
-	Colour colour;
+	Col col;
 	char character;
 } Pixel;
 

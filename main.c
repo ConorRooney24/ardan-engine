@@ -10,11 +10,12 @@
 #include "include/util_time.h"
 #include "include/input.h"
 
-#define RES_X 300
-#define RES_Y 150
+#define RES_X 157
+#define RES_Y 81
 #define MAP_X 50
 #define MAP_Y 10
 #define MAP_Z 50
+#define FRAMETIME_MIN 100.0f
 
 int main(void)
 {
@@ -58,14 +59,14 @@ int main(void)
         }
 
         Vec3 pos;
-        Vec2 dir_deg;
+        Vec2 dir;
         pos.x = MAP_X/2;
         pos.y = 2;
         pos.z = MAP_Z/2;
-        dir_deg.x = 0;
-        dir_deg.y = 0;
+        dir.x = 0;
+        dir.y = 0;
 
-        Cam c = cam_init(RES_X, RES_Y, 90, pos, dir_deg);
+        Cam c = cam_init(pos, dir, RES_X, RES_Y, deg_to_rad(90));
         cam_calculate_vFOV(&c);
 
         printf("\033[2J");
@@ -87,54 +88,53 @@ int main(void)
 
                 if(input_key_pressed('w'))
                 {
-                        c.pos = vec3_add(c.pos, c.dir);
+                        c.pos.z++;
                 }
                 if(input_key_pressed('a'))
                 {
-                        c.dir_deg.x++;
+                        c.pos.x--;
                 }
                 if(input_key_pressed('s'))
                 {
-                        c.pos = vec3_subtract(c.pos, c.dir);
+                        c.pos.z--;
                 }
                 if(input_key_pressed('d'))
                 {
-                        c.dir_deg.x++;
+                        c.pos.x++;
                 }
 
                 if(input_key_pressed('i'))
                 {
-                        c.dir_deg.x+=2;
+                        c.rot.x+= 0.1;
                 }
                 if(input_key_pressed('k'))
                 {
-                        c.dir_deg.x-=2;
+                        c.rot.x-= 0.1;
                 }
                 if(input_key_pressed('l'))
                 {
-                        c.dir_deg.y+=2;
+                        c.rot.y+= 0.1;
                 }
                 if(input_key_pressed('j'))
                 {
-                        c.dir_deg.y-=2;
+                        c.rot.y-=0.1;
                 }
 
-
-                
-                c.dir_rad.x = deg_to_rad(c.dir_deg.x);
-                c.dir_rad.y = deg_to_rad(c.dir_deg.y);
-                c.dir = rot_to_vel(c.dir_rad);
-                c.dir = vec3_normalize(c.dir);
 
                 cam_rays_reset(&c);
                 cam_calculate_ray_trajectories(&c);
                 capture_and_pass(&c, &buffer, &map);
                 buffer_translate_ray_data(&buffer);
                 buffer_print(&buffer);
-                //sleep_ns(20000000);
+                
 
                 frame_end = record_time();
-                printf("FPS: %.1f", time_frame_time_to_fps(time_diff(frame_start, frame_end)));
+                printf("| FPS: %.1f | Frametime: %.1fms | Min Frametime: %.1f", time_frame_time_to_fps(time_diff(frame_start, frame_end)), timestamp_to_ms(time_diff(frame_start, frame_end)), FRAMETIME_MIN);
+                
+                if (timestamp_to_ms(time_diff(frame_start, frame_end)) < FRAMETIME_MIN)
+                {
+                        sleep_ms(FRAMETIME_MIN - timestamp_to_ms(time_diff(frame_start, frame_end))); 
+                }
         }
 
         input_restore();

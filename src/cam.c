@@ -98,9 +98,9 @@ void capture_and_pass(Cam *cam, Buffer *buffer, Map *map)
 {
         if (cam->res_x != buffer->res_x || cam->res_y != buffer->res_y)
         {
-                colour_print_set(COLOUR_RED);
+                col_print_set(COL_RED);
                 printf("Error: Cam resolution does not match buffer resolution");
-                colour_print_reset();
+                col_print_reset();
                 printf("\n");
                 return;
         }

@@ -6,7 +6,7 @@
 #define MATERIAL_H
 
 #include <stdint.h>
-#include "colour.h"
+#include "col.h"
 
 #define MAT_AIR 0
 #define MAT_BLOCK_RED 1

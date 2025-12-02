@@ -1,18 +1,18 @@
-// colour.c
+// col.c
 
-#include "../include/colour.h"
+#include "../include/col.h"
 
-void colour_print_set(Col c)
+void col_print_set(Col c)
 {
         printf("\x1b[48;2;%d;%d;%dm", c.r, c.g, c.b);
 }
 
-void colour_print_reset()
+void col_print_reset()
 {
         printf("\x1b[0m");
 }
 
-Col colour_skew(Col c, int max_amount)
+Col col_skew(Col c, int max_amount)
 {
         for (int i = 0; i < max_amount; i++)
         {
@@ -86,15 +86,15 @@ Col colour_skew(Col c, int max_amount)
         return c;
 }
 
-Col colour_blend(Col a, Col b, float ratio)
+Col col_blend(Col a, Col b, float ratio)
 {
         if (!(ratio >= 0.0f && ratio <= 1.0f))
         {
-                colour_print_set(COLOUR_RED);
+                col_print_set(COL_RED);
                 printf("Error: Ratio must be between 0.0 and 1.0 inclusive");
-                colour_print_reset();
+                col_print_reset();
                 printf("\n");
-                return COLOUR_UNDEFINED;
+                return COL_UNDEFINED;
         }
         
         Col c;

@@ -3,8 +3,8 @@
 // Acts as a middle man between the Raycaster and the renderer.
 // Provides the cam struct. Also provides functions for calculating vFOV using hFOV as well as calculating the trajectories of each ray based on FOV and display resolution.
 
-#ifndef CAMERA_H
-#define CAMERA_H
+#ifndef CAM_H
+#define CAM_H
 
 #include "config.h"
 #include "vector.h"
@@ -33,4 +33,4 @@ void cam_print_info(Cam *cam);
 void cam_print_ray_trajectories_deg(Cam *cam);
 void cam_print_ray_trajectories_rad(Cam *cam);
 
-#endif // CAMERA_H
+#endif // CAM_H

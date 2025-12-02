@@ -23,7 +23,7 @@ Cam cam_init(int resolution_x, int resolution_y, float hFOV_deg, Vec3 pos, Vec2 
         cam.dir_rad.x = deg_to_rad(cam.dir_deg.x);
         cam.dir_rad.y = deg_to_rad(cam.dir_deg.y);
 
-        cam.dir = dir_rad_to_dir(cam.dir_rad);
+        cam.dir = rot_to_vel(cam.dir_rad);
         cam.dir = vec3_normalize(cam.dir);
 
         cam.rays = (Ray**)malloc(resolution_y * sizeof(Ray*));
@@ -37,7 +37,7 @@ Cam cam_init(int resolution_x, int resolution_y, float hFOV_deg, Vec3 pos, Vec2 
         {
                 for (int x = 0; x < resolution_x; x++)
                 {
-                        cam.rays[y][x] = ray_init(cam.pos, cam.dir_deg);
+                        cam.rays[y][x] = ray_init(cam.pos, cam.dir_rad);
                 }       
         }
 
@@ -90,13 +90,10 @@ void cam_calculate_ray_trajectories(Cam *cam)
                         double ray_pitch = vertical_ray_start_pos - y * vertical_ray_step;
                         double ray_yaw = horizontal_ray_start_pos + x * horizontal_ray_step;
 
-                        cam->rays[y][x].dir_rad.x = rad_normalise(ray_pitch);
-                        cam->rays[y][x].dir_rad.y = rad_normalise(ray_yaw);
+                        cam->rays[y][x].rot.x = rad_normalise(ray_pitch);
+                        cam->rays[y][x].rot.y = rad_normalise(ray_yaw);
 
-                        cam->rays[y][x].dir_deg.x = rad_to_deg(cam->rays[y][x].dir_rad.x);
-                        cam->rays[y][x].dir_deg.y = rad_to_deg(cam->rays[y][x].dir_rad.y);
-
-                        cam->rays[y][x].dir = dir_rad_to_dir(cam->rays[y][x].dir_rad);
+                        cam->rays[y][x].vel = rot_to_vel(cam->rays[y][x].rot);
                 } 
         }  
 }
@@ -131,9 +128,8 @@ void cam_rays_reset(Cam *cam)
                 {
                         cam->rays[y][x].collided = false;
                         cam->rays[y][x].collided_material = materials[MAT_UNDEFINED];
-                        cam->rays[y][x].dir = cam->dir;
-                        cam->rays[y][x].dir_deg = cam->dir_deg;
-                        cam->rays[y][x].dir_rad = cam->dir_rad;
+                        cam->rays[y][x].vel = cam->dir;
+                        cam->rays[y][x].rot = cam->dir_rad;
                         cam->rays[y][x].distance_travelled = 0;
                         cam->rays[y][x].pos = cam->pos;
                 }
@@ -159,7 +155,7 @@ void cam_print_ray_trajectories_deg(Cam *cam)
         {
                 for (int x = 0; x < cam->resolution_x; x++)
                 {
-                        printf("y%d, x%d [%.1f, %.1f], ", y, x, cam->rays[y][x].dir_deg.x, cam->rays[y][x].dir_deg.y);
+                        printf("y%d, x%d [%.1f, %.1f], ", y, x, rad_to_deg(cam->rays[y][x].rot.x), rad_to_deg(cam->rays[y][x].rot.y));
                 }
                 printf("\n");
         }  
@@ -172,7 +168,7 @@ void cam_print_ray_trajectories_rad(Cam *cam)
         {
                 for (int x = 0; x < cam->resolution_x; x++)
                 {
-                        printf("[%.1f, %.1f]", cam->rays[y][x].dir_rad.x, cam->rays[y][x].dir_rad.y);
+                        printf("[%.1f, %.1f]", cam->rays[y][x].rot.x, cam->rays[y][x].rot.y);
                 }
                 printf("\n");
         }  

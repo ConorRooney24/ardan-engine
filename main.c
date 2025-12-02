@@ -10,11 +10,11 @@
 #include "include/util_time.h"
 #include "include/input.h"
 
-#define RES_X 100
-#define RES_Y 50
-#define MAP_X 100
-#define MAP_Y 50
-#define MAP_Z 100
+#define RES_X 300
+#define RES_Y 150
+#define MAP_X 50
+#define MAP_Y 10
+#define MAP_Z 50
 
 int main(void)
 {
@@ -123,7 +123,7 @@ int main(void)
                 
                 c.dir_rad.x = deg_to_rad(c.dir_deg.x);
                 c.dir_rad.y = deg_to_rad(c.dir_deg.y);
-                c.dir = dir_rad_to_dir(c.dir_rad);
+                c.dir = rot_to_vel(c.dir_rad);
                 c.dir = vec3_normalize(c.dir);
 
                 cam_rays_reset(&c);

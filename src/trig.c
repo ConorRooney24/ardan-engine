@@ -31,17 +31,18 @@ Vec2 rad_to_vec2(double rad)
 	return v;
 }
 
-Vec3 dir_rad_to_dir(Vec2 dir_rad)
+Vec3 rot_to_vel(Vec2 rot)
 {
-        float pitch = dir_rad.x;
-        float yaw = dir_rad.y;
+	Vec3 vel;
 
-        Vec3 dir;
-        dir.x = cos(pitch) * sin(yaw);
-        dir.y = sin(pitch);
-        dir.z = cos(pitch) * cos(yaw);
+        float pitch = rot.x;
+        float yaw = rot.y;
+        
+        vel.x = cos(pitch) * sin(yaw);
+        vel.y = sin(pitch);
+        vel.z = cos(pitch) * cos(yaw);
 
-        return dir;
+        return vec3_normalize(vel);
 }
 
 Vec3 vec3_normalize(Vec3 vector) 

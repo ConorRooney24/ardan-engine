@@ -31,17 +31,17 @@ Vec2 rad_to_vec2(double rad)
 	return v;
 }
 
-Vec3 direction_rad_to_direction(Vec2 direction_rad)
+Vec3 dir_rad_to_dir(Vec2 dir_rad)
 {
-        float pitch = direction_rad.x;
-        float yaw = direction_rad.y;
+        float pitch = dir_rad.x;
+        float yaw = dir_rad.y;
 
-        Vec3 direction;
-        direction.x = cos(pitch) * sin(yaw);
-        direction.y = sin(pitch);
-        direction.z = cos(pitch) * cos(yaw);
+        Vec3 dir;
+        dir.x = cos(pitch) * sin(yaw);
+        dir.y = sin(pitch);
+        dir.z = cos(pitch) * cos(yaw);
 
-        return direction;
+        return dir;
 }
 
 Vec3 vec3_normalize(Vec3 vector) 

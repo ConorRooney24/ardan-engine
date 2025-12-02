@@ -87,44 +87,44 @@ int main(void)
 
                 if(input_key_pressed('w'))
                 {
-                        c.position = vec3_add(c.position, c.direction);
+                        c.pos = vec3_add(c.pos, c.dir);
                 }
                 if(input_key_pressed('a'))
                 {
-                        c.direction_deg.x++;
+                        c.dir_deg.x++;
                 }
                 if(input_key_pressed('s'))
                 {
-                        c.position = vec3_subtract(c.position, c.direction);
+                        c.pos = vec3_subtract(c.pos, c.dir);
                 }
                 if(input_key_pressed('d'))
                 {
-                        c.direction_deg.x++;
+                        c.dir_deg.x++;
                 }
 
                 if(input_key_pressed('i'))
                 {
-                        c.direction_deg.x+=2;
+                        c.dir_deg.x+=2;
                 }
                 if(input_key_pressed('k'))
                 {
-                        c.direction_deg.x-=2;
+                        c.dir_deg.x-=2;
                 }
                 if(input_key_pressed('l'))
                 {
-                        c.direction_deg.y+=2;
+                        c.dir_deg.y+=2;
                 }
                 if(input_key_pressed('j'))
                 {
-                        c.direction_deg.y-=2;
+                        c.dir_deg.y-=2;
                 }
 
 
                 
-                c.direction_rad.x = deg_to_rad(c.direction_deg.x);
-                c.direction_rad.y = deg_to_rad(c.direction_deg.y);
-                c.direction = direction_rad_to_direction(c.direction_rad);
-                c.direction = vec3_normalize(c.direction);
+                c.dir_rad.x = deg_to_rad(c.dir_deg.x);
+                c.dir_rad.y = deg_to_rad(c.dir_deg.y);
+                c.dir = dir_rad_to_dir(c.dir_rad);
+                c.dir = vec3_normalize(c.dir);
 
                 camera_rays_reset(&c);
                 camera_calculate_ray_trajectories(&c);

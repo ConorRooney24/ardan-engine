@@ -15,13 +15,13 @@ typedef struct Camera
 {
         int resolution_x, resolution_y;
         float hFOV, vFOV, hFOV_deg, vFOV_deg;
-        Vec3 position, direction;
-        Vec2 direction_rad; // Pitch(radian from z going up), Yaw(radian from z going right); Pitch(z and y), Yaw(z and x) - a pitch of 0 and yaw of 0 meaning facing straight on towards z. a pitch of 90degrees means facing straight up, towards y. a yaw of 90 means facing right, towards x.
-        Vec2 direction_deg;
+        Vec3 pos, dir;
+        Vec2 dir_rad; // Pitch(radian from z going up), Yaw(radian from z going right); Pitch(z and y), Yaw(z and x) - a pitch of 0 and yaw of 0 meaning facing straight on towards z. a pitch of 90degrees means facing straight up, towards y. a yaw of 90 means facing right, towards x.
+        Vec2 dir_deg;
         Ray **rays; // y, x
 } Camera;
 
-Camera camera_init(int resolution_x, int resolution_y, float hFOV_deg, Vec3 position, Vec2 direction_deg);
+Camera camera_init(int resolution_x, int resolution_y, float hFOV_deg, Vec3 pos, Vec2 dir_deg);
 void camera_destroy(Camera *camera);
 
 void camera_calculate_vFOV(Camera *camera);

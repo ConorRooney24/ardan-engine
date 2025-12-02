@@ -17,6 +17,7 @@ typedef struct TimeStamp
 } TimeStamp;
 
 void sleep_ns(long ns);
+void sleep_ms(long ms);
 
 TimeStamp record_time();
 TimeStamp time_diff(TimeStamp a, TimeStamp b);

@@ -14,6 +14,11 @@ void sleep_ns(long ns)
         }
 }
 
+void sleep_ms(long ms)
+{
+        sleep_ns(ms * 1000000.0L);
+}
+
 TimeStamp record_time()
 {
         TimeStamp time;

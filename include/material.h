@@ -8,11 +8,11 @@
 #include <stdint.h>
 #include "col.h"
 
-#define MAT_AIR 0
+#define MAT_UNDEFINED 0
 #define MAT_BLOCK_RED 1
 #define MAT_BLOCK_GREEN 2
 #define MAT_BLOCK_BLUE 3
-#define MAT_UNDEFINED 255
+#define MAT_AIR 255
 
 typedef struct Material
 {       

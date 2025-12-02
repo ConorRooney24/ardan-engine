@@ -116,7 +116,8 @@ void capture_and_pass(Camera *camera, Buffer *buffer, Map *map)
         {
                 for (int x = 0; x < camera->resolution_x; x++)
                 {
-                        ray_cast(&camera->rays[y][x], map, config.max_ray_distance, config.max_ray_step);
+                        //ray_cast_simple(&camera->rays[y][x], map, config.max_ray_distance, config.ray_step_scalar_fine);
+                        ray_cast_jump(&camera->rays[y][x], map, config.max_ray_distance, config.ray_step_scalar_coarse, config.ray_step_scalar_fine);
                         buffer->rays[y][x] = camera->rays[y][x];
                 }
         }

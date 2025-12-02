@@ -8,17 +8,21 @@
 #include "include/camera.h"
 #include "include/trig.h"
 #include "include/util_time.h"
+#include "include/input.h"
 
-#define RES_X 16*16
-#define RES_Y 9*16
-#define MAP_X 50
+#define RES_X 100
+#define RES_Y 50
+#define MAP_X 100
 #define MAP_Y 50
 #define MAP_Z 100
 
 int main(void)
 {
-        config.max_ray_distance = 200;
-        config.max_ray_step = 1;
+        config.max_ray_distance = 400;
+        config.ray_step_scalar_coarse = 1.0f;
+        config.ray_step_scalar_fine = 0.03f;
+
+
         materials_init(materials);
 
         Buffer buffer = buffer_init(RES_X, RES_Y);
@@ -32,7 +36,7 @@ int main(void)
                         {
                                 //map.grid[x][y][z].mat_id = MAT_AIR;
                                 //map.grid[x][y][z].mat_id = MAT_BLOCK_GREEN;
-                                if (x == map.size.x-1)
+                                if (x == map.size.x-1 || x == 0)
                                 {
                                         map.grid[x][y][z] = materials[MAT_BLOCK_RED];
                                 }
@@ -56,57 +60,89 @@ int main(void)
         Vec3 pos;
         Vec2 dir_deg;
         pos.x = MAP_X/2;
-        pos.y = MAP_Y/2;
+        pos.y = 2;
         pos.z = MAP_Z/2;
         dir_deg.x = 0;
         dir_deg.y = 0;
 
-        Camera c = camera_init(RES_X, RES_Y, 180, pos, dir_deg);
+        Camera c = camera_init(RES_X, RES_Y, 90, pos, dir_deg);
         camera_calculate_vFOV(&c);
 
-        TimeStamp a[360];
-        TimeStamp b[360];
-        float delta_s[360];
-        double total_delta_s = 0;
-        float average_frametime_seconds;
+        printf("\033[2J");
 
-        printf("\033[2J"); // clear terminal before render TODO, make a program controller with init and end functions and stuff, also put destroyers in there
+        TimeStamp frame_start;
+        TimeStamp frame_end;
 
-        for (int i = 0; i < 360; i++)
+        input_init();
+        bool running = true;
+        while (running)
         {
-                a[i] = record_time();
-                c.direction_deg.y = i;
-                c.direction_deg.x = sin(i*0.01)*10;
+                frame_start = record_time();
+                input_update();
+
+                if(input_key_pressed('0'))
+                {
+                        running = false;
+                }
+
+                if(input_key_pressed('w'))
+                {
+                        c.position = vec3_add(c.position, c.direction);
+                }
+                if(input_key_pressed('a'))
+                {
+                        c.direction_deg.x++;
+                }
+                if(input_key_pressed('s'))
+                {
+                        c.position = vec3_subtract(c.position, c.direction);
+                }
+                if(input_key_pressed('d'))
+                {
+                        c.direction_deg.x++;
+                }
+
+                if(input_key_pressed('i'))
+                {
+                        c.direction_deg.x+=2;
+                }
+                if(input_key_pressed('k'))
+                {
+                        c.direction_deg.x-=2;
+                }
+                if(input_key_pressed('l'))
+                {
+                        c.direction_deg.y+=2;
+                }
+                if(input_key_pressed('j'))
+                {
+                        c.direction_deg.y-=2;
+                }
+
+
+                
                 c.direction_rad.x = deg_to_rad(c.direction_deg.x);
                 c.direction_rad.y = deg_to_rad(c.direction_deg.y);
                 c.direction = direction_rad_to_direction(c.direction_rad);
                 c.direction = vec3_normalize(c.direction);
+
                 camera_rays_reset(&c);
                 camera_calculate_ray_trajectories(&c);
                 capture_and_pass(&c, &buffer, &map);
                 buffer_translate_ray_data(&buffer);
                 buffer_print(&buffer);
-                b[i] = record_time();
+                //sleep_ns(20000000);
+
+                frame_end = record_time();
+                printf("FPS: %.1f", time_frame_time_to_fps(time_diff(frame_start, frame_end)));
         }
 
-        for (int i = 0; i < 360; i++)
-        {
-                delta_s[i] = timestamp_to_s(time_diff(a[i], b[i]));
-        }
-
-        for (int i = 0; i < 360; i++)
-        {
-                total_delta_s += (double)delta_s[i];
-        }
-
-        average_frametime_seconds = total_delta_s / 360;
+        input_restore();
         
         printf("\033[2J");
 
         camera_destroy(&c);
         buffer_destroy(&buffer);
-
-        printf("\n\n\nAverage Frametime (s): %f\n\n\n", average_frametime_seconds);
 
         return 0;
 }

@@ -23,7 +23,7 @@ typedef struct Pixel
 
 typedef struct Buffer
 {
-	int resolution_y, resolution_x; // y, x format for printing
+	int res_y, res_x; // y, x format for printing
 	Ray **rays; // Raw ray data to be processed
 	Pixel **pixels; // Processed pixels with colour information
 } Buffer;

@@ -7,26 +7,26 @@
 
 // Pixel buffer[DISPLAY_HEIGHT_MAX][DISPLAY_WIDTH_MAX];
 
-Buffer buffer_init(int resolution_x, int resolution_y)
+Buffer buffer_init(int res_x, int res_y)
 {
         Buffer buffer;
-        buffer.resolution_x = resolution_x;
-        buffer.resolution_y = resolution_y;
+        buffer.res_x = res_x;
+        buffer.res_y = res_y;
 
-        buffer.rays = (Ray**)malloc(resolution_y * sizeof(Ray*));
-        buffer.pixels = (Pixel**)malloc(resolution_y * sizeof(Pixel*));
+        buffer.rays = (Ray**)malloc(res_y * sizeof(Ray*));
+        buffer.pixels = (Pixel**)malloc(res_y * sizeof(Pixel*));
 
-        for (int i = 0; i < resolution_y; i++)
+        for (int i = 0; i < res_y; i++)
         {
-                buffer.rays[i] = malloc(resolution_x * sizeof(Ray));
-                buffer.pixels[i] = malloc(resolution_x * sizeof(Pixel));
+                buffer.rays[i] = malloc(res_x * sizeof(Ray));
+                buffer.pixels[i] = malloc(res_x * sizeof(Pixel));
         }
         
         
 
-        for (int y = 0; y < resolution_y; y++)
+        for (int y = 0; y < res_y; y++)
         {
-                for (int x = 0; x < resolution_x; x++)
+                for (int x = 0; x < res_x; x++)
                 {
                         buffer.rays[y][x] = ray_init((Vec3){0,0,0}, (Vec2){0,0});
 
@@ -42,7 +42,7 @@ Buffer buffer_init(int resolution_x, int resolution_y)
 
 void buffer_destroy(Buffer* buffer)
 {
-        for (int y = 0; y < buffer->resolution_y; y++)
+        for (int y = 0; y < buffer->res_y; y++)
         {
                 free(buffer->rays[y]);
                 free(buffer->pixels[y]);
@@ -54,15 +54,15 @@ void buffer_destroy(Buffer* buffer)
         buffer->rays = NULL;
         buffer->pixels = NULL;
         
-        buffer->resolution_x = 0;
-        buffer->resolution_y = 0;
+        buffer->res_x = 0;
+        buffer->res_y = 0;
 }
 
 void buffer_translate_ray_data(Buffer *buffer)
 {
-        for (int y = 0; y < buffer->resolution_y; y++)
+        for (int y = 0; y < buffer->res_y; y++)
         {
-                for (int x = 0; x < buffer->resolution_x; x++)
+                for (int x = 0; x < buffer->res_x; x++)
                 {
                         if (buffer->rays[y][x].collided)
                         {
@@ -81,9 +81,9 @@ void buffer_translate_ray_data(Buffer *buffer)
 void buffer_print(Buffer *buffer)
 {
         printf("\033[H");
-        for (int y = 0; y < buffer->resolution_y; y++)
+        for (int y = 0; y < buffer->res_y; y++)
         {
-                for (int x = 0; x < buffer->resolution_x; x++)
+                for (int x = 0; x < buffer->res_x; x++)
                 {
                         colour_print_set(buffer->pixels[y][x].colour);
                         printf("%c%c", buffer->pixels[y][x].character, buffer->pixels[y][x].character);
@@ -95,9 +95,9 @@ void buffer_print(Buffer *buffer)
 
 void buffer_print_ray_material_id(Buffer *buffer)
 {
-        for (int y = 0; y < buffer->resolution_y; y++)
+        for (int y = 0; y < buffer->res_y; y++)
         {
-                for (int x = 0; x < buffer->resolution_x; x++)
+                for (int x = 0; x < buffer->res_x; x++)
                 {
                         printf("%d, ", buffer->rays[y][x].collided_material.mat_id);
                 }

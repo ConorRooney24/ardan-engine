@@ -5,7 +5,7 @@
 #include "include/material.h"
 #include "include/config.h"
 #include "include/renderer.h"
-#include "include/camera.h"
+#include "include/cam.h"
 #include "include/trig.h"
 #include "include/util_time.h"
 #include "include/input.h"
@@ -65,8 +65,8 @@ int main(void)
         dir_deg.x = 0;
         dir_deg.y = 0;
 
-        Camera c = camera_init(RES_X, RES_Y, 90, pos, dir_deg);
-        camera_calculate_vFOV(&c);
+        Cam c = cam_init(RES_X, RES_Y, 90, pos, dir_deg);
+        cam_calculate_vFOV(&c);
 
         printf("\033[2J");
 
@@ -126,8 +126,8 @@ int main(void)
                 c.dir = dir_rad_to_dir(c.dir_rad);
                 c.dir = vec3_normalize(c.dir);
 
-                camera_rays_reset(&c);
-                camera_calculate_ray_trajectories(&c);
+                cam_rays_reset(&c);
+                cam_calculate_ray_trajectories(&c);
                 capture_and_pass(&c, &buffer, &map);
                 buffer_translate_ray_data(&buffer);
                 buffer_print(&buffer);
@@ -141,7 +141,7 @@ int main(void)
         
         printf("\033[2J");
 
-        camera_destroy(&c);
+        cam_destroy(&c);
         buffer_destroy(&buffer);
 
         return 0;

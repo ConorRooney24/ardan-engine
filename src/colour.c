@@ -12,9 +12,9 @@ void colour_print_reset()
         printf("\x1b[0m");
 }
 
-Col colour_skew(Col c, int max_ammount)
+Col colour_skew(Col c, int max_amount)
 {
-        for (int i = 0; i < max_ammount; i++)
+        for (int i = 0; i < max_amount; i++)
         {
                 if (c.r >= 255) // We must subtract
                 {
@@ -98,14 +98,14 @@ Col colour_blend(Col a, Col b, float ratio)
         }
         
         Col c;
-        float ammount_a, ammount_b;
+        float amount_a, amount_b;
 
-        ammount_a = 1 - ratio;
-        ammount_b = ratio;
+        amount_a = 1 - ratio;
+        amount_b = ratio;
 
-        c.r = (( (float)a.r ) * ammount_a) + (( (float)b.r ) * ammount_b);
-        c.g = (( (float)a.g ) * ammount_a) + (( (float)b.g ) * ammount_b);
-        c.b = (( (float)a.b ) * ammount_a) + (( (float)b.b ) * ammount_b);
+        c.r = (( (float)a.r ) * amount_a) + (( (float)b.r ) * amount_b);
+        c.g = (( (float)a.g ) * amount_a) + (( (float)b.g ) * amount_b);
+        c.b = (( (float)a.b ) * amount_a) + (( (float)b.b ) * amount_b);
 
         return c;
 }

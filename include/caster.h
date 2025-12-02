@@ -13,7 +13,7 @@ typedef struct Ray
         Vec3 pos, vel;
         Vec3i pos_f; // Position floored
         Vec2 rot; // Pitch and Yaw in Radian.
-        float distance_travelled;
+        float distance_traveled;
         bool collided;
         Material collided_material;
 } Ray;

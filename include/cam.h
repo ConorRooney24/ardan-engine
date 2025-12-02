@@ -26,7 +26,7 @@ void cam_destroy(Cam *cam);
 
 void cam_calculate_vFOV(Cam *cam);
 void cam_calculate_ray_trajectories(Cam *cam);
-void capture_and_pass(Cam *cam, Buffer *buffer, Map *map); // Uses the raycaster to cast a ray for each pixel along its trajecory in the matrix and sends the ray journey information to a buffer
+void capture_and_pass(Cam *cam, Buffer *buffer, Map *map); // Uses the raycaster to cast a ray for each pixel along its trajectory in the matrix and sends the ray journey information to a buffer
 void cam_rays_reset(Cam *cam); // Resets the rays for the next cast
 
 void cam_print_info(Cam *cam);

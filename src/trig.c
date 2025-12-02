@@ -64,7 +64,7 @@ Vec3 vec3_normalize(Vec3 vector)
 	return result;
 }
 
-float rad_normalise(float rad)
+float rad_normalize(float rad)
 {
 	rad = fmod(rad, 2.0 * TRIG_PI);
 

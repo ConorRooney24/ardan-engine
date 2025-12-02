@@ -12,7 +12,7 @@ Ray ray_init(Vec3 pos, Vec2 rot)
 	ray.collided = false;
 	ray.collided_material = materials[MAT_UNDEFINED];
 
-	ray.distance_travelled = 0;
+	ray.distance_traveled = 0;
 
 	ray.pos = pos;
 	ray.pos_f = vec3_floor(pos);
@@ -32,7 +32,7 @@ void ray_cast_simple(Ray *ray, Map *map, int max_distance, float step_scalar)
 	ray->vel.y *= step_scalar;
 	ray->vel.z *= step_scalar;
 
-	while (ray->distance_travelled <= max_distance && ray->collided == false)
+	while (ray->distance_traveled <= max_distance && ray->collided == false)
 	{
 		ray->pos_f.x = (int)floor(ray->pos.x);
 		ray->pos_f.y = (int)floor(ray->pos.y);
@@ -51,14 +51,14 @@ void ray_cast_simple(Ray *ray, Map *map, int max_distance, float step_scalar)
 			printf("\n");
 			return;
 		}
-		else if (map->grid[ray->pos_f.x][ray->pos_f.y][ray->pos_f.z].transparency == 1.0f) // If the block is fully transparant (air)
+		else if (map->grid[ray->pos_f.x][ray->pos_f.y][ray->pos_f.z].transparency == 1.0f) // If the block is fully transparent (air)
 		{
 			ray->pos.x += ray->vel.x;
 			ray->pos.y += ray->vel.y;
 			ray->pos.z += ray->vel.z;
-			ray->distance_travelled += vec3_to_distance(ray->vel);
+			ray->distance_traveled += vec3_to_distance(ray->vel);
 		}
-		else // If not out of bounds, and havent hit undefined, and the block isnt fully transparant, we must have hit an object
+		else // If not out of bounds, and havent hit undefined, and the block isnt fully transparent, we must have hit an object
 		{
 			ray->collided = true;
 			ray->collided_material = map->grid[ray->pos_f.x][ray->pos_f.y][ray->pos_f.z];
@@ -96,7 +96,7 @@ void ray_cast_jump(Ray *ray, Map *map, int max_distance, float step_scalar_coars
 
 	ray->vel = vec3_scale(ray->vel, step_scalar_fine);
 
-	while (ray->distance_travelled <= max_distance && ray->collided == false)
+	while (ray->distance_traveled <= max_distance && ray->collided == false)
 	{
 		ray->pos_f.x = (int)floor(ray->pos.x);
 		ray->pos_f.y = (int)floor(ray->pos.y);
@@ -115,14 +115,14 @@ void ray_cast_jump(Ray *ray, Map *map, int max_distance, float step_scalar_coars
 			printf("\n");
 			return;
 		}
-		else if (map->grid[ray->pos_f.x][ray->pos_f.y][ray->pos_f.z].transparency == 1.0f) // If the block is fully transparant (air)
+		else if (map->grid[ray->pos_f.x][ray->pos_f.y][ray->pos_f.z].transparency == 1.0f) // If the block is fully transparent (air)
 		{
 			ray->pos.x += ray->vel.x;
 			ray->pos.y += ray->vel.y;
 			ray->pos.z += ray->vel.z;
-			ray->distance_travelled += vec3_to_distance(ray->vel);
+			ray->distance_traveled += vec3_to_distance(ray->vel);
 		}
-		else // If not out of bounds, and havent hit undefined, and the block isnt fully transparant, we must have hit an object
+		else // If not out of bounds, and havent hit undefined, and the block isnt fully transparent, we must have hit an object
 		{
 			ray->collided = true;
 			ray->collided_material = map->grid[ray->pos_f.x][ray->pos_f.y][ray->pos_f.z];

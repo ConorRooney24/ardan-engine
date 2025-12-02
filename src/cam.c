@@ -75,8 +75,8 @@ void cam_calculate_ray_trajectories(Cam *cam)
         double horizontal_ray_step = cam->hFOV / (cam->resolution_x - 1); // The distance between rays on the x axis in radian.
         double vertical_ray_step = cam->vFOV / (cam->resolution_y - 1); // The distance between rays on the y axis in radian.
 
-        cam->dir_rad.x = rad_normalise(cam->dir_rad.x);
-        cam->dir_rad.y = rad_normalise(cam->dir_rad.y);
+        cam->dir_rad.x = rad_normalize(cam->dir_rad.x);
+        cam->dir_rad.y = rad_normalize(cam->dir_rad.y);
 
         double horizontal_ray_start_pos = cam->dir_rad.y - (cam->hFOV / 2); // the yaw measure in radian which rays on the x axis will start casting from, and then move right by the x distance each step.
         //double vertical_ray_start_pos = cam->dir_rad.x - (cam->vFOV / 2);
@@ -90,8 +90,8 @@ void cam_calculate_ray_trajectories(Cam *cam)
                         double ray_pitch = vertical_ray_start_pos - y * vertical_ray_step;
                         double ray_yaw = horizontal_ray_start_pos + x * horizontal_ray_step;
 
-                        cam->rays[y][x].rot.x = rad_normalise(ray_pitch);
-                        cam->rays[y][x].rot.y = rad_normalise(ray_yaw);
+                        cam->rays[y][x].rot.x = rad_normalize(ray_pitch);
+                        cam->rays[y][x].rot.y = rad_normalize(ray_yaw);
 
                         cam->rays[y][x].vel = rot_to_vel(cam->rays[y][x].rot);
                 } 
@@ -130,7 +130,7 @@ void cam_rays_reset(Cam *cam)
                         cam->rays[y][x].collided_material = materials[MAT_UNDEFINED];
                         cam->rays[y][x].vel = cam->dir;
                         cam->rays[y][x].rot = cam->dir_rad;
-                        cam->rays[y][x].distance_travelled = 0;
+                        cam->rays[y][x].distance_traveled = 0;
                         cam->rays[y][x].pos = cam->pos;
                 }
         }

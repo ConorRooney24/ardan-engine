@@ -7,15 +7,15 @@
 
 #include "col.h"
 
-#define TEXT_SIZE_X 4
-#define TEXT_SIZE_Y 4
+#define TEXT_RES_X 8
+#define TEXT_RES_Y 8
 
 #define TEXT_UNDEFINED 0
 
 typedef struct Text
 {
         uint8_t id;
-        Col col_map[TEXT_SIZE_Y][TEXT_SIZE_X];
+        Col col_map[6][TEXT_RES_Y][TEXT_RES_X]; // 6 Sides of a cube
 } Text;
 
 extern Text texts[256];

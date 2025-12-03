@@ -15,7 +15,9 @@ typedef struct Ray
         Vec2 rot; // Pitch and Yaw in Radian.
         float distance_traveled;
         bool collided;
-        Material collided_material;
+        Vox collided_vox; // The voxel the ray collided with
+        Vec3 collision_pos; // The position of the ray when it collided
+        Vec3 pos_last_alive; // The last position the ray was in before colliding
 } Ray;
 
 Ray ray_init(Vec3 pos, Vec2 rot);

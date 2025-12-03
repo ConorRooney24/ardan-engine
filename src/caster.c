@@ -10,7 +10,8 @@ Ray ray_init(Vec3 pos, Vec2 rot)
 	Ray ray;
 
 	ray.collided = false;
-	ray.collided_material = materials[MAT_UNDEFINED];
+	ray.collided_vox.mat = materials[MAT_UNDEFINED];
+	ray.collided_vox.text = texts[TEXT_UNDEFINED];
 
 	ray.distance_traveled = 0;
 
@@ -20,6 +21,9 @@ Ray ray_init(Vec3 pos, Vec2 rot)
 	ray.rot = rot;
 
 	ray.vel = rot_to_vel(rot);
+
+	ray.collision_pos = pos;
+	ray.pos_last_alive = pos;
 
 	return ray;
 }
@@ -43,7 +47,7 @@ void ray_cast_simple(Ray *ray, Map *map, int max_distance, float step_scalar)
 			ray->collided = false;
 			return;
 		}
-		else if (!map->vox[ray->pos_f.x][ray->pos_f.y][ray->pos_f.z].mat.mat_id == MAT_UNDEFINED) // if we have hit an undefined cell
+		else if (map->vox[ray->pos_f.x][ray->pos_f.y][ray->pos_f.z].mat.mat_id == MAT_UNDEFINED) // if we have hit an undefined cell
 		{
 			col_print_set(COL_RED);
 			printf("Error: Ray collided with undefined material;");
@@ -53,6 +57,8 @@ void ray_cast_simple(Ray *ray, Map *map, int max_distance, float step_scalar)
 		}
 		else if (map->vox[ray->pos_f.x][ray->pos_f.y][ray->pos_f.z].mat.transparency == 1.0f) // If the block is fully transparent (air)
 		{
+			ray->pos_last_alive = ray->pos; // Set last alive pos before moving
+
 			ray->pos.x += ray->vel.x;
 			ray->pos.y += ray->vel.y;
 			ray->pos.z += ray->vel.z;
@@ -61,7 +67,8 @@ void ray_cast_simple(Ray *ray, Map *map, int max_distance, float step_scalar)
 		else // If not out of bounds, and haven't hit undefined, and the block isn't fully transparent, we must have hit an object
 		{
 			ray->collided = true;
-			ray->collided_material = map->vox[ray->pos_f.x][ray->pos_f.y][ray->pos_f.z].mat;
+			ray->collided_vox = map->vox[ray->pos_f.x][ray->pos_f.y][ray->pos_f.z];
+			ray->collision_pos = ray->pos;
 			return;
 		}
 	}
@@ -101,7 +108,7 @@ void ray_cast_jump(Ray *ray, Map *map, int max_distance, float step_scalar_coars
 		ray->pos_f.x = (int)floor(ray->pos.x);
 		ray->pos_f.y = (int)floor(ray->pos.y);
 		ray->pos_f.z = (int)floor(ray->pos.z);
-		
+
 		if ((ray->pos_f.x >= map->size.x || ray->pos_f.x < 0) || (ray->pos_f.y >= map->size.y || ray->pos_f.y < 0)||(ray->pos_f.z >= map->size.z || ray->pos_f.z < 0)) // if out of bounds
 		{
 			ray->collided = false;
@@ -117,6 +124,8 @@ void ray_cast_jump(Ray *ray, Map *map, int max_distance, float step_scalar_coars
 		}
 		else if (map->vox[ray->pos_f.x][ray->pos_f.y][ray->pos_f.z].mat.transparency == 1.0f) // If the block is fully transparent (air)
 		{
+			ray->pos_last_alive = ray->pos; // Set last alive pos before moving
+
 			ray->pos.x += ray->vel.x;
 			ray->pos.y += ray->vel.y;
 			ray->pos.z += ray->vel.z;
@@ -125,7 +134,8 @@ void ray_cast_jump(Ray *ray, Map *map, int max_distance, float step_scalar_coars
 		else // If not out of bounds, and haven't hit undefined, and the block isn't fully transparent, we must have hit an object
 		{
 			ray->collided = true;
-			ray->collided_material = map->vox[ray->pos_f.x][ray->pos_f.y][ray->pos_f.z].mat;
+			ray->collided_vox = map->vox[ray->pos_f.x][ray->pos_f.y][ray->pos_f.z];
+			ray->collision_pos = ray->pos;
 			return;
 		}
 	}

@@ -17,7 +17,6 @@
 typedef struct Material
 {       
         uint8_t mat_id;
-        Col col;
         float transparency;
         float reflectivity;
 } Material;

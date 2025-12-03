@@ -10,21 +10,22 @@
 #include "include/util_time.h"
 #include "include/input.h"
 
-#define RES_X 157
-#define RES_Y 81
-#define MAP_X 50
+#define RES_X 400
+#define RES_Y 200
+#define MAP_X 20
 #define MAP_Y 10
-#define MAP_Z 50
+#define MAP_Z 20
 #define FRAMETIME_MIN 100.0f
 
 int main(void)
 {
         config.max_ray_distance = 400;
         config.ray_step_scalar_coarse = 1.0f;
-        config.ray_step_scalar_fine = 0.03f;
+        config.ray_step_scalar_fine = 0.05f;
 
 
         materials_init(materials);
+        text_init();
 
         Buffer buffer = buffer_init(RES_X, RES_Y);
         Map map = map_init((Vec3i){MAP_X,MAP_Y,MAP_Z});
@@ -35,23 +36,25 @@ int main(void)
                 {
                         for (int z = 0; z < map.size.z; z++)
                         {
-                                //map.grid[x][y][z].mat_id = MAT_AIR;
-                                //map.grid[x][y][z].mat_id = MAT_BLOCK_GREEN;
                                 if (x == map.size.x-1 || x == 0)
                                 {
                                         map.vox[x][y][z].mat = materials[MAT_BLOCK_RED];
+                                        map.vox[x][y][z].text = texts[TEXT_UNDEFINED];
                                 }
                                 else if (y == map.size.y-1 || y == 0)
                                 {
                                         map.vox[x][y][z].mat = materials[MAT_BLOCK_GREEN];
+                                        map.vox[x][y][z].text = texts[TEXT_UNDEFINED];
                                 }
                                 else if (z == map.size.z-1 || z == 0)
                                 {
                                         map.vox[x][y][z].mat = materials[MAT_BLOCK_BLUE];
+                                        map.vox[x][y][z].text = texts[TEXT_UNDEFINED];
                                 }
                                 else
                                 {
                                         map.vox[x][y][z].mat = materials[MAT_AIR];
+                                        map.vox[x][y][z].text = texts[TEXT_UNDEFINED];
                                 }
                                 
                         }

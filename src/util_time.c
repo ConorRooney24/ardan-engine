@@ -1,4 +1,4 @@
-//time.c
+// util_time.c
 
 #include "../include/util_time.h"
 

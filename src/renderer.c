@@ -5,6 +5,7 @@
 #include <math.h>
 #include "../include/renderer.h"
 #include "../include/config.h"
+#include "../include/util_time.h"
 
 // Pixel buffer[DISPLAY_HEIGHT_MAX][DISPLAY_WIDTH_MAX];
 
@@ -195,8 +196,9 @@ void buffer_print(Buffer *buffer)
                 {
                         col_print_set(buffer->pixels[y][x].col);
                         printf("%c%c", buffer->pixels[y][x].character, buffer->pixels[y][x].character);
+                        
                 }
-                printf("\x1b[0m");
+                col_print_reset();
                 printf("\n");
         }
 }

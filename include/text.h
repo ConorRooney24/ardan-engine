@@ -7,8 +7,8 @@
 
 #include "col.h"
 
-#define TEXT_RES_X 8
-#define TEXT_RES_Y 8
+#define TEXT_RES_X 16
+#define TEXT_RES_Y 16
 
 #define TEXT_UNDEFINED 0
 

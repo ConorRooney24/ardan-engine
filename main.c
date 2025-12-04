@@ -10,8 +10,8 @@
 #include "include/util_time.h"
 #include "include/input.h"
 
-#define RES_X 400
-#define RES_Y 200
+#define RES_X 920/4
+#define RES_Y 480/4
 #define MAP_X 20
 #define MAP_Y 10
 #define MAP_Z 20
@@ -21,8 +21,7 @@ int main(void)
 {
         config.max_ray_distance = 400;
         config.ray_step_scalar_coarse = 1.0f;
-        config.ray_step_scalar_fine = 0.05f;
-
+        config.ray_step_scalar_fine = 0.001f;
 
         materials_init(materials);
         text_init();

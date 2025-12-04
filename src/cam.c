@@ -75,7 +75,6 @@ void cam_calculate_ray_trajectories(Cam *cam)
         cam->rot.y = rad_normalize(cam->rot.y);
 
         double horizontal_ray_start_pos = cam->rot.y - (cam->hFOV / 2); // the yaw measure in radian which rays on the x axis will start casting from, and then move right by the x distance each step.
-        //double vertical_ray_start_pos = cam->dir_rad.x - (cam->vFOV / 2);
         double vertical_ray_start_pos = cam->rot.x + (cam->vFOV / 2.0);
 
         for (int y = 0; y < cam->res_y; y++) // for each ray

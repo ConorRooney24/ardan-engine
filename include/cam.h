@@ -20,7 +20,7 @@ typedef struct Cam
         Ray **rays; // y, x
 } Cam;
 
-Cam cam_init(Vec3 pos, Vec2 dir, int res_x, int res_y, float hFOV);
+Cam cam_init(Vec3 pos, Vec2 rot, int res_x, int res_y, float hFOV);
 void cam_destroy(Cam *cam);
 
 void cam_calculate_vFOV(Cam *cam);

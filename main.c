@@ -10,12 +10,12 @@
 #include "include/util_time.h"
 #include "include/input.h"
 
-#define RES_X 920/4
-#define RES_Y 480/4
-#define MAP_X 20
+#define RES_X 920/6
+#define RES_Y 480/6
+#define MAP_X 50
 #define MAP_Y 10
-#define MAP_Z 20
-#define FRAMETIME_MIN 100.0f
+#define MAP_Z 50
+#define FRAMETIME_MIN 1.0f
 
 int main(void)
 {
@@ -60,10 +60,29 @@ int main(void)
                 }
         }
 
+        map.vox[(int)floor(MAP_X/2)][1][(int)floor(MAP_Z/2)].mat = materials[MAT_BLOCK];
+        map.vox[(int)floor(MAP_X/2)][1][(int)floor(MAP_Z/2)].text = texts[TEXT_UNDEFINED];
+
+        map.vox[(int)floor(MAP_X/2)][1][(int)floor(MAP_Z/2)+1].mat = materials[MAT_BLOCK];
+        map.vox[(int)floor(MAP_X/2)][1][(int)floor(MAP_Z/2)+1].text = texts[TEXT_TEST];
+
+        map.vox[(int)floor(MAP_X/2)][1][(int)floor(MAP_Z/2)+2].mat = materials[MAT_BLOCK];
+        map.vox[(int)floor(MAP_X/2)][1][(int)floor(MAP_Z/2)+2].text = texts[TEXT_TEST];
+
+        map.vox[(int)floor(MAP_X/2)][2][(int)floor(MAP_Z/2)].mat = materials[MAT_BLOCK];
+        map.vox[(int)floor(MAP_X/2)][2][(int)floor(MAP_Z/2)].text = texts[TEXT_UNDEFINED];
+
+        map.vox[(int)floor(MAP_X/2)][2][(int)floor(MAP_Z/2)+1].mat = materials[MAT_BLOCK];
+        map.vox[(int)floor(MAP_X/2)][2][(int)floor(MAP_Z/2)+1].text = texts[TEXT_TEST];
+
+        map.vox[(int)floor(MAP_X/2)][2][(int)floor(MAP_Z/2)+2].mat = materials[MAT_BLOCK];
+        map.vox[(int)floor(MAP_X/2)][2][(int)floor(MAP_Z/2)+2].text = texts[TEXT_TEST];
+
+
         Vec3 pos;
         Vec2 dir;
         pos.x = MAP_X/2;
-        pos.y = 2;
+        pos.y = 7;
         pos.z = MAP_Z/2;
         dir.x = 0;
         dir.y = 0;
@@ -90,19 +109,19 @@ int main(void)
 
                 if(input_key_pressed('w'))
                 {
-                        c.pos.z++;
+                        c.pos.z+=0.5;
                 }
                 if(input_key_pressed('a'))
                 {
-                        c.pos.x--;
+                        c.pos.x-=0.5;
                 }
                 if(input_key_pressed('s'))
                 {
-                        c.pos.z--;
+                        c.pos.z-=0.5;
                 }
                 if(input_key_pressed('d'))
                 {
-                        c.pos.x++;
+                        c.pos.x+=0.5;
                 }
 
                 if(input_key_pressed('i'))

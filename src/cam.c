@@ -74,8 +74,8 @@ void cam_calculate_ray_trajectories(Cam *cam)
         cam->rot.x = rad_normalize(cam->rot.x);
         cam->rot.y = rad_normalize(cam->rot.y);
 
-        double horizontal_ray_start_pos = cam->rot.y - (cam->hFOV / 2); // the yaw measure in radian which rays on the x axis will start casting from, and then move right by the x distance each step.
-        double vertical_ray_start_pos = cam->rot.x + (cam->vFOV / 2.0);
+        double horizontal_ray_start_pos = cam->rot.y - (cam->hFOV / 2.0f); // the yaw measure in radian which rays on the x axis will start casting from, and then move right by the x distance each step.
+        double vertical_ray_start_pos = cam->rot.x + (cam->vFOV / 2.0f);
 
         for (int y = 0; y < cam->res_y; y++) // for each ray
         {
@@ -109,7 +109,8 @@ void capture_and_pass(Cam *cam, Buffer *buffer, Map *map)
                 for (int x = 0; x < cam->res_x; x++)
                 {
                         //ray_cast_simple(&cam->rays[y][x], map, config.max_ray_distance, config.ray_step_scalar_fine);
-                        ray_cast_jump(&cam->rays[y][x], map, config.max_ray_distance, config.ray_step_scalar_coarse, config.ray_step_scalar_fine);
+                        //ray_cast_jump(&cam->rays[y][x], map, config.max_ray_distance, config.ray_step_scalar_coarse, config.ray_step_scalar_fine);
+                        ray_cast_dda(&cam->rays[y][x], map, config.max_ray_distance);
                         buffer->rays[y][x] = cam->rays[y][x];
                 }
         }

@@ -23,8 +23,6 @@ Buffer buffer_init(int res_x, int res_y)
                 buffer.rays[i] = malloc(res_x * sizeof(Ray));
                 buffer.pixels[i] = malloc(res_x * sizeof(Pixel));
         }
-        
-        
 
         for (int y = 0; y < res_y; y++)
         {
@@ -68,8 +66,11 @@ void buffer_translate_ray_data(Buffer *buffer)
                 {
                         if (buffer->rays[y][x].collided)
                         {
-                                // Start by calculating which face of the voxel was hit.
                                 int face_hit;
+
+                                /* OLD CODE - FOR DDA THIS IS DONE IN THE RAY_CAST FUNC
+                                // Start by calculating which face of the voxel was hit.
+                                
 
                                 int last_alive_pos_x = (int)floorf(buffer->rays[y][x].pos_last_alive.x);
                                 int last_alive_pos_y = (int)floorf(buffer->rays[y][x].pos_last_alive.y);
@@ -115,10 +116,13 @@ void buffer_translate_ray_data(Buffer *buffer)
                                         {
                                                 face_hit = VOX_FACE_Z_MINUS;
                                         }
-                                }
+                                } */
+
+                                face_hit = buffer->rays[y][x].face_hit;
 
                                 // Now that we have the face, we calculate the UV
                                 float U, V;
+                                /*
                                 if (face_hit == VOX_FACE_X_MINUS)
                                 {
                                         U = buffer->rays[y][x].pos_last_alive.z - floor(buffer->rays[y][x].pos_last_alive.z);
@@ -149,7 +153,10 @@ void buffer_translate_ray_data(Buffer *buffer)
                                 {
                                         U = 1.0f - (buffer->rays[y][x].pos_last_alive.x - floor(buffer->rays[y][x].pos_last_alive.x));
                                         V = buffer->rays[y][x].pos_last_alive.y - floor(buffer->rays[y][x].pos_last_alive.y);
-                                }
+                                }*/
+
+                                U = buffer->rays[y][x].tex_u;
+                                V = buffer->rays[y][x].tex_v;
 
                                 // Now we translate UV into texel coords and set the colour
                                 int tx = (int)floor(U * TEXT_RES_X); // Texel x
@@ -192,6 +199,7 @@ void buffer_print(Buffer *buffer)
         printf("\033[H");
         for (int y = 0; y < buffer->res_y; y++)
         {
+                sleep_ns(100000);
                 for (int x = 0; x < buffer->res_x; x++)
                 {
                         col_print_set(buffer->pixels[y][x].col);
@@ -200,6 +208,7 @@ void buffer_print(Buffer *buffer)
                 }
                 col_print_reset();
                 printf("\n");
+
         }
 }
 

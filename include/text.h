@@ -11,7 +11,8 @@
 #define TEXT_RES_Y 16
 
 #define TEXT_UNDEFINED 0
-#define TEXT_RED_BRICK_WALL 1
+#define TEXT_BRICK_WALL_RED 1
+#define TEXT_FLOOR_BOARDS_DIRTY_YELLOW 2
 #define TEXT_TEST 255
 
 typedef struct Text

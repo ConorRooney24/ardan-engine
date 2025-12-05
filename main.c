@@ -21,7 +21,7 @@ int main(void)
 {
         config.max_ray_distance = 400;
         config.ray_step_scalar_coarse = 1.0f;
-        config.ray_step_scalar_fine = 0.001f;
+        config.ray_step_scalar_fine = 0.01f;
 
         materials_init(materials);
         text_init();
@@ -37,18 +37,18 @@ int main(void)
                         {
                                 if (x == map.size.x-1 || x == 0)
                                 {
-                                        map.vox[x][y][z].mat = materials[MAT_BLOCK_RED];
-                                        map.vox[x][y][z].text = texts[TEXT_RED_BRICK_WALL];
+                                        map.vox[x][y][z].mat = materials[MAT_BLOCK];
+                                        map.vox[x][y][z].text = texts[TEXT_BRICK_WALL_RED];
                                 }
                                 else if (y == map.size.y-1 || y == 0)
                                 {
-                                        map.vox[x][y][z].mat = materials[MAT_BLOCK_GREEN];
-                                        map.vox[x][y][z].text = texts[TEXT_TEST];
+                                        map.vox[x][y][z].mat = materials[MAT_BLOCK];
+                                        map.vox[x][y][z].text = texts[TEXT_FLOOR_BOARDS_DIRTY_YELLOW];
                                 }
                                 else if (z == map.size.z-1 || z == 0)
                                 {
-                                        map.vox[x][y][z].mat = materials[MAT_BLOCK_BLUE];
-                                        map.vox[x][y][z].text = texts[TEXT_RED_BRICK_WALL];
+                                        map.vox[x][y][z].mat = materials[MAT_BLOCK];
+                                        map.vox[x][y][z].text = texts[TEXT_BRICK_WALL_RED];
                                 }
                                 else
                                 {

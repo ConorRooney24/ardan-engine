@@ -10,8 +10,8 @@
 #include "include/util_time.h"
 #include "include/input.h"
 
-#define RES_X 920/6
-#define RES_Y 480/6
+#define RES_X 920/4
+#define RES_Y 480/4
 #define MAP_X 50
 #define MAP_Y 10
 #define MAP_Z 50
@@ -25,6 +25,7 @@ int main(void)
 
         materials_init(materials);
         text_init();
+        map_voxs_init();
 
         Buffer buffer = buffer_init(RES_X, RES_Y);
         Map map = map_init((Vec3i){MAP_X,MAP_Y,MAP_Z});
@@ -37,46 +38,29 @@ int main(void)
                         {
                                 if (x == map.size.x-1 || x == 0)
                                 {
-                                        map.vox[x][y][z].mat = materials[MAT_BLOCK];
-                                        map.vox[x][y][z].text = texts[TEXT_BRICK_WALL_RED];
+                                        map.vox[x][y][z] = voxs[VOX_BRICK_WALL_RED];
                                 }
                                 else if (y == map.size.y-1 || y == 0)
                                 {
-                                        map.vox[x][y][z].mat = materials[MAT_BLOCK];
-                                        map.vox[x][y][z].text = texts[TEXT_FLOOR_BOARDS_DIRTY_YELLOW];
+                                        map.vox[x][y][z] = voxs[VOX_FLOOR_BOARDS_DIRTY_YELLOW];
                                 }
                                 else if (z == map.size.z-1 || z == 0)
                                 {
-                                        map.vox[x][y][z].mat = materials[MAT_BLOCK];
-                                        map.vox[x][y][z].text = texts[TEXT_BRICK_WALL_RED];
+                                        map.vox[x][y][z] = voxs[VOX_BRICK_WALL_RED];
                                 }
                                 else
                                 {
-                                        map.vox[x][y][z].mat = materials[MAT_AIR];
-                                        map.vox[x][y][z].text = texts[TEXT_TEST];
+                                        map.vox[x][y][z] = voxs[VOX_AIR];
                                 }
-                                
                         }
                 }
         }
 
-        map.vox[(int)floor(MAP_X/2)][1][(int)floor(MAP_Z/2)].mat = materials[MAT_BLOCK];
-        map.vox[(int)floor(MAP_X/2)][1][(int)floor(MAP_Z/2)].text = texts[TEXT_UNDEFINED];
-
-        map.vox[(int)floor(MAP_X/2)][1][(int)floor(MAP_Z/2)+1].mat = materials[MAT_BLOCK];
-        map.vox[(int)floor(MAP_X/2)][1][(int)floor(MAP_Z/2)+1].text = texts[TEXT_TEST];
-
-        map.vox[(int)floor(MAP_X/2)][1][(int)floor(MAP_Z/2)+2].mat = materials[MAT_BLOCK];
-        map.vox[(int)floor(MAP_X/2)][1][(int)floor(MAP_Z/2)+2].text = texts[TEXT_TEST];
-
-        map.vox[(int)floor(MAP_X/2)][2][(int)floor(MAP_Z/2)].mat = materials[MAT_BLOCK];
-        map.vox[(int)floor(MAP_X/2)][2][(int)floor(MAP_Z/2)].text = texts[TEXT_UNDEFINED];
-
-        map.vox[(int)floor(MAP_X/2)][2][(int)floor(MAP_Z/2)+1].mat = materials[MAT_BLOCK];
-        map.vox[(int)floor(MAP_X/2)][2][(int)floor(MAP_Z/2)+1].text = texts[TEXT_TEST];
-
-        map.vox[(int)floor(MAP_X/2)][2][(int)floor(MAP_Z/2)+2].mat = materials[MAT_BLOCK];
-        map.vox[(int)floor(MAP_X/2)][2][(int)floor(MAP_Z/2)+2].text = texts[TEXT_TEST];
+        for (int y = 0; y < map.size.y; y++)
+        {
+                map.vox[(int)floor(MAP_X/2)][y][(int)floor(MAP_Z/2)] = voxs[VOX_TEST];
+                map.vox[(int)floor(MAP_X/2)][y][(int)floor(MAP_Z/2)+1] = voxs[VOX_TEST];
+        }
 
 
         Vec3 pos;

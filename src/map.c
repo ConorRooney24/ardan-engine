@@ -21,8 +21,7 @@ Map map_init(Vec3i size)
 
                         for (int z = 0; z < size.z; z++)
                         {                                
-                                map.vox[x][y][z].mat = materials[MAT_UNDEFINED];
-                                map.vox[x][y][z].text = texts[TEXT_UNDEFINED];
+                                map.vox[x][y][z] = voxs[VOX_UNDEFINED];
                         }
                 }
         }

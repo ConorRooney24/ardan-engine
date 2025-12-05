@@ -11,20 +11,7 @@
 #include "vector.h"
 #include "material.h"
 #include "text.h"
-
-// Used for describing the faces of a voxel
-#define VOX_FACE_X_MINUS 0
-#define VOX_FACE_X_PLUS 1
-#define VOX_FACE_Y_MINUS 2
-#define VOX_FACE_Y_PLUS 3
-#define VOX_FACE_Z_MINUS 4
-#define VOX_FACE_Z_PLUS 5
-
-typedef struct Vox // Voxels
-{
-        Material mat;
-        Text text;
-} Vox;
+#include "vox.h"
 
 typedef struct Map
 {

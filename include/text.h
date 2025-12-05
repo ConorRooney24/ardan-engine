@@ -11,6 +11,7 @@
 #define TEXT_RES_Y 16
 
 #define TEXT_UNDEFINED 0
+#define TEXT_TEST 255
 
 typedef struct Text
 {
@@ -21,5 +22,6 @@ typedef struct Text
 extern Text texts[256];
 
 void text_init(); // Initialises the texts array with textures
+int text_load_from_img(const char *filename, uint8_t index);
 
 #endif // TEXT_H

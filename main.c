@@ -38,22 +38,22 @@ int main(void)
                                 if (x == map.size.x-1 || x == 0)
                                 {
                                         map.vox[x][y][z].mat = materials[MAT_BLOCK_RED];
-                                        map.vox[x][y][z].text = texts[TEXT_UNDEFINED];
+                                        map.vox[x][y][z].text = texts[TEXT_TEST];
                                 }
                                 else if (y == map.size.y-1 || y == 0)
                                 {
                                         map.vox[x][y][z].mat = materials[MAT_BLOCK_GREEN];
-                                        map.vox[x][y][z].text = texts[TEXT_UNDEFINED];
+                                        map.vox[x][y][z].text = texts[TEXT_TEST];
                                 }
                                 else if (z == map.size.z-1 || z == 0)
                                 {
                                         map.vox[x][y][z].mat = materials[MAT_BLOCK_BLUE];
-                                        map.vox[x][y][z].text = texts[TEXT_UNDEFINED];
+                                        map.vox[x][y][z].text = texts[TEXT_TEST];
                                 }
                                 else
                                 {
                                         map.vox[x][y][z].mat = materials[MAT_AIR];
-                                        map.vox[x][y][z].text = texts[TEXT_UNDEFINED];
+                                        map.vox[x][y][z].text = texts[TEXT_TEST];
                                 }
                                 
                         }
@@ -68,7 +68,7 @@ int main(void)
         dir.x = 0;
         dir.y = 0;
 
-        Cam c = cam_init(pos, dir, RES_X, RES_Y, deg_to_rad(90));
+        Cam c = cam_init(pos, dir, RES_X, RES_Y, deg_to_rad(60));
         cam_calculate_vFOV(&c);
 
         printf("\033[2J");

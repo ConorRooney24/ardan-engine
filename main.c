@@ -40,9 +40,13 @@ int main(void)
                                 {
                                         map.vox[x][y][z] = voxs[VOX_BRICK_WALL_RED];
                                 }
-                                else if (y == map.size.y-1 || y == 0)
+                                else if (y == 0)
                                 {
                                         map.vox[x][y][z] = voxs[VOX_FLOOR_BOARDS_DIRTY_YELLOW];
+                                }
+                                else if (y == map.size.y - 1)
+                                {
+                                        map.vox[x][y][z] = voxs[VOX_PAINT_BEIGE];
                                 }
                                 else if (z == map.size.z-1 || z == 0)
                                 {

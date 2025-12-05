@@ -21,6 +21,7 @@
 #define VOX_TEST 1
 #define VOX_BRICK_WALL_RED 2
 #define VOX_FLOOR_BOARDS_DIRTY_YELLOW 3
+#define VOX_PAINT_BEIGE 4
 #define VOX_AIR 255
 
 typedef struct Vox // Voxels

@@ -25,6 +25,10 @@ void map_voxs_init()
         voxs[VOX_FLOOR_BOARDS_DIRTY_YELLOW].mat = materials[MAT_BLOCK];
         voxs[VOX_FLOOR_BOARDS_DIRTY_YELLOW].text = texts[TEXT_FLOOR_BOARDS_DIRTY_YELLOW];
 
+        voxs[VOX_PAINT_BEIGE].id = VOX_PAINT_BEIGE;
+        voxs[VOX_PAINT_BEIGE].mat = materials[MAT_BLOCK];
+        voxs[VOX_PAINT_BEIGE].text = texts[TEXT_PAINT_BEIGE];
+
         voxs[VOX_AIR].id = VOX_AIR;
         voxs[VOX_AIR].mat = materials[MAT_AIR];
         voxs[VOX_AIR].text = texts[TEXT_UNDEFINED];

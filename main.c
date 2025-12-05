@@ -38,7 +38,7 @@ int main(void)
                                 if (x == map.size.x-1 || x == 0)
                                 {
                                         map.vox[x][y][z].mat = materials[MAT_BLOCK_RED];
-                                        map.vox[x][y][z].text = texts[TEXT_TEST];
+                                        map.vox[x][y][z].text = texts[TEXT_RED_BRICK_WALL];
                                 }
                                 else if (y == map.size.y-1 || y == 0)
                                 {
@@ -48,7 +48,7 @@ int main(void)
                                 else if (z == map.size.z-1 || z == 0)
                                 {
                                         map.vox[x][y][z].mat = materials[MAT_BLOCK_BLUE];
-                                        map.vox[x][y][z].text = texts[TEXT_TEST];
+                                        map.vox[x][y][z].text = texts[TEXT_RED_BRICK_WALL];
                                 }
                                 else
                                 {

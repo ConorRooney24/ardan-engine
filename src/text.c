@@ -66,6 +66,9 @@ void text_init()
 
         texts[TEXT_TEST].id = TEXT_TEST;
         text_load_from_img("res/text/TEXT_TEST.png", TEXT_TEST);
+
+        texts[TEXT_BRICK_WALL_RED].id = TEXT_BRICK_WALL_RED;
+        text_load_from_img("res/text/TEXT_BRICK_WALL_RED.png", TEXT_BRICK_WALL_RED);
 }
 
 int text_load_from_img(const char *filename, uint8_t index) // This function is completely AI generated. I dont understand PNG's.

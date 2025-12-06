@@ -1,18 +1,17 @@
 # Termicast
-A Fully 3D Terminal based Ray-Caster written in C.
+A Fully 3D Terminal based Ray-Caster engine written in C.
 
 ## Conventions
-### Position & Direction
-In 3D Space, +x is right, +y is up, and +z is forward. If an objects z increases, it means it's moving forward relative to global space. If its y increases, it's floating up. If its x increases, it's moving right.
+### Coordinates
+In this program, When using 3D space, The coordinate system is as follows: +x means moving right, -x means moving left, +y means moving up (into the air), -y means moving down (towards the floor), +z means moving forward, and -z means moving back.
 
-The position of objects in 3D space is stored in a Vec3 where x, y, and z are a given objects global coordinates.
+Coordinate systems can either be relative to the map, or relative to another object. going 1 unit forward in the Z axis relative to the map would mean the same thing for every object regardless of their rotation. They would all move in the same direction along the map. However, Moving and object 1 unit forward in the Z axis relative to that objects own self would just that the object moves forward in whatever direction it is facing. If that object was facing towards the +y direction relative to the map, and it moved +1 unit in the z axis relative to itself, it would move 1 unit in the y axis relative to the world.
 
-The direction of an object refers to where it is facing. Direction is stored in 3 different ways throughout the program:
-- A Vec3 which represents a translation between the objects current position and a translation which would be added to that position if it were to move in the direction it is facing. This is the primary method of storing direction.
-- A Vec2 where x and y represent the pitch and yaw in radian respectively. This is used for trig functions and compatibility with math.h.
-- A Vec2 where x and y represent the pitch and yaw in degrees respectively. This is used for human readability and is usually translated into Radian or a translation Vec3 later for actual computation.
-### Pitch, Roll, and Yaw
-When we are dealing with Pitch, Roll, and Yaw for say an objects direction (In which case it would just be pitch and yaw given objects do not yet support roll) instead of a Vec3 translation vector, We measure as follows:
-- Pitch is measured as the angle (in radian or degrees) from +z towards +y. A pitch of 0 would mean straight forward towards z. A pitch of 90 degrees would mean facing straight up towards y.
-- Yaw is the angle from +y towards +x, so a yaw of 0 would be even, and a yaw of 90 degrees would mean tilted 90 degrees clockwise.
-- Roll is measured as the angle from +z towards +x.
+### Position (pos)
+The position of an object describes it's current location relative to world space. Position is stored as a Vec3 of x, y, and z.
+### Rotation (rot)
+The rotation of an object currently describes an objects pitch and yaw. Rotation is stored in a Vec2 of x, and y. x refers to the objects pitch going from +z towards +y. Meaning a pitch of 0 degrees would be looking dead on, a pitch of 90 degrees would be straight up, and a pitch of 180 degrees would be straight behind. Similarly, y refers to an objects yaw starting from +z going towards +x. A yaw of 0 degrees would mean straight on, 90 would mean to the right, 180, would mean behind, and 270 would mean to the left.
+
+Rotation vectors are stored in radian, not degrees.
+### Velocity (vel)
+The velocity of an object describes how far it is moving each frame relative to world space, not relative to itself. Velocity is stored as a Vec3.

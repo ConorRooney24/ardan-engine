@@ -12,9 +12,9 @@
 
 #define RES_X 920/4
 #define RES_Y 480/4
-#define MAP_X 50
-#define MAP_Y 10
-#define MAP_Z 50
+#define MAP_X 200
+#define MAP_Y 30
+#define MAP_Z 200
 #define FRAMETIME_MIN 1.0f
 
 int main(void)
@@ -22,6 +22,7 @@ int main(void)
         config.max_ray_distance = 400;
         config.ray_step_scalar_coarse = 1.0f;
         config.ray_step_scalar_fine = 0.01f;
+        config.raycast_multithreading = true;
 
         materials_init(materials);
         text_init();
@@ -64,6 +65,13 @@ int main(void)
         {
                 map.vox[(int)floor(MAP_X/2)][y][(int)floor(MAP_Z/2)] = voxs[VOX_TEST];
                 map.vox[(int)floor(MAP_X/2)][y][(int)floor(MAP_Z/2)+1] = voxs[VOX_TEST];
+                map.vox[(int)floor(MAP_X/2)][y][(int)floor(MAP_Z/2)+2] = voxs[VOX_TEST];
+                map.vox[(int)floor(MAP_X/2)][y][(int)floor(MAP_Z/2)+3] = voxs[VOX_TEST];
+
+                map.vox[(int)floor(MAP_X/2)][y][(int)floor(MAP_Z/2)] = voxs[VOX_TEST];
+                map.vox[(int)floor(MAP_X/2)+1][y][(int)floor(MAP_Z/2)] = voxs[VOX_TEST];
+                map.vox[(int)floor(MAP_X/2)+2][y][(int)floor(MAP_Z/2)] = voxs[VOX_TEST];
+                map.vox[(int)floor(MAP_X/2)+3][y][(int)floor(MAP_Z/2)] = voxs[VOX_TEST];
         }
 
 
@@ -152,6 +160,8 @@ int main(void)
 
         cam_destroy(&c);
         buffer_destroy(&buffer);
+
+        map_load_file(&map, "res/map/MAP_TEST.txt");
 
         return 0;
 }

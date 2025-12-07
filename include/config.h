@@ -5,6 +5,8 @@
 #ifndef CONFIG_H
 #define CONFIG_H
 
+#include <stdbool.h>
+
 #define DISPLAY_WIDTH_DEFAULT 250
 #define DISPLAY_HEIGHT_DEFAULT 150
 
@@ -16,6 +18,7 @@ typedef struct Config
         int display_width, display_height;
         float hFOV;
         float max_ray_distance, ray_step_scalar_coarse, ray_step_scalar_fine;
+        bool raycast_multithreading;
 } Config;
 
 extern Config config;

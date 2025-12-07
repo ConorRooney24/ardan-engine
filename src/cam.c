@@ -3,6 +3,7 @@
 #include <math.h>
 #include <stdlib.h>
 #include <stdio.h>
+#include <pthread.h>
 #include "../include/trig.h"
 #include "../include/cam.h"
 
@@ -104,16 +105,55 @@ void capture_and_pass(Cam *cam, Buffer *buffer, Map *map)
                 return;
         }
 
-        for (int y = 0; y < cam->res_y; y++)
+        if (config.raycast_multithreading)
         {
-                for (int x = 0; x < cam->res_x; x++)
+                pthread_t threads[cam->res_y]; // Array of threads
+                RowThreadArgs args[cam->res_y]; // Array of arguments for each row thread
+
+                for (int y = 0; y < cam->res_y; y++)
                 {
-                        //ray_cast_simple(&cam->rays[y][x], map, config.max_ray_distance, config.ray_step_scalar_fine);
-                        //ray_cast_jump(&cam->rays[y][x], map, config.max_ray_distance, config.ray_step_scalar_coarse, config.ray_step_scalar_fine);
-                        ray_cast_dda(&cam->rays[y][x], map, config.max_ray_distance);
-                        buffer->rays[y][x] = cam->rays[y][x];
+                        
+                        args[y].buffer = buffer;
+                        args[y].cam = cam;
+                        args[y].map = map;
+                        args[y].row_y = y;
+
+                        pthread_create(&threads[y], NULL, capture_and_pass_row, &args[y]); 
+                }
+
+                for (int y = 0; y < cam->res_y; y++) // join all threads back for each row
+                {
+                        pthread_join(threads[y], NULL);
                 }
         }
+        else
+        {
+                for (int y = 0; y < cam->res_y; y++)
+                {
+                        for (int x = 0; x < cam->res_x; x++)
+                        {
+                                //ray_cast_simple(&cam->rays[y][x], map, config.max_ray_distance, config.ray_step_scalar_fine);
+                                //ray_cast_jump(&cam->rays[y][x], map, config.max_ray_distance, config.ray_step_scalar_coarse, config.ray_step_scalar_fine);
+                                ray_cast_dda(&cam->rays[y][x], map, config.max_ray_distance);
+                                buffer->rays[y][x] = cam->rays[y][x];
+                        }
+                }
+        }
+        
+}
+
+void *capture_and_pass_row(void *args)
+{
+        RowThreadArgs *a = (RowThreadArgs *)args;
+
+        for (int x = 0; x < a->cam->res_x; x++) // For every pixel (column)  in this row
+        {
+                ray_cast_dda(&a->cam->rays[a->row_y][x], a->map, config.max_ray_distance);
+
+                a->buffer->rays[a->row_y][x] = a->cam->rays[a->row_y][x];
+        }
+
+        return NULL;
 }
 
 void cam_rays_reset(Cam *cam)

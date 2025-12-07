@@ -20,12 +20,21 @@ typedef struct Cam
         Ray **rays; // y, x
 } Cam;
 
+typedef struct RowThreadArgs // Arguments passed to threads that run *capture_and_pass_row
+{
+        Cam *cam;
+        Buffer *buffer;
+        Map *map;
+        int row_y;
+} RowThreadArgs;
+
 Cam cam_init(Vec3 pos, Vec2 rot, int res_x, int res_y, float hFOV);
 void cam_destroy(Cam *cam);
 
 void cam_calculate_vFOV(Cam *cam);
 void cam_calculate_ray_trajectories(Cam *cam);
 void capture_and_pass(Cam *cam, Buffer *buffer, Map *map); // Uses the raycaster to cast a ray for each pixel along its trajectory in the matrix and sends the ray journey information to a buffer
+void *capture_and_pass_row(void *args); // Used for multithreading. same as capture_and_pass only for a specific row
 void cam_rays_reset(Cam *cam); // Resets the rays for the next cast
 
 void cam_print_info(Cam *cam);

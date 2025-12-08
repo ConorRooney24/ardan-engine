@@ -8,9 +8,9 @@
 #include <stdint.h>
 #include "col.h"
 
-#define MAT_UNDEFINED 0
+#define MAT_AIR 0
 #define MAT_BLOCK 1
-#define MAT_AIR 255
+#define MAT_UNDEFINED 255
 
 typedef struct Material
 {       

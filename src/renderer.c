@@ -196,10 +196,11 @@ void buffer_translate_ray_data(Buffer *buffer)
 
 void buffer_print(Buffer *buffer)
 {
-        printf("\033[H");
+        printf("\033[H"); // cursor to top left
+
         for (int y = 0; y < buffer->res_y; y++)
         {
-                sleep_ns(100000);
+                //sleep_ns(1000000);
                 for (int x = 0; x < buffer->res_x; x++)
                 {
                         col_print_set(buffer->pixels[y][x].col);

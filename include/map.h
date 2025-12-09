@@ -15,11 +15,16 @@
 
 typedef struct Map
 {
+        char *name;
         Vec3i size;
+        Vec3 spawn_pos;
+        Vec2 spawn_rot;
         Vox ***vox;
 } Map;
 
 Map map_init(Vec3i size);
 void map_destroy(Map *map);
+
+void map_load_file(Map *map, const char *file); // Takes an initialised map and populates it with data from a map file.
 
 #endif // MAP_H

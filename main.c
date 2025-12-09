@@ -12,14 +12,14 @@
 
 #define RES_X 920/4
 #define RES_Y 480/4
-#define MAP_X 200
-#define MAP_Y 30
-#define MAP_Z 200
-#define FRAMETIME_MIN 1.0f
+#define MAP_X 5
+#define MAP_Y 5
+#define MAP_Z 5
+#define FRAMETIME_MIN 0.0f
 
 int main(void)
 {
-        config.max_ray_distance = 400;
+        config.max_ray_distance = 300;
         config.ray_step_scalar_coarse = 1.0f;
         config.ray_step_scalar_fine = 0.01f;
         config.raycast_multithreading = true;
@@ -30,7 +30,9 @@ int main(void)
 
         Buffer buffer = buffer_init(RES_X, RES_Y);
         Map map = map_init((Vec3i){MAP_X,MAP_Y,MAP_Z});
+        map_load_file(&map, "res/map/MAP_TEST.mapa");
 
+        /*
         for (int x = 0; x < map.size.x; x++)
         {
                 for (int y = 0; y < map.size.y; y++)
@@ -73,15 +75,16 @@ int main(void)
                 map.vox[(int)floor(MAP_X/2)+2][y][(int)floor(MAP_Z/2)] = voxs[VOX_TEST];
                 map.vox[(int)floor(MAP_X/2)+3][y][(int)floor(MAP_Z/2)] = voxs[VOX_TEST];
         }
+        */
 
 
         Vec3 pos;
         Vec2 dir;
-        pos.x = MAP_X/2;
-        pos.y = 7;
-        pos.z = MAP_Z/2;
-        dir.x = 0;
-        dir.y = 0;
+        pos.x = map.spawn_pos.x;
+        pos.y = map.spawn_pos.y;
+        pos.z = map.spawn_pos.z;
+        dir.x = map.spawn_rot.x;
+        dir.y = map.spawn_rot.y;
 
         Cam c = cam_init(pos, dir, RES_X, RES_Y, deg_to_rad(60));
         cam_calculate_vFOV(&c);
@@ -160,8 +163,6 @@ int main(void)
 
         cam_destroy(&c);
         buffer_destroy(&buffer);
-
-        map_load_file(&map, "res/map/MAP_TEST.txt");
 
         return 0;
 }

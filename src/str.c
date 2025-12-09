@@ -1,7 +1,9 @@
+// str.c
 
 #include <stdlib.h>
+#include "../include/str.h"
 
-static char *str_whitespace_remove(char *str)
+char *str_whitespace_remove(char *str)
 {
         char *start = str;
 

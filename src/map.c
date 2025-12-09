@@ -53,8 +53,10 @@ void map_destroy(Map *map)
         map->size = (Vec3i){0,0,0};
 }
 
-void map_load_file(Map *map, const char *file)
+Map map_load_file(const char *file)
 {
+        Map map;
+
         const int MAX_LINE_LENGTH = 4096;
         const int NUM_HEADER_VALUES = 8; // excluding name
 
@@ -65,7 +67,7 @@ void map_load_file(Map *map, const char *file)
                 printf("Error: Unable to read map file '%s'.", file);
                 col_print_reset();
                 printf("\n");
-                return;
+                return map;
         }
 
         char *line = malloc((size_t)MAX_LINE_LENGTH);
@@ -126,7 +128,7 @@ void map_load_file(Map *map, const char *file)
                                 free(name_buf);
                                 free(line);
                                 fclose(map_file);
-                                return;
+                                return map;
                         }
                 }
                 else if (header_values_read == 1)
@@ -142,7 +144,7 @@ void map_load_file(Map *map, const char *file)
                                 free(name_buf);
                                 free(line);
                                 fclose(map_file);
-                                return;
+                                return map;
                         }
                 }
                 else if (header_values_read == 2)
@@ -158,7 +160,7 @@ void map_load_file(Map *map, const char *file)
                                 free(name_buf);
                                 free(line);
                                 fclose(map_file);
-                                return;
+                                return map;
                         }
                 }
                 else if (header_values_read == 3)
@@ -174,7 +176,7 @@ void map_load_file(Map *map, const char *file)
                                 free(name_buf);
                                 free(line);
                                 fclose(map_file);
-                                return;
+                                return map;
                         }
                 }
                 else if (header_values_read == 4)
@@ -190,7 +192,7 @@ void map_load_file(Map *map, const char *file)
                                 free(name_buf);
                                 free(line);
                                 fclose(map_file);
-                                return;
+                                return map;
                         }
                 }
                 else if (header_values_read == 5)
@@ -206,7 +208,7 @@ void map_load_file(Map *map, const char *file)
                                 free(name_buf);
                                 free(line);
                                 fclose(map_file);
-                                return;
+                                return map;
                         }
                 }
                 else if (header_values_read == 6)
@@ -222,7 +224,7 @@ void map_load_file(Map *map, const char *file)
                                 free(name_buf);
                                 free(line);
                                 fclose(map_file);
-                                return;
+                                return map;
                         }
                 }
                 else if (header_values_read == 7)
@@ -238,7 +240,7 @@ void map_load_file(Map *map, const char *file)
                                 free(name_buf);
                                 free(line);
                                 fclose(map_file);
-                                return;
+                                return map;
                         }
                 }
                 else
@@ -262,7 +264,7 @@ void map_load_file(Map *map, const char *file)
                 free(name_buf);
                 free(line);
                 fclose(map_file);
-                return;
+                return map;
         }
 
         if (!name_read || header_values_read != NUM_HEADER_VALUES)
@@ -275,7 +277,7 @@ void map_load_file(Map *map, const char *file)
                 free(name_buf);
                 free(line);
                 fclose(map_file);
-                return;
+                return map;
         }
 
         if (size_x <= 0 || size_y <= 0 || size_z <= 0)
@@ -288,7 +290,7 @@ void map_load_file(Map *map, const char *file)
                 free(name_buf);
                 free(line);
                 fclose(map_file);
-                return;
+                return map;
         }
 
 
@@ -319,7 +321,7 @@ void map_load_file(Map *map, const char *file)
                         printf("Error: Invalid voxel data given on line '%s' in map file '%s'.", line, file);
                         col_print_reset();
                         printf("\n");
-                        return;
+                        return map;
                 }
 
                 if (vx < 0 || vx >= size_x || vy < 0 || vy >= size_y || vz < 0 || vz >= size_z) // validating
@@ -328,7 +330,7 @@ void map_load_file(Map *map, const char *file)
                         printf("Error: Voxel coordinate (x%d, y%d, z%d) does not match map size on line '%s' in map file '%s'.", vx, vy, vz, line, file);
                         col_print_reset();
                         printf("\n");
-                        return;
+                        return map;
                 }
 
                 size_t index = ((size_t)vy * (size_t)size_z + (size_t)vz) * (size_t)size_x + (size_t)vx;
@@ -339,38 +341,51 @@ void map_load_file(Map *map, const char *file)
         fclose(map_file);
         free(line);
 
-        if (map != NULL)
+        
+        map.name = name_buf;
+        map.size.x = size_x;
+        map.size.y = size_y;
+        map.size.z = size_z;
+        map.spawn_pos.x = (float)spawn_pos_x;
+        map.spawn_pos.y = (float)spawn_pos_y;
+        map.spawn_pos.z = (float)spawn_pos_z;
+        map.spawn_rot.x = (float)spawn_rot_x;
+        map.spawn_rot.y = (float)spawn_rot_y;
+
+        // Initialise the return maps vox's
+        map.vox = (Vox***)malloc(map.size.x * sizeof(Vox**));
+        for (int x = 0; x < map.size.x; x++)
         {
-                map->name = name_buf;
-                map->size.x = size_x;
-                map->size.y = size_y;
-                map->size.z = size_z;
-                map->spawn_pos.x = (float)spawn_pos_x;
-                map->spawn_pos.y = (float)spawn_pos_y;
-                map->spawn_pos.z = (float)spawn_pos_z;
-                map->spawn_rot.x = (float)spawn_rot_x;
-                map->spawn_rot.y = (float)spawn_rot_y;
-                
-                for (int x = 0; x < map->size.x; x++)
+                map.vox[x] = (Vox**)malloc(map.size.y * sizeof(Vox*));
+
+                for (int y = 0; y < map.size.y; y++)
                 {
-                        for (int y = 0; y < map->size.y; y++)
+                        map.vox[x][y] = (Vox *)malloc(map.size.z * sizeof(Vox));
+
+                        for (int z = 0; z < map.size.z; z++)
+                        {                                
+                                map.vox[x][y][z] = voxs[VOX_UNDEFINED];
+                        }
+                }
+        }
+        
+        // populate the return maps vox's
+        for (int x = 0; x < map.size.x; x++)
+        {
+                for (int y = 0; y < map.size.y; y++)
+                {
+                        for (int z = 0; z < map.size.z; z++)
                         {
-                                for (int z = 0; z < map->size.z; z++)
-                                {
-                                        size_t index = (size_t)y * map->size.z * map->size.x + (size_t)z * map->size.x + (size_t)x;
-                                        map->vox[x][y][z] = voxs[voxel_buffer[index]];
-                                }
-                                
+                                size_t index = (size_t)y * map.size.z * map.size.x + (size_t)z * map.size.x + (size_t)x;
+                                map.vox[x][y][z] = voxs[voxel_buffer[index]];
                         }
                         
                 }
-
-                free(voxel_buffer);
-        }
-        else
-        {
-                free(name_buf);
-                free(voxel_buffer);
+                
         }
 
+        return map;
+
+        free(name_buf);
+        free(voxel_buffer);
 }

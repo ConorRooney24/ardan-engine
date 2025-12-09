@@ -25,6 +25,6 @@ typedef struct Map
 Map map_init(Vec3i size);
 void map_destroy(Map *map);
 
-void map_load_file(Map *map, const char *file); // Takes an initialised map and populates it with data from a map file.
+Map map_load_file(const char *file); // Inits a map from a file
 
 #endif // MAP_H

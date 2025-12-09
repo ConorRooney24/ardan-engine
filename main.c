@@ -12,9 +12,9 @@
 
 #define RES_X 920/4
 #define RES_Y 480/4
-#define MAP_X 5
-#define MAP_Y 5
-#define MAP_Z 5
+#define MAP_X 1
+#define MAP_Y 1
+#define MAP_Z 1
 #define FRAMETIME_MIN 0.0f
 
 int main(void)
@@ -29,8 +29,8 @@ int main(void)
         map_voxs_init();
 
         Buffer buffer = buffer_init(RES_X, RES_Y);
-        Map map = map_init((Vec3i){MAP_X,MAP_Y,MAP_Z});
-        map_load_file(&map, "res/map/MAP_TEST.mapa");
+        //Map map = map_init((Vec3i){MAP_X,MAP_Y,MAP_Z});
+        Map map = map_load_file("res/map/MAP_BRICK_HOUSE.mapa");
 
         /*
         for (int x = 0; x < map.size.x; x++)
@@ -86,7 +86,7 @@ int main(void)
         dir.x = map.spawn_rot.x;
         dir.y = map.spawn_rot.y;
 
-        Cam c = cam_init(pos, dir, RES_X, RES_Y, deg_to_rad(60));
+        Cam c = cam_init(pos, dir, RES_X, RES_Y, deg_to_rad(80));
         cam_calculate_vFOV(&c);
 
         printf("\033[2J");

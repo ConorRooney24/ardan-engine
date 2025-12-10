@@ -10,11 +10,8 @@
 #include "include/util_time.h"
 #include "include/input.h"
 
-#define RES_X 920/4
-#define RES_Y 480/4
-#define MAP_X 1
-#define MAP_Y 1
-#define MAP_Z 1
+#define RES_X 1280/4
+#define RES_Y 720/4
 #define FRAMETIME_MIN 0.0f
 
 int main(void)
@@ -29,53 +26,7 @@ int main(void)
         map_voxs_init();
 
         Buffer buffer = buffer_init(RES_X, RES_Y);
-        //Map map = map_init((Vec3i){MAP_X,MAP_Y,MAP_Z});
         Map map = map_load_file("res/map/MAP_BRICK_HOUSE.mapa");
-
-        /*
-        for (int x = 0; x < map.size.x; x++)
-        {
-                for (int y = 0; y < map.size.y; y++)
-                {
-                        for (int z = 0; z < map.size.z; z++)
-                        {
-                                if (x == map.size.x-1 || x == 0)
-                                {
-                                        map.vox[x][y][z] = voxs[VOX_BRICK_WALL_RED];
-                                }
-                                else if (y == 0)
-                                {
-                                        map.vox[x][y][z] = voxs[VOX_FLOOR_BOARDS_DIRTY_YELLOW];
-                                }
-                                else if (y == map.size.y - 1)
-                                {
-                                        map.vox[x][y][z] = voxs[VOX_PAINT_BEIGE];
-                                }
-                                else if (z == map.size.z-1 || z == 0)
-                                {
-                                        map.vox[x][y][z] = voxs[VOX_BRICK_WALL_RED];
-                                }
-                                else
-                                {
-                                        map.vox[x][y][z] = voxs[VOX_AIR];
-                                }
-                        }
-                }
-        }
-
-        for (int y = 0; y < map.size.y; y++)
-        {
-                map.vox[(int)floor(MAP_X/2)][y][(int)floor(MAP_Z/2)] = voxs[VOX_TEST];
-                map.vox[(int)floor(MAP_X/2)][y][(int)floor(MAP_Z/2)+1] = voxs[VOX_TEST];
-                map.vox[(int)floor(MAP_X/2)][y][(int)floor(MAP_Z/2)+2] = voxs[VOX_TEST];
-                map.vox[(int)floor(MAP_X/2)][y][(int)floor(MAP_Z/2)+3] = voxs[VOX_TEST];
-
-                map.vox[(int)floor(MAP_X/2)][y][(int)floor(MAP_Z/2)] = voxs[VOX_TEST];
-                map.vox[(int)floor(MAP_X/2)+1][y][(int)floor(MAP_Z/2)] = voxs[VOX_TEST];
-                map.vox[(int)floor(MAP_X/2)+2][y][(int)floor(MAP_Z/2)] = voxs[VOX_TEST];
-                map.vox[(int)floor(MAP_X/2)+3][y][(int)floor(MAP_Z/2)] = voxs[VOX_TEST];
-        }
-        */
 
 
         Vec3 pos;
@@ -96,8 +47,11 @@ int main(void)
 
         input_init();
         bool running = true;
+        bool gravity_enabled = true;
+
         while (running)
         {
+
                 frame_start = record_time();
                 input_update();
 
@@ -106,55 +60,170 @@ int main(void)
                         running = false;
                 }
 
+                Vec3 vec_buf;
+
                 if(input_key_pressed('w'))
                 {
-                        c.pos.z+=0.5;
+                        vec_buf.y = sin(c.rot.x);
+                        vec_buf.x = cos(c.rot.y - deg_to_rad(90));
+                        vec_buf.z = sin(c.rot.y + deg_to_rad(90));
+
+                        vec_buf = vec3_normalize(vec_buf);
+                        vec_buf = vec3_scale(vec_buf, 0.2f);
+
+                        c.vel.x += vec_buf.x;
+                        c.vel.y += vec_buf.y;
+                        c.vel.z += vec_buf.z;
                 }
                 if(input_key_pressed('a'))
                 {
-                        c.pos.x-=0.5;
+                        vec_buf.y = sin(c.rot.x);
+                        vec_buf.x = cos(c.rot.y  + deg_to_rad(180));
+                        vec_buf.z = -sin(c.rot.y + deg_to_rad(180));
+
+                        vec_buf = vec3_normalize(vec_buf);
+                        vec_buf = vec3_scale(vec_buf, 0.2f);
+
+                        c.vel.x += vec_buf.x;
+                        //c.vel.y += vec_buf.y;
+                        c.vel.z += vec_buf.z;
                 }
                 if(input_key_pressed('s'))
                 {
-                        c.pos.z-=0.5;
+                        vec_buf.y = sin(c.rot.x);
+                        vec_buf.x = cos(c.rot.y - deg_to_rad(90));
+                        vec_buf.z = sin(c.rot.y + deg_to_rad(90));
+
+                        vec_buf = vec3_normalize(vec_buf);
+                        vec_buf = vec3_scale(vec_buf, 0.2f);
+
+                        c.vel.x -= vec_buf.x;
+                        c.vel.y -= vec_buf.y;
+                        c.vel.z -= vec_buf.z;
                 }
                 if(input_key_pressed('d'))
                 {
-                        c.pos.x+=0.5;
+                        vec_buf.y = sin(c.rot.x);
+                        vec_buf.x = -cos(c.rot.y  + deg_to_rad(180));
+                        vec_buf.z = sin(c.rot.y + deg_to_rad(180));
+
+                        vec_buf = vec3_normalize(vec_buf);
+                        vec_buf = vec3_scale(vec_buf, 0.2f);
+
+                        c.vel.x += vec_buf.x;
+                        //c.vel.y += vec_buf.y;
+                        c.vel.z += vec_buf.z;
                 }
+                if(input_key_pressed('q'))
+                {
+                        c.vel.y -= 0.1;
+                }
+                if(input_key_pressed('e'))
+                {
+                        c.vel.y += 0.1;
+                }
+                
+                Vec2 rot_vel;
+                rot_vel.x = 0;
+                rot_vel.y = 0;
 
                 if(input_key_pressed('i'))
                 {
-                        c.rot.x+= 0.1;
+                        rot_vel.x += 0.05;
                 }
                 if(input_key_pressed('k'))
                 {
-                        c.rot.x-= 0.1;
+                        rot_vel.x -= 0.05;
                 }
                 if(input_key_pressed('l'))
                 {
-                        c.rot.y+= 0.1;
+                        rot_vel.y += 0.05;
                 }
                 if(input_key_pressed('j'))
                 {
-                        c.rot.y-=0.1;
+                        rot_vel.y -= 0.05;
                 }
+                if (input_key_pressed('-'))
+                {
+                        c.hFOV += 0.01;
+                        cam_calculate_vFOV(&c);
+                }
+                if (input_key_pressed('='))
+                {
+                        c.hFOV -= 0.01;
+                        cam_calculate_vFOV(&c);
+                }
+                if (input_key_pressed('g'))
+                {
+                        if (gravity_enabled)
+                        {
+                                gravity_enabled = false;
+                        }
+                        else
+                        {
+                                gravity_enabled = true;
+                        }
+                        
+                }
+                
 
 
                 cam_rays_reset(&c);
                 cam_calculate_ray_trajectories(&c);
                 capture_and_pass(&c, &buffer, &map);
                 buffer_translate_ray_data(&buffer);
+               
                 buffer_print(&buffer);
                 
 
                 frame_end = record_time();
-                printf("| FPS: %.1f | Frametime: %.1fms | Min Frametime: %.1f", time_frame_time_to_fps(time_diff(frame_start, frame_end)), timestamp_to_ms(time_diff(frame_start, frame_end)), FRAMETIME_MIN);
+                printf("| FPS: %.1f | Frametime: %.1fms | Min Frametime: %.1f | Cam Pos: x%f, y%f, z%f | Cam Rot: x%f, y%f |", time_frame_time_to_fps(time_diff(frame_start, frame_end)), timestamp_to_ms(time_diff(frame_start, frame_end)), FRAMETIME_MIN, c.pos.x, c.pos.y, c.pos.z, c.rot.x, c.rot.y);
                 
                 if (timestamp_to_ms(time_diff(frame_start, frame_end)) < FRAMETIME_MIN)
                 {
                         sleep_ms(FRAMETIME_MIN - timestamp_to_ms(time_diff(frame_start, frame_end))); 
                 }
+
+                const float g_friction = 0.6; // The friction on the floor
+                const float a_friction = 0.9; // The friction in the air
+                const float gravity = 0.1; // The force of gravity applied
+
+                const float rot_vel_friction = 1;
+                
+
+                if (c.pos.y <= 2.5) // If we are touching the floor
+                {
+                        c.pos.y = 2.5;
+
+                        if (c.vel.y < 0)
+                        {
+                                c.vel.y = 0;
+                        }
+                        
+
+                        c.vel.x *= g_friction;
+                        c.vel.z *= g_friction;
+                }
+                else // if we are in the air
+                {
+                        if (gravity_enabled)
+                        {
+                                c.vel.y -= gravity;
+                        }
+
+                        c.vel.x *= a_friction;
+                        c.vel.z *= a_friction;
+                        c.vel.y *= a_friction;
+                }
+
+                c.rot.x += rot_vel.x;
+                c.rot.y += rot_vel.y;
+
+                rot_vel.x *= rot_vel_friction;
+                rot_vel.y *= rot_vel_friction;
+                
+                c.pos = vec3_add(c.pos, c.vel);
+                
         }
 
         input_restore();

@@ -32,6 +32,7 @@ Cam cam_init(Vec3 pos, Vec2 rot, int res_x, int res_y, float hFOV);
 void cam_destroy(Cam *cam);
 
 void cam_calculate_vFOV(Cam *cam);
+void cam_calculate_ray_trajectories_legacy(Cam *cam);
 void cam_calculate_ray_trajectories(Cam *cam);
 void capture_and_pass(Cam *cam, Buffer *buffer, Map *map); // Uses the raycaster to cast a ray for each pixel along its trajectory in the matrix and sends the ray journey information to a buffer
 void *capture_and_pass_row(void *args); // Used for multithreading. same as capture_and_pass only for a specific row

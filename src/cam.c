@@ -20,6 +20,8 @@ Cam cam_init(Vec3 pos, Vec2 rot, int res_x, int res_y, float hFOV)
 
         cam.rot = rot;
 
+        cam.vel = (Vec3){0, 0, 0};
+
         cam_calculate_vFOV(&cam);
 
         cam.rays = (Ray**)malloc(res_y * sizeof(Ray*));
@@ -67,7 +69,7 @@ void cam_calculate_vFOV(Cam *cam)
         cam->vFOV = 2.0f * atan(tan(cam->hFOV / 2.0f) * aspect_ratio);
 }
 
-void cam_calculate_ray_trajectories(Cam *cam)
+void cam_calculate_ray_trajectories_legacy(Cam *cam) // old and buggy
 {
         double horizontal_ray_step = cam->hFOV / (cam->res_x - 1); // The distance between rays on the x axis in radian.
         double vertical_ray_step = cam->vFOV / (cam->res_y - 1); // The distance between rays on the y axis in radian.
@@ -92,6 +94,55 @@ void cam_calculate_ray_trajectories(Cam *cam)
                         cam->rays[y][x].vel = rot_to_vel(cam->rays[y][x].rot);
                 } 
         }  
+}
+
+void cam_calculate_ray_trajectories(Cam *cam)
+{
+        float tan_half_hFOV = tanf(cam->hFOV * 0.5f);
+        float tan_half_vFOV = tanf(cam->vFOV * 0.5f);
+
+        Vec3 world_up = {0.0f, 1.0f, 0.0f}; // Up relative to world space
+
+        Vec3 cam_forward = rot_to_vel(cam->rot); // Vector representing forward relative to the cam
+
+        Vec3 cam_right; // Vector representing right relative to the cam
+        cam_right.x = cam_forward.z * world_up.y - cam_forward.y * world_up.z;
+        cam_right.y = cam_forward.x * world_up.z - cam_forward.z * world_up.x;
+        cam_right.z = cam_forward.y * world_up.x - cam_forward.x * world_up.y;
+        cam_right = vec3_normalize(cam_right);
+
+        Vec3 cam_up; // Vector representing up relative to the cam
+        cam_up.x = cam_right.y * cam_forward.z - cam_right.z * cam_forward.y;
+        cam_up.y = cam_right.z * cam_forward.x - cam_right.x * cam_forward.z;
+        cam_up.z = cam_right.x * cam_forward.y - cam_right.y * cam_forward.x;
+        cam_up = vec3_normalize(cam_up);
+
+        float ndc_x, ndc_y;
+        float cx, cy, cz;
+
+        for (int y = 0; y < cam->res_y; y++)
+        {
+                ndc_y = (((float)y + 0.5f ) / (float)cam->res_y) * 2.0f - 1.0f;
+
+                for (int x = 0; x < cam->res_x; x++)
+                {
+                        ndc_x = ( ( (float)x + 0.5f ) / (float)cam->res_x ) * 2.0f - 1.0f;
+
+                        cx = ndc_x * tan_half_hFOV;
+                        cy = ndc_y * tan_half_vFOV;
+                        cz = 1.0f;
+
+                        Vec3 vel;
+                        vel.x = cx * cam_right.x + cy * cam_up.x + cz * cam_forward.x;
+                        vel.y = cx * cam_right.y + cy * cam_up.y + cz * cam_forward.y;
+                        vel.z = cx * cam_right.z + cy * cam_up.z + cz * cam_forward.z;
+
+                        vel = vec3_normalize(vel);
+
+                        cam->rays[y][x].pos = cam->pos;
+                        cam->rays[y][x].vel = vel;
+                }
+        }
 }
 
 void capture_and_pass(Cam *cam, Buffer *buffer, Map *map)

@@ -163,8 +163,8 @@ void cam_rays_reset(Cam *cam)
                 for (int x = 0; x < cam->res_x; x++)
                 {
                         cam->rays[y][x].collided = false;
-                        cam->rays[y][x].collided_vox.mat = materials[MAT_UNDEFINED];
-                        cam->rays[y][x].collided_vox.text = texts[TEXT_UNDEFINED];
+                        cam->rays[y][x].collided_vox.mat = &materials[MAT_UNDEFINED];
+                        cam->rays[y][x].collided_vox.text = &texts[TEXT_UNDEFINED];
                         cam->rays[y][x].vel = cam->vel;
                         cam->rays[y][x].rot = cam->rot;
                         cam->rays[y][x].distance_traveled = 0;

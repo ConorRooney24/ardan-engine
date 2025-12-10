@@ -11,8 +11,8 @@ Ray ray_init(Vec3 pos, Vec2 rot)
 	Ray ray;
 
 	ray.collided = false;
-	ray.collided_vox.mat = materials[MAT_UNDEFINED];
-	ray.collided_vox.text = texts[TEXT_UNDEFINED];
+	ray.collided_vox.mat = &materials[MAT_UNDEFINED];
+	ray.collided_vox.text = &texts[TEXT_UNDEFINED];
 
 	ray.distance_traveled = 0;
 
@@ -52,7 +52,7 @@ void ray_cast_simple(Ray *ray, Map *map, int max_distance, float step_scalar)
 			ray->collided = false;
 			return;
 		}
-		else if (map->vox[ray->pos_f.x][ray->pos_f.y][ray->pos_f.z].mat.mat_id == MAT_UNDEFINED) // if we have hit an undefined cell
+		else if (map->vox[ray->pos_f.x][ray->pos_f.y][ray->pos_f.z].mat->mat_id == MAT_UNDEFINED) // if we have hit an undefined cell
 		{
 			col_print_set(COL_RED);
 			printf("Error: Ray collided with undefined material;");
@@ -60,7 +60,7 @@ void ray_cast_simple(Ray *ray, Map *map, int max_distance, float step_scalar)
 			printf("\n");
 			return;
 		}
-		else if (map->vox[ray->pos_f.x][ray->pos_f.y][ray->pos_f.z].mat.transparency == 1.0f) // If the block is fully transparent (air)
+		else if (map->vox[ray->pos_f.x][ray->pos_f.y][ray->pos_f.z].mat->transparency == 1.0f) // If the block is fully transparent (air)
 		{
 			ray->pos_last_alive = ray->pos; // Set last alive pos before moving
 
@@ -93,7 +93,7 @@ void ray_cast_jump(Ray *ray, Map *map, int max_distance, float step_scalar_coars
 	{
 		simulated_ray_pos_floored = vec3_floor(simulated_ray_pos);
 		
-		if (map->vox[simulated_ray_pos_floored.x][simulated_ray_pos_floored.y][simulated_ray_pos_floored.z].mat.transparency == 1.0f) // if air
+		if (map->vox[simulated_ray_pos_floored.x][simulated_ray_pos_floored.y][simulated_ray_pos_floored.z].mat->transparency == 1.0f) // if air
 		{
 			simulated_ray_pos = vec3_add(simulated_ray_pos, simulated_ray_vel);
 			jumpDistanceScalar++;
@@ -119,7 +119,7 @@ void ray_cast_jump(Ray *ray, Map *map, int max_distance, float step_scalar_coars
 			ray->collided = false;
 			return;
 		}
-		else if (map->vox[ray->pos_f.x][ray->pos_f.y][ray->pos_f.z].mat.mat_id == MAT_UNDEFINED) // if we have hit an undefined cell
+		else if (map->vox[ray->pos_f.x][ray->pos_f.y][ray->pos_f.z].mat->mat_id == MAT_UNDEFINED) // if we have hit an undefined cell
 		{
 			col_print_set(COL_RED);
 			printf("Error: Ray collided with undefined material;");
@@ -127,7 +127,7 @@ void ray_cast_jump(Ray *ray, Map *map, int max_distance, float step_scalar_coars
 			printf("\n");
 			return;
 		}
-		else if (map->vox[ray->pos_f.x][ray->pos_f.y][ray->pos_f.z].mat.transparency == 1.0f) // If the block is fully transparent (air)
+		else if (map->vox[ray->pos_f.x][ray->pos_f.y][ray->pos_f.z].mat->transparency == 1.0f) // If the block is fully transparent (air)
 		{
 			ray->pos_last_alive = ray->pos; // Set last alive pos before moving
 
@@ -166,7 +166,7 @@ void ray_cast_dda(Ray *ray, Map *map, int max_distance)
 		return;
 	}
 
-	if (map->vox[current_vox.x][current_vox.y][current_vox.z].mat.mat_id == MAT_UNDEFINED)
+	if (map->vox[current_vox.x][current_vox.y][current_vox.z].mat->mat_id == MAT_UNDEFINED)
 	{
 		col_print_set(COL_RED);
 		printf("Error: Ray collided with undefined material;");
@@ -175,7 +175,7 @@ void ray_cast_dda(Ray *ray, Map *map, int max_distance)
 		return;
 	}
 
-	if (map->vox[current_vox.x][current_vox.y][current_vox.z].mat.transparency != 1.0f)
+	if (map->vox[current_vox.x][current_vox.y][current_vox.z].mat->transparency != 1.0f)
 	{
 		ray->collided = true;
 		ray->collided_vox = map->vox[current_vox.x][current_vox.y][current_vox.z];
@@ -529,7 +529,7 @@ void ray_cast_dda(Ray *ray, Map *map, int max_distance)
 			return;
 		}
 
-		if (map->vox[current_vox.x][current_vox.y][current_vox.z].mat.mat_id == MAT_UNDEFINED)
+		if (map->vox[current_vox.x][current_vox.y][current_vox.z].mat->mat_id == MAT_UNDEFINED)
 		{
 			col_print_set(COL_RED);
 			printf("Error: Ray collided with undefined material;");
@@ -538,7 +538,7 @@ void ray_cast_dda(Ray *ray, Map *map, int max_distance)
 			return;
 		}
 
-		if (map->vox[current_vox.x][current_vox.y][current_vox.z].mat.transparency == 1.0f)
+		if (map->vox[current_vox.x][current_vox.y][current_vox.z].mat->transparency == 1.0f)
 		{
 			continue;
 		}

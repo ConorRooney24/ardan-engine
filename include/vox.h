@@ -27,8 +27,8 @@
 typedef struct Vox // Voxels
 {
         uint8_t id;
-        Material mat;
-        Text text; // Storing individual copies of texts is taking up an insane amount of memory and probably resources due to the amount of memory accessing we do when rendering. we could change these to pointers to individual materials or textures but then we would not be able to modify a given voxels individual texture and also we would need to expand on the caster logic.
+        Material *mat;
+        Text *text; // Storing individual copies of texts is taking up an insane amount of memory and probably resources due to the amount of memory accessing we do when rendering. we could change these to pointers to individual materials or textures but then we would not be able to modify a given voxels individual texture and also we would need to expand on the caster logic.
 } Vox;
 
 extern Vox voxs[256];

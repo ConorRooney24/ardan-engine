@@ -180,7 +180,8 @@ void buffer_translate_ray_data(Buffer *buffer)
                                         ty = TEXT_RES_Y - 1;
                                 }
 
-                                buffer->pixels[y][x].col = buffer->rays[y][x].collided_vox.text.col_map[face_hit][ty][tx];
+                                //buffer->pixels[y][x].col = buffer->rays[y][x].collided_vox.text.col_map[face_hit][ty][tx];
+                                buffer->pixels[y][x].col = buffer->rays[y][x].collided_vox.text->col_map[face_hit][ty][tx];
                                 //printf("tx: %d, ty: %d, U: %.2f, V: %.2f\n", tx, ty, U, V);
                                 
                         }
@@ -219,7 +220,7 @@ void buffer_print_ray_material_id(Buffer *buffer)
         {
                 for (int x = 0; x < buffer->res_x; x++)
                 {
-                        printf("%d, ", buffer->rays[y][x].collided_vox.mat.mat_id);
+                        printf("%d, ", buffer->rays[y][x].collided_vox.mat->mat_id);
                 }
                 printf("\n");
         }     

@@ -187,7 +187,7 @@ void buffer_translate_ray_data(Buffer *buffer)
                         }
                         else
                         {
-                                buffer->pixels[y][x].col = COL_BLUE; // If the ray has not collided (meaning it went out of bounds) we set it to blue
+                                buffer->pixels[y][x].col = (Col){182, 224, 240}; // If the ray has not collided (meaning it went out of bounds) we set it to blue
                         }
                 }
                 

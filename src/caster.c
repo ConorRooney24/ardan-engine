@@ -150,7 +150,7 @@ void ray_cast_dda(Ray *ray, Map *map, int max_distance)
 {
 	const float EPSILON = 0.00001; // The epsilon we use to put difference between the last alive pos and the collided pos. Essentially has the same effect as the step scalar in the old algorithms except with no performance impact
 
-	ray->vel = vec3_normalize(ray->vel);
+	//ray->vel = vec3_normalize(ray->vel); //Dont need to do this because it is done in cam.c before passing
 
 	Vec3 dir = ray->vel;
 	Vec3 origin_pos = ray->pos;
@@ -294,7 +294,7 @@ void ray_cast_dda(Ray *ray, Map *map, int max_distance)
 			axis_chosen = 2;
 		}
 
-		ray->pos_last_alive = vec3_add(origin_pos, vec3_scale(dir, dist_next - EPSILON));
+		// ray->pos_last_alive = vec3_add(origin_pos, vec3_scale(dir, dist_next - EPSILON)); Currently not used
 
 		ray->pos = vec3_add(origin_pos, vec3_scale(dir, dist_next));
 

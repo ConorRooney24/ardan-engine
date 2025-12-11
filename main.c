@@ -1,14 +1,7 @@
 #include <stdio.h>
 #include <math.h>
 
-#include "include/map.h"
-#include "include/material.h"
-#include "include/config.h"
-#include "include/renderer.h"
-#include "include/cam.h"
-#include "include/trig.h"
-#include "include/util_time.h"
-#include "include/input.h"
+#include "engine/ae_engine.h"
 
 #define RES_X 1280/4
 #define RES_Y 720/4

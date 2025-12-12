@@ -7,3 +7,16 @@ ardan
 TODO.md
 onefile.sh
 prog.txt
+
+build/*
+
+*.o
+*.a
+*.so
+*.dll
+*.exe
+.idea/
+*.swp
+*.swo
+*~
+.DS_Store

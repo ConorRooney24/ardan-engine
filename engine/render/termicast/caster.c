@@ -4,7 +4,7 @@
 #include <stdio.h>
 #include <float.h>
 #include "caster.h"
-#include "../trig.h"
+#include "../../trig.h"
 
 Ray ray_init(Vec3 pos, Vec2 rot)
 {

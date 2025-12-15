@@ -4,7 +4,7 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <pthread.h>
-#include "../trig.h"
+#include "../../trig.h"
 #include "cam.h"
 
 Cam cam_init(Vec3 pos, Vec2 rot, int res_x, int res_y, float hFOV)
@@ -145,9 +145,9 @@ void cam_calculate_ray_trajectories(Cam *cam)
         }
 }
 
-void capture_and_pass(Cam *cam, Buffer *buffer, Map *map)
+void capture_and_pass(Cam *cam, RayBuffer *ray_buffer, Map *map)
 {
-        if (cam->res_x != buffer->res_x || cam->res_y != buffer->res_y)
+        if (cam->res_x != ray_buffer->res_x || cam->res_y != ray_buffer->res_y)
         {
                 col_print_set(COL_RED);
                 printf("Error: Cam resolution does not match buffer resolution");
@@ -164,7 +164,7 @@ void capture_and_pass(Cam *cam, Buffer *buffer, Map *map)
                 for (int y = 0; y < cam->res_y; y++)
                 {
                         
-                        args[y].buffer = buffer;
+                        args[y].ray_buffer = ray_buffer;
                         args[y].cam = cam;
                         args[y].map = map;
                         args[y].row_y = y;
@@ -186,7 +186,7 @@ void capture_and_pass(Cam *cam, Buffer *buffer, Map *map)
                                 //ray_cast_simple(&cam->rays[y][x], map, config.max_ray_distance, config.ray_step_scalar_fine);
                                 //ray_cast_jump(&cam->rays[y][x], map, config.max_ray_distance, config.ray_step_scalar_coarse, config.ray_step_scalar_fine);
                                 ray_cast_dda(&cam->rays[y][x], map, config.max_ray_distance);
-                                buffer->rays[y][x] = cam->rays[y][x];
+                                ray_buffer->rays[y][x] = cam->rays[y][x];
                         }
                 }
         }
@@ -201,7 +201,7 @@ void *capture_and_pass_row(void *args)
         {
                 ray_cast_dda(&a->cam->rays[a->row_y][x], a->map, config.max_ray_distance);
 
-                a->buffer->rays[a->row_y][x] = a->cam->rays[a->row_y][x];
+                a->ray_buffer->rays[a->row_y][x] = a->cam->rays[a->row_y][x];
         }
 
         return NULL;

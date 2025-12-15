@@ -5,7 +5,7 @@
 
 #include <stdbool.h>
 #include "material.h"
-#include "../vector.h"
+#include "../../vector.h"
 #include "map.h"
 
 typedef struct Ray

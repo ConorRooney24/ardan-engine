@@ -6,7 +6,7 @@
 #define MATERIAL_H
 
 #include <stdint.h>
-#include "../col.h"
+#include "../../col.h"
 
 #define MAT_AIR 0
 #define MAT_BLOCK 1

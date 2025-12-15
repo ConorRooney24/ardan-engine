@@ -3,8 +3,8 @@
 
 #include "engine/ae_engine.h"
 
-#define RES_X 1280/4
-#define RES_Y 720/4
+#define RES_X 100
+#define RES_Y 50
 #define FRAMETIME_MIN 0.0f
 
 int main(void)
@@ -18,8 +18,9 @@ int main(void)
         text_init();
         map_voxs_init();
 
-        Buffer buffer = buffer_init(RES_X, RES_Y);
-        Map map = map_load_file("res/map/MAP_BRICK_HOUSE.mapa");
+        Buffer pbuff = buffer_init(RES_X, RES_Y);
+        RayBuffer rbuff = ray_buffer_init(RES_X, RES_Y);
+        Map map = map_load_file("../res/map/MAP_BRICK_HOUSE.mapa");
 
 
         Vec3 pos;
@@ -33,7 +34,7 @@ int main(void)
         Cam c = cam_init(pos, dir, RES_X, RES_Y, deg_to_rad(80));
         cam_calculate_vFOV(&c);
 
-        printf("\033[2J");
+        printf("\033[2J"); //cls
 
         TimeStamp frame_start;
         TimeStamp frame_end;
@@ -163,10 +164,11 @@ int main(void)
 
                 cam_rays_reset(&c);
                 cam_calculate_ray_trajectories(&c);
-                capture_and_pass(&c, &buffer, &map);
-                buffer_translate_ray_data(&buffer);
+                capture_and_pass(&c, &rbuff, &map);
+                
+                ray_buffer_translate(&rbuff, &pbuff);
                
-                buffer_print(&buffer);
+                terminal_out_print(&pbuff, ' ');
                 
 
                 frame_end = record_time();
@@ -224,7 +226,8 @@ int main(void)
         printf("\033[2J");
 
         cam_destroy(&c);
-        buffer_destroy(&buffer);
+        buffer_destroy(&pbuff);
+        ray_buffer_destroy(&rbuff);
 
         return 0;
 }

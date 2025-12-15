@@ -6,7 +6,7 @@
 #include <stdbool.h>
 #include "map.h"
 #include "material.h"
-#include "../util/str.h"
+#include "../../util/str.h"
 
 Map map_init(Vec3i size)
 {

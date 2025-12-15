@@ -3,11 +3,36 @@ project(ardan C)
 
 set(CMAKE_C_STANDARD 11)
 set(CMAKE_C_STANDARD_REQUIRED ON)
+set(CMAKE_C_EXTENSIONS OFF)
 
-file(GLOB ENGINE_SRC engine/*.c engine/io/*.c engine/termicast/*.c engine/util/*.c)
+# engine src
+file(GLOB ENGINE_SRC
+    engine/*.c
+    engine/io/*.c
+    engine/io/terminal/*.c
+    engine/render/termicast/*.c
+    engine/util/*.c
+)
 
-add_executable(ardan ${ENGINE_SRC} main.c)
 
-target_link_libraries(ardan PRIVATE m)
+add_executable(ardan main.c ${ENGINE_SRC})
+
+
+target_include_directories(ardan PRIVATE engine)
+
+# sdl2 option
+option(AE_ENABLE_SDL2 "Enable SDL2-based IO module" OFF)
+
+if(AE_ENABLE_SDL2)
+    find_package(SDL2 REQUIRED)
+    target_link_libraries(ardan PRIVATE SDL2::SDL2)
+endif()
+
+# math lib
+if(UNIX AND NOT APPLE)
+    target_link_libraries(ardan PRIVATE m)
+endif()
+
+# png
 find_package(PNG REQUIRED)
 target_link_libraries(ardan PRIVATE PNG::PNG)

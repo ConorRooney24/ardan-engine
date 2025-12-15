@@ -5,7 +5,7 @@
 #ifndef TEXT_H
 #define TEXT_H
 
-#include "../col.h"
+#include "../../col.h"
 
 #define TEXT_RES_X 16
 #define TEXT_RES_Y 16

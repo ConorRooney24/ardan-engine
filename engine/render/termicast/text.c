@@ -64,16 +64,16 @@ void text_init()
         }
 
         texts[TEXT_TEST].id = TEXT_TEST;
-        text_load_from_img("res/text/TEXT_TEST.png", TEXT_TEST);
+        text_load_from_img("../res/text/TEXT_TEST.png", TEXT_TEST);
 
         texts[TEXT_BRICK_WALL_RED].id = TEXT_BRICK_WALL_RED;
-        text_load_from_img("res/text/TEXT_BRICK_WALL_RED.png", TEXT_BRICK_WALL_RED);
+        text_load_from_img("../res/text/TEXT_BRICK_WALL_RED.png", TEXT_BRICK_WALL_RED);
 
         texts[TEXT_FLOOR_BOARDS_DIRTY_YELLOW].id = TEXT_FLOOR_BOARDS_DIRTY_YELLOW;
-        text_load_from_img("res/text/TEXT_FLOOR_BOARDS_DIRTY_YELLOW.png", TEXT_FLOOR_BOARDS_DIRTY_YELLOW);
+        text_load_from_img("../res/text/TEXT_FLOOR_BOARDS_DIRTY_YELLOW.png", TEXT_FLOOR_BOARDS_DIRTY_YELLOW);
 
         texts[TEXT_PAINT_BEIGE].id = TEXT_PAINT_BEIGE;
-        text_load_from_img("res/text/TEXT_PAINT_BEIGE.png", TEXT_PAINT_BEIGE);
+        text_load_from_img("../res/text/TEXT_PAINT_BEIGE.png", TEXT_PAINT_BEIGE);
         
 }
 

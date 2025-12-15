@@ -8,7 +8,7 @@
 #define MAP_H
 
 #include <stdint.h>
-#include "../vector.h"
+#include "../../vector.h"
 #include "material.h"
 #include "text.h"
 #include "vox.h"

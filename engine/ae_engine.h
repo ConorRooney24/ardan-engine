@@ -12,6 +12,7 @@
 #include "io/buffer.h"
 #include "io/terminal/input.h"
 #include "io/terminal/terminal_out.h"
+#include "io/ae_sdl/aeio_sdl.h"
 
 #include "render/termicast/cam.h"
 #include "render/termicast/caster.h"

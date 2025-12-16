@@ -9,11 +9,11 @@ set(CMAKE_C_EXTENSIONS OFF)
 file(GLOB ENGINE_SRC
     engine/*.c
     engine/io/*.c
+    engine/io/ae_sdl/*.c
     engine/io/terminal/*.c
     engine/render/termicast/*.c
     engine/util/*.c
 )
-
 
 add_executable(ardan main.c ${ENGINE_SRC})
 
@@ -21,7 +21,7 @@ add_executable(ardan main.c ${ENGINE_SRC})
 target_include_directories(ardan PRIVATE engine)
 
 # sdl2 option
-option(AE_ENABLE_SDL2 "Enable SDL2-based IO module" OFF)
+option(AE_ENABLE_SDL2 "Enable SDL2-based IO module" ON)
 
 if(AE_ENABLE_SDL2)
     find_package(SDL2 REQUIRED)

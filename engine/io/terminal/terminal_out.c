@@ -10,7 +10,7 @@ void terminal_out_print(Buffer *buffer, char character)
 
         for (int y = 0; y < buffer->res_y; y++)
         {
-                sleep_ns(5000000);
+                //sleep_ns(5000000);
                 for (int x = 0; x < buffer->res_x; x++)
                 {
                         //sleep_ms(1);

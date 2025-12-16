@@ -3,8 +3,8 @@
 
 #include "engine/ae_engine.h"
 
-#define RES_X 100
-#define RES_Y 50
+#define RES_X 800/2
+#define RES_Y 600/2
 #define FRAMETIME_MIN 0.0f
 
 int main(void)
@@ -39,16 +39,38 @@ int main(void)
         TimeStamp frame_start;
         TimeStamp frame_end;
 
-        input_init();
+        //input_init();
         bool running = true;
         bool gravity_enabled = true;
+
+        AEIO_SDL_Context aeio_sdl = aeio_sdl_init("Test", RES_X, RES_Y, 2);
 
         while (running)
         {
 
                 frame_start = record_time();
-                input_update();
+                //input_update();
 
+                SDL_Event sdl_event;
+                while (SDL_PollEvent(&sdl_event))
+                {
+                        if (sdl_event.type == SDL_QUIT)
+                        {
+                                running = false;
+                        }
+                        else if (sdl_event.type == SDL_KEYDOWN && !sdl_event.key.repeat)
+                        {
+                                if (sdl_event.key.keysym.scancode == SDL_SCANCODE_G)
+                                {
+                                        gravity_enabled = !gravity_enabled;
+                                }
+                        }
+                }
+
+                const Uint8 *keyboard_state = SDL_GetKeyboardState(NULL);
+                Vec3 vec_buf;
+
+#if 0
                 if(input_key_pressed('0'))
                 {
                         running = false;
@@ -116,11 +138,78 @@ int main(void)
                 {
                         c.vel.y += 0.1;
                 }
+#endif
+
+                if(keyboard_state[SDL_SCANCODE_0])
+                {
+                        running = false;
+                }
+                if(keyboard_state[SDL_SCANCODE_W])
+                {
+                        vec_buf.y = sin(c.rot.x);
+                        vec_buf.x = cos(c.rot.y - deg_to_rad(90));
+                        vec_buf.z = sin(c.rot.y + deg_to_rad(90));
+
+                        vec_buf = vec3_normalize(vec_buf);
+                        vec_buf = vec3_scale(vec_buf, 0.2f);
+
+                        c.vel.x += vec_buf.x;
+                        c.vel.y += vec_buf.y;
+                        c.vel.z += vec_buf.z;
+                }
+                if(keyboard_state[SDL_SCANCODE_A])
+                {
+                        vec_buf.y = sin(c.rot.x);
+                        vec_buf.x = cos(c.rot.y  + deg_to_rad(180));
+                        vec_buf.z = -sin(c.rot.y + deg_to_rad(180));
+
+                        vec_buf = vec3_normalize(vec_buf);
+                        vec_buf = vec3_scale(vec_buf, 0.2f);
+
+                        c.vel.x += vec_buf.x;
+                        //c.vel.y += vec_buf.y;
+                        c.vel.z += vec_buf.z;
+                }
+                if(keyboard_state[SDL_SCANCODE_S])
+                {
+                        vec_buf.y = sin(c.rot.x);
+                        vec_buf.x = cos(c.rot.y - deg_to_rad(90));
+                        vec_buf.z = sin(c.rot.y + deg_to_rad(90));
+
+                        vec_buf = vec3_normalize(vec_buf);
+                        vec_buf = vec3_scale(vec_buf, 0.2f);
+
+                        c.vel.x -= vec_buf.x;
+                        c.vel.y -= vec_buf.y;
+                        c.vel.z -= vec_buf.z;
+                }
+                if(keyboard_state[SDL_SCANCODE_D])
+                {
+                        vec_buf.y = sin(c.rot.x);
+                        vec_buf.x = -cos(c.rot.y  + deg_to_rad(180));
+                        vec_buf.z = sin(c.rot.y + deg_to_rad(180));
+
+                        vec_buf = vec3_normalize(vec_buf);
+                        vec_buf = vec3_scale(vec_buf, 0.2f);
+
+                        c.vel.x += vec_buf.x;
+                        //c.vel.y += vec_buf.y;
+                        c.vel.z += vec_buf.z;
+                }
+                if(keyboard_state[SDL_SCANCODE_Q])
+                {
+                        c.vel.y -= 0.1;
+                }
+                if(keyboard_state[SDL_SCANCODE_E])
+                {
+                        c.vel.y += 0.1;
+                }
                 
                 Vec2 rot_vel;
                 rot_vel.x = 0;
                 rot_vel.y = 0;
 
+#if 0
                 if(input_key_pressed('i'))
                 {
                         rot_vel.x += 0.05;
@@ -157,7 +246,35 @@ int main(void)
                         {
                                 gravity_enabled = true;
                         }
-                        
+                
+                }
+#endif
+
+                if(keyboard_state[SDL_SCANCODE_I])
+                {
+                        rot_vel.x += 0.05;
+                }
+                if(keyboard_state[SDL_SCANCODE_K])
+                {
+                        rot_vel.x -= 0.05;
+                }
+                if(keyboard_state[SDL_SCANCODE_L])
+                {
+                        rot_vel.y += 0.05;
+                }
+                if(keyboard_state[SDL_SCANCODE_J])
+                {
+                        rot_vel.y -= 0.05;
+                }
+                if (keyboard_state[SDL_SCANCODE_MINUS])
+                {
+                        c.hFOV += 0.01;
+                        cam_calculate_vFOV(&c);
+                }
+                if (keyboard_state[SDL_SCANCODE_EQUALS])
+                {
+                        c.hFOV -= 0.01;
+                        cam_calculate_vFOV(&c);
                 }
                 
 
@@ -168,11 +285,13 @@ int main(void)
                 
                 ray_buffer_translate(&rbuff, &pbuff);
                
-                terminal_out_print(&pbuff, ' ');
+                //terminal_out_print(&pbuff, ' ');
+
+                aeio_sdl_draw(&aeio_sdl, &pbuff);
                 
 
                 frame_end = record_time();
-                printf("| FPS: %.1f | Frametime: %.1fms | Min Frametime: %.1f | Cam Pos: x%f, y%f, z%f | Cam Rot: x%f, y%f |", time_frame_time_to_fps(time_diff(frame_start, frame_end)), timestamp_to_ms(time_diff(frame_start, frame_end)), FRAMETIME_MIN, c.pos.x, c.pos.y, c.pos.z, c.rot.x, c.rot.y);
+                printf("| FPS: %.1f | Frametime: %.1fms | Min Frametime: %.1f | Cam Pos: x%f, y%f, z%f | Cam Rot: x%f, y%f |\n", time_frame_time_to_fps(time_diff(frame_start, frame_end)), timestamp_to_ms(time_diff(frame_start, frame_end)), FRAMETIME_MIN, c.pos.x, c.pos.y, c.pos.z, c.rot.x, c.rot.y);
                 
                 if (timestamp_to_ms(time_diff(frame_start, frame_end)) < FRAMETIME_MIN)
                 {
@@ -221,13 +340,15 @@ int main(void)
                 
         }
 
-        input_restore();
+        //input_restore();
         
         printf("\033[2J");
 
         cam_destroy(&c);
         buffer_destroy(&pbuff);
         ray_buffer_destroy(&rbuff);
+
+        aeio_sdl_destroy(&aeio_sdl);
 
         return 0;
 }

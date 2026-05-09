@@ -1,7 +1,25 @@
 # Ardán Engine (AE)
-A Fully 3D Voxel-Based Raycasting Engine.
+A 3D voxel-based CPU rendering engine.
 
-Ardan is currently minimal, but I plan to greatly improve the features, performance, and usability of the Engine over time.
+Ardan is currently minimal, but I plan to greatly improve the engine's features, performance, and usability over time. I may also move away from voxels and eventually rewrite the engine as a rasterizer. Currently, Ardan is fully CPU based and does not use the GPU, making it pretty slow.
+
+## Building
+As of May 2026, the engine officially supports Linux only. Windows support is currently untested.
+
+To build the project after cloning the repository, run:
+
+```bash
+mkdir build
+cd build
+cmake ..
+cmake --build .
+```
+
+Once built, run the engine with:
+
+```bash
+./ardan
+```
 
 ## Key components
 There are 4 most important parts of AE are the Map, Caster, Camera, and Renderer.

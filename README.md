@@ -22,7 +22,7 @@ Once built, run the engine with:
 ```
 
 ## Key components
-There are 4 most important parts of AE are the Map, Caster, Camera, and Renderer.
+The 4 most important parts of AE are the Map, Caster, Camera, and Renderer.
 ### Map
 The Map is represented as a 3D grid of Voxels. Each Voxel has a material and texture that dictates how that voxel looks, and interacts with light.
 ### Caster

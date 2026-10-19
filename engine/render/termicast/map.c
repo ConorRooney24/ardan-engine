@@ -5,7 +5,6 @@
 #include <string.h>
 #include <stdbool.h>
 #include "map.h"
-#include "material.h"
 #include "../../util/str.h"
 
 Map map_init(Vec3i size)
@@ -100,7 +99,7 @@ Map map_load_file(const char *file)
 
                 if (!name_read)
                 {
-                        name_buf = strdup(line);
+                        //name_buf = strdup(line);
                         name_read = true;
                         continue;
                 }
